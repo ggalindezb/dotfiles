@@ -1,0 +1,15 @@
+[user]
+	name = Gerardo Galindez
+	email = gerardo.galindez@gmail.com
+[core]
+	editor = vim
+	excludesfile = /home/heldraug/.gitignore_global
+[merge]
+	tool = vimdiff
+[diff]
+    tool = vimdiff
+[color]
+	status = auto
+	branch = auto
+	interactive = auto
+	diff = auto
