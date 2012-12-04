@@ -1,0 +1,78 @@
+# The Quickening
+
+
+[Icon Theme]
+Name=Quickening
+Comment=Dark icon theme.
+Inherits=Tango,gnome,Industrial
+Directories=scalable/apps,scalable/devices,scalable/emblems,scalable/filesystems,scalable/mimetypes,scalable/misc,scalable/stock
+
+
+
+[scalable/apps]
+MinSize=1
+Size=128
+MaxSize=128
+Context=Applications
+Type=scalable
+
+
+
+[scalable/devices]
+MinSize=1
+Size=128
+MaxSize=128
+Context=Devices
+Type=scalable
+
+
+
+[scalable/emblems]
+# Let's it believe that icons are 96px so they look good while scaled down
+# (this should not be necessary with current xfce-icontheme code,
+#  because vector graphics have no size, they are scalable,
+#  unfortunately gnome crashes... --EWG)
+Size=96
+Context=Emblems
+Type=Scalable
+
+
+
+[scalable/filesystems]
+MinSize=1
+Size=128
+MaxSize=128
+Context=FileSystems
+Type=Scalable
+
+
+
+[scalable/mimetypes]
+MinSize=1
+Size=128
+MaxSize=128
+Context=MimeTypes
+Type=Scalable
+
+
+
+[scalable/misc]
+MinSize=1
+Size=128
+MaxSize=128
+Context=Misc
+Type=Scalable
+
+
+
+[scalable/stock]
+MinSize=1
+Size=128
+MaxSize=128
+Context=Misc
+Type=Scalable
+
+
+
+[Desktop Entry]
+GenericName=

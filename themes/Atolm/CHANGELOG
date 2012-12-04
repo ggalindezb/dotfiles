@@ -1,0 +1,35 @@
+############################
+# Version 0.50, 29/12/2010 #
+############################
+
+ - Initial release.
+
+############################
+# Version 0.65, 03/01/2011 #
+############################
+
+
+FIXES:
+======
+
+ - Speed optimizations, the theme is now faster than Orta.
+ - Notebook spacing changed.
+ - Notebook tabs changed.
+ - Nautilus breadcrumbs and mode button improved.
+ - Check, radio buttons and tabs now share the same coloring with buttons.
+ - White arrows on spinbuttons fixed.
+ - Ubuntu Software Center text colors fixed.
+ - Emesene status button text color fixed.
+ - Pidgin status toggle button text color fixed.
+ - Various Evolution Fixes.
+ - OpenOffice text visibility fixes.
+
+
+KNOWN BUGS:
+===========
+
+ - OpenOffice and most other Gtk apps have a different base and text color than the rest of the theme.
+   This is anavoidable if you want to have a usable OpenOffice. If you want to have a unified look, you
+   can make all Gtk apps follow the same settings by setting the Input Boxes background color to 5C5C5C
+   and the Input Boxes text color to ECECEC.
+
