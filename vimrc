@@ -55,11 +55,14 @@ Bundle 'fholgado/minibufexpl.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'tpope/vim-commentary'
 Bundle 'Lokaltog/vim-powerline'
-Bundle 'tpope/vim-rails'
-Bundle 'kchmck/vim-coffee-script'
 Bundle 'tsaleh/vim-matchit'
 Bundle 'mattn/zencoding-vim'
 Bundle 'garbas/vim-snipmate'
+
+" Filetype
+Bundle 'tpope/vim-rails'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'dagwieers/asciidoc-vim'
 
 " Colorschemes
 Bundle 'Heldraug/vim-megara'
