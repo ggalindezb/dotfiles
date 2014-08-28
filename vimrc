@@ -1,7 +1,7 @@
 " vimrc custom configuration file
 " Maintainer:	Gerardo Galindez 
-" Created:	    10/Sep/2012
-" Version:      0.1
+" Created:	    28/Aug/2014
+" Version:      0.3
 " Sections:
 "    -> General [GEN]
 "    -> Vundle [VUN]
@@ -20,11 +20,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> General [GEN]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Load Pathogen (Currently unused)
-" call pathogen#infect()
-" call pathogen#runtime_append_all_bundles()
-" call pathogen#helptags()
-
 " Set to auto read when a file is changed from the outside
 set autoread
 
@@ -41,31 +36,29 @@ set undolevels=512
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Vundle [VUN]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" Dependencies
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "honza/snipmate-snippets"
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " Plugins
-Bundle 'gmarik/vundle'
-Bundle 'fholgado/minibufexpl.vim'
-Bundle 'kien/ctrlp.vim'
-Bundle 'tpope/vim-commentary'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'tsaleh/vim-matchit'
-Bundle 'mattn/zencoding-vim'
-Bundle 'garbas/vim-snipmate'
+Plugin 'gmarik/vundle'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-commentary'
+Plugin 'tmhedberg/matchit'
+Plugin 'bling/vim-airline'
+Bundle 'mattn/emmet-vim'
 
 " Filetype
-Bundle 'tpope/vim-rails'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'dagwieers/asciidoc-vim'
+Plugin 'tpope/vim-rails'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'dagwieers/asciidoc-vim'
 
 " Colorschemes
-Bundle 'Heldraug/vim-megara'
+Plugin 'Heldraug/vim-megara'
+call vundle#end()
+
+" Unused plugins
+" Plugin 'Lokaltog/vim-powerline'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Keymaps [KEY]
@@ -267,14 +260,7 @@ endfunc
 let g:ctrlp_open_multiple_files = 'i'
 
 """"""""""""
-" Powerline
+" Airline
 """"""""""""
-let g:Powerline_symbols = 'fancy'
-
-""""""""""
-" NERDTree
-""""""""""
-" Close vim if the only window left open is a NERDTree
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-" Close NERDTree after opening a file
-" let NERDTreeQuitOnOpen=1
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'powerlineish'
