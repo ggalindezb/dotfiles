@@ -1,6 +1,7 @@
 " vimrc custom configuration file
-" Maintainer:	Gerardo Galindez 
-" Created:	    28/Aug/2014
+" Maintainer:	Gerardo Galindez
+" Created:	    10/Sep/2012
+" Last Updated: 08/Sep/2014
 " Version:      0.3
 " Sections:
 "    -> General [GEN]
@@ -12,7 +13,7 @@
 "    -> Autocmds and lang specific [AUT]
 "    -> Helpers [HLP]
 "    -> Plugin configuration [PGC]
-" References: 
+" References:
 "    -> Amix vimrc [http://amix.dk/vim/vimrc.html]
 "    -> VimCasts [http://vimcasts.org]
 "    -> Gary Berhardt [https://github.com/garybernhardt/dotfiles/blob/master/.vimrc]
@@ -39,6 +40,14 @@ set undolevels=512
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+" Dependencies
+" tlib - for vim-asciidoc
+Plugin 'tomtom/tlib_vim'
+" asif - for vim-asciidoc
+Plugin 'dahu/Asif'
+" SyntaxRange - for vim-asciidoc
+Plugin 'vim-scripts/SyntaxRange'
+
 " Plugins
 Plugin 'gmarik/vundle'
 Plugin 'fholgado/minibufexpl.vim'
@@ -47,6 +56,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tmhedberg/matchit'
 Plugin 'bling/vim-airline'
 Bundle 'mattn/emmet-vim'
+Plugin 'dahu/vim-asciidoc'
 
 " Filetype
 Plugin 'tpope/vim-rails'
@@ -133,13 +143,13 @@ set number
 set numberwidth=4
 set ruler
 set cul
-set showmatch	
+set showmatch
 set backspace=indent,eol,start " Allow backspacing over everything
 
 " Vim command line and Wildmenu
 set wildmenu
 set wildignore=*~,*.swp
-set showcmd	
+set showcmd
 set cmdheight=1
 
 " Search options
@@ -160,7 +170,7 @@ set t_vb=
 
 syntax on
 colorscheme megara
-set t_Co=256        " 256 color term 
+set t_Co=256        " 256 color term
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Files [FIL]
@@ -212,17 +222,18 @@ set wrap
 autocmd!
 
 " Set [...] to 2-space indent
-autocmd WinEnter,FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set sts=2 ts=2 sw=2 
+autocmd WinEnter,FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set sts=2 ts=2 sw=2
 
 " Text -> Git, Asciidoc
 autocmd FileType text setlocal textwidth=80
+autocmd FileType asciidoc setlocal textwidth=80
 
 " Set SASS to SASS. Duh
-autocmd! BufRead,BufNewFile *.sass setfiletype sass 
+autocmd! BufRead,BufNewFile *.sass setfiletype sass
 
 " Set F# lex to F#
-autocmd! BufRead,BufNewFile *.fsl setfiletype fsharp 
-autocmd! BufRead,BufNewFile *.fsy setfiletype fsharp 
+autocmd! BufRead,BufNewFile *.fsl setfiletype fsharp
+autocmd! BufRead,BufNewFile *.fsy setfiletype fsharp
 
 " Don't change tabs for spaces in Makefiles
 autocmd FileType make setlocal noexpandtab
@@ -236,6 +247,7 @@ endfunc
 
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
+autocmd BufWrite *.txt :call DeleteTrailingWS()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "-> Helpers [HLP]
