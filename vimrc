@@ -1,7 +1,7 @@
 " vimrc custom configuration file
 " Maintainer:	Gerardo Galindez
 " Created:	    10/Sep/2012
-" Last Updated: 08/Sep/2014
+" Last Updated: 27/Oct/2014
 " Version:      0.3
 " Sections:
 "    -> General [GEN]
@@ -55,10 +55,12 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'tmhedberg/matchit'
 Plugin 'bling/vim-airline'
-Bundle 'mattn/emmet-vim'
+Plugin 'mattn/emmet-vim'
 Plugin 'dahu/vim-asciidoc'
+Plugin 'kien/rainbow_parentheses.vim'
 
 " Filetype
+Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'dagwieers/asciidoc-vim'
@@ -276,3 +278,11 @@ let g:ctrlp_open_multiple_files = 'i'
 """"""""""""
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'powerlineish'
+
+""""""""""""""""""""""""
+" Rainbow Parentheses
+""""""""""""""""""""""""
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
