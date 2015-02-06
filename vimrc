@@ -1,18 +1,18 @@
 " vimrc custom configuration file
 " Maintainer:	Gerardo Galindez
 " Created:	    10/Sep/2012
-" Last Updated: 27/Oct/2014
-" Version:      0.3
+" Last Updated: 06/Feb/2015
+" Version:      0.4
 " Sections:
 "    -> General [GEN]
-"    -> Vundle [VUN]
+"    -> Packages [PKG]
 "    -> Keymaps [KEY]
 "    -> Vim UI [VUI]
 "    -> Files [FIL]
 "    -> Editing [EDT]
 "    -> Autocmds and lang specific [AUT]
 "    -> Helpers [HLP]
-"    -> Plugin configuration [PGC]
+"    -> Plugin configuration [PKC]
 " References:
 "    -> Amix vimrc [http://amix.dk/vim/vimrc.html]
 "    -> VimCasts [http://vimcasts.org]
@@ -35,42 +35,80 @@ set history=256
 set undolevels=512
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" -> Vundle [VUN]
+" -> Packages [PKG]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Load vim-plug
+if empty(glob("~/.vim/autoload/plug.vim"))
+    execute '!mkdir -p ~/.vim/autoload'
+    execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+endif
+
+call plug#begin('~/.vim/plugged')
 
 " Dependencies
-" tlib - for vim-asciidoc
-Plugin 'tomtom/tlib_vim'
-" asif - for vim-asciidoc
-Plugin 'dahu/Asif'
-" SyntaxRange - for vim-asciidoc
-Plugin 'vim-scripts/SyntaxRange'
+Plug 'tomtom/tlib_vim' " tlib - for vim-asciidoc
+Plug 'dahu/Asif' " asif - for vim-asciidoc
+Plug 'vim-scripts/SyntaxRange' " SyntaxRange - for vim-asciidoc
 
-" Plugins
-Plugin 'gmarik/vundle'
-Plugin 'fholgado/minibufexpl.vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-commentary'
-Plugin 'tmhedberg/matchit'
-Plugin 'bling/vim-airline'
-Plugin 'mattn/emmet-vim'
-Plugin 'dahu/vim-asciidoc'
-Plugin 'kien/rainbow_parentheses.vim'
+" Vim interface extensions
+Plug 'fholgado/minibufexpl.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'bling/vim-airline'
+Plug 'tpope/vim-fugitive'
+" Plug 'benmills/vimux'
+" Plug 'christoomey/vim-tmux-navigator'
+" Plug 'wellle/tmux-complete.vim'
+" Plug 'scrooloose/syntastic'
+
+" File handling
+Plug 'kien/ctrlp.vim'
+Plug 'mileszs/ack.vim'
+" Plug 'rking/ag.vim'
+" Plug 'scrooloose/nerdtree'
+
+" Motion
+Plug 'tmhedberg/matchit'
+" Plug 'Lokaltog/vim-easymotion'
+" Plug 'justinmk/vim-sneak'
+" Plug 'tpope/vim-repeat'
+
+" Text wrangling
+Plug 'tpope/vim-commentary'
+Plug 'godlygeek/tabular'
+Plug 'kien/rainbow_parentheses.vim'
+" Plug 'tpope/vim-surround'
+" Plug 'maxbrunsfeld/vim-yankstack'
+
+" Text objects / Operators
+" Plug 'kana/vim-textobj-user'
+" Plug 'wellle/targets.vim'
+" Plug 'kana/vim-textobj-fold'
+
+" Completion
+" Plug 'Valloric/YouCompleteMe'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
+Plug 'mattn/emmet-vim'
+" Plug 'ervandew/supertab'
 
 " Filetype
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'dagwieers/asciidoc-vim'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+" Plug 'pangloss/vim-javascript'
+Plug 'kchmck/vim-coffee-script'
+Plug 'othree/html5.vim'
+Plug 'tpope/vim-haml'
+Plug 'dahu/vim-asciidoc'
+Plug 'plasticboy/vim-markdown'
 
 " Colorschemes
-Plugin 'Heldraug/vim-megara'
-call vundle#end()
+Plug 'Heldraug/vim-megara'
+Plug 'tomasr/molokai'
+Plug 'altercation/vim-colors-solarized'
+
+call plug#end()
 
 " Unused plugins
-" Plugin 'Lokaltog/vim-powerline'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Keymaps [KEY]
@@ -265,7 +303,7 @@ function! <SID>SynStack()
 endfunc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" -> Plugin configuration [PGC]
+" -> Package configuration [PKC]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""
 " CtrlP
