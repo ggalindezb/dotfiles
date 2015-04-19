@@ -1,22 +1,23 @@
 " vimrc custom configuration file
 " Maintainer:	Gerardo Galindez
 " Created:	    10/Sep/2012
-" Last Updated: 06/Feb/2015
-" Version:      0.4
+" Last Updated: 07/Feb/2015
+" Version:      0.5
 " Sections:
-"    -> General [GEN]
-"    -> Packages [PKG]
-"    -> Keymaps [KEY]
-"    -> Vim UI [VUI]
-"    -> Files [FIL]
-"    -> Editing [EDT]
+"    -> General                    [GEN]
+"    -> Packages                   [PKG]
+"    -> Keymaps                    [KEY]
+"    -> Vim UI                     [VUI]
+"    -> Files                      [FIL]
+"    -> Editing                    [EDT]
 "    -> Autocmds and lang specific [AUT]
-"    -> Helpers [HLP]
-"    -> Plugin configuration [PKC]
+"    -> Helpers                    [HLP]
+"    -> Plugin configuration       [PKC]
 " References:
-"    -> Amix vimrc [http://amix.dk/vim/vimrc.html]
-"    -> VimCasts [http://vimcasts.org]
+"    -> Amix vimrc    [http://amix.dk/vim/vimrc.html]
+"    -> VimCasts      [http://vimcasts.org]
 "    -> Gary Berhardt [https://github.com/garybernhardt/dotfiles/blob/master/.vimrc]
+"    -> Andrew Radev  [http://andrewradev.com]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> General [GEN]
@@ -37,7 +38,7 @@ set undolevels=512
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Packages [PKG]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Load vim-plug
+" Install Plug if it's not available
 if empty(glob("~/.vim/autoload/plug.vim"))
     execute '!mkdir -p ~/.vim/autoload'
     execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
@@ -46,36 +47,37 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Dependencies
-Plug 'tomtom/tlib_vim' " tlib - for vim-asciidoc
-Plug 'dahu/Asif' " asif - for vim-asciidoc
-Plug 'vim-scripts/SyntaxRange' " SyntaxRange - for vim-asciidoc
+Plug 'tomtom/tlib_vim'                  " tlib - for vim-asciidoc
+Plug 'dahu/Asif'                        " asif - for vim-asciidoc
+Plug 'vim-scripts/SyntaxRange'          " SyntaxRange - for vim-asciidoc
 
 " Vim interface extensions
-Plug 'fholgado/minibufexpl.vim'
-Plug 'airblade/vim-gitgutter'
-Plug 'bling/vim-airline'
-Plug 'tpope/vim-fugitive'
+Plug 'fholgado/minibufexpl.vim'         " Elegant buffer explorer
+Plug 'airblade/vim-gitgutter'           " Git diff in the gutter
+Plug 'bling/vim-airline'                " Lean and mean status/tabline
+Plug 'tpope/vim-fugitive'               " Git wrapper so awesome, it should be illegal
 " Plug 'benmills/vimux'
 " Plug 'christoomey/vim-tmux-navigator'
 " Plug 'wellle/tmux-complete.vim'
 " Plug 'scrooloose/syntastic'
 
 " File handling
-Plug 'kien/ctrlp.vim'
-Plug 'mileszs/ack.vim'
+Plug 'kien/ctrlp.vim'                   " Fuzzy file/buffer finder
+Plug 'mileszs/ack.vim'                  " Wrapper for ack, beyond grep
 " Plug 'rking/ag.vim'
 " Plug 'scrooloose/nerdtree'
 
 " Motion
-Plug 'tmhedberg/matchit'
+Plug 'tmhedberg/matchit'                " Extended % matching
 " Plug 'Lokaltog/vim-easymotion'
 " Plug 'justinmk/vim-sneak'
 " Plug 'tpope/vim-repeat'
 
 " Text wrangling
-Plug 'tpope/vim-commentary'
-Plug 'godlygeek/tabular'
-Plug 'kien/rainbow_parentheses.vim'
+Plug 'tpope/vim-commentary'             " Comment stuff out
+Plug 'godlygeek/tabular'                " Text filtering and alignment
+Plug 'kien/rainbow_parentheses.vim'     " Better Rainbow Parentheses
+Plug 'ntpeters/vim-better-whitespace'   " Fix whitespace
 " Plug 'tpope/vim-surround'
 " Plug 'maxbrunsfeld/vim-yankstack'
 
@@ -88,23 +90,23 @@ Plug 'kien/rainbow_parentheses.vim'
 " Plug 'Valloric/YouCompleteMe'
 " Plug 'SirVer/ultisnips'
 " Plug 'honza/vim-snippets'
-Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'                  " Emmet expanding abbreviations
 " Plug 'ervandew/supertab'
 
 " Filetype
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
+Plug 'vim-ruby/vim-ruby'                " Vim support of Ruby
+Plug 'tpope/vim-rails'                  " Vim support for Rails
 " Plug 'pangloss/vim-javascript'
-Plug 'kchmck/vim-coffee-script'
-Plug 'othree/html5.vim'
-Plug 'tpope/vim-haml'
-Plug 'dahu/vim-asciidoc'
-Plug 'plasticboy/vim-markdown'
+Plug 'kchmck/vim-coffee-script'         " Vim support for Coffeescript
+Plug 'othree/html5.vim'                 " Vim support for HTML5
+Plug 'tpope/vim-haml'                   " Vim support for HAML
+Plug 'dahu/vim-asciidoc'                " Vim support for Asciidoc
+Plug 'plasticboy/vim-markdown'          " Vim support for Markdown
 
 " Colorschemes
-Plug 'Heldraug/vim-megara'
-Plug 'tomasr/molokai'
-Plug 'altercation/vim-colors-solarized'
+Plug 'Heldraug/vim-megara'              " Colorscheme focused on template
+Plug 'tomasr/molokai'                   " Port of the monokai
+Plug 'altercation/vim-colors-solarized' " Precision colorscheme
 
 call plug#end()
 
@@ -126,7 +128,6 @@ let mapleader = ","
 set pastetoggle=<Leader>p
 
 " Navigation keymaps
-" Power navigation, by Andrew Radev
 nmap J 5j
 nmap K 5k
 xmap J 5j
@@ -317,9 +318,26 @@ let g:ctrlp_open_multiple_files = 'i'
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'powerlineish'
 
-""""""""""""""""""""""""
+"""""""""""""""""""""""
 " Rainbow Parentheses
-""""""""""""""""""""""""
+"""""""""""""""""""""""
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3']]
+
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
