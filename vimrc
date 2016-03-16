@@ -50,16 +50,17 @@ call plug#begin('~/.vim/plugged')
 Plug 'tomtom/tlib_vim', {'for': 'asciidoc'}           " tlib - for vim-asciidoc
 Plug 'dahu/Asif', {'for': 'asciidoc'}                 " asif - for vim-asciidoc
 Plug 'vim-scripts/SyntaxRange', {'for': 'asciidoc'}   " SyntaxRange - for vim-asciidoc
-Plug 'marijnh/tern_for_vim', {'for': 'javascript'}    " tern - for tagbar JS support
+" Plug 'marijnh/tern_for_vim', {'for': 'javascript'}    " tern - for tagbar JS support
 
 " Vim interface extensions
 Plug 'fholgado/minibufexpl.vim'                       " Elegant buffer explorer
 Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, it should be illegal
 Plug 'airblade/vim-gitgutter'                         " Git diff in the gutter
 Plug 'bling/vim-airline'                              " Lean and mean status/tabline
-Plug 'scrooloose/syntastic'                           " Syntax checking hacks
+Plug 'vim-airline/vim-airline-themes'                 " Collection of themes for airline
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
-Plug 'majutsushi/tagbar'                              " Tags ordered by scope
+" Plug 'scrooloose/syntastic'                         " Syntax checking hacks
+" Plug 'majutsushi/tagbar'                            " Tags ordered by scope
 " Plug 'benmills/vimux'
 " Plug 'christoomey/vim-tmux-navigator'
 " Plug 'wellle/tmux-complete.vim'
@@ -67,7 +68,7 @@ Plug 'majutsushi/tagbar'                              " Tags ordered by scope
 " File/Buffer searching
 Plug 'kien/ctrlp.vim'                                 " Fuzzy file/buffer finder
 Plug 'mileszs/ack.vim'                                " Wrapper for ack, beyond grep
-Plug 'osyo-manga/vim-hopping'                         " Incremental buffer line filtering
+" Plug 'osyo-manga/vim-hopping'                       " Incremental buffer line filtering
 " Plug 'rking/ag.vim'
 " Plug 'scrooloose/nerdtree'
 
@@ -102,6 +103,7 @@ Plug 'tpope/vim-rails', {'for': 'ruby'}               " Vim support for Rails
 Plug 'pangloss/vim-javascript', {'for': 'javascript'} " Vim support for Javascript
 Plug 'kchmck/vim-coffee-script', {'for': 'coffee'}    " Vim support for Coffeescript
 Plug 'othree/html5.vim', {'for': 'html'}              " Vim support for HTML5
+Plug 'slim-template/vim-slim', {'for': 'slim'}        " Vim support for Slim
 Plug 'tpope/vim-haml', {'for': 'haml'}                " Vim support for HAML/SASS
 Plug 'dahu/vim-asciidoc', {'for': 'asciidoc'}         " Vim support for Asciidoc
 Plug 'plasticboy/vim-markdown', {'for': 'mkd'}        " Vim support for Markdown
