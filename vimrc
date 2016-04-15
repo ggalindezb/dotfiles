@@ -1,8 +1,8 @@
 " vimrc custom configuration file
 " Maintainer:	Gerardo Galindez
 " Created:	    10/Sep/2012
-" Last Updated: 05/May/2015
-" Version:      0.7
+" Last Updated: 20/Mar/2016
+" Version:      0.8
 " Sections:
 "    -> General                    [GEN]
 "    -> Packages                   [PKG]
@@ -110,8 +110,9 @@ Plug 'plasticboy/vim-markdown', {'for': 'mkd'}        " Vim support for Markdown
 
 " Colorschemes
 Plug 'Heldraug/vim-megara'                            " Colorscheme focused on template
-Plug 'tomasr/molokai'                                 " Port of the monokai
-Plug 'altercation/vim-colors-solarized'               " Precision colorscheme
+Plug 'tomasr/molokai'                                 " Port of monokai
+Plug 'joshdick/onedark.vim'                           " Port of onedark
+Plug 'sjl/badwolf'                                    " Woof Woof
 
 call plug#end()
 
@@ -215,7 +216,7 @@ set noerrorbells
 set t_vb=
 
 syntax on
-colorscheme megara
+colorscheme onedark
 set t_Co=256        " 256 color term
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

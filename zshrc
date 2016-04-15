@@ -1,59 +1,42 @@
-# Filename:      /etc/skel/.zshrc
-# Purpose:       config file for zsh (z shell)
-# Authors:       (c) grml-team (grml.org)
-# Bug-Reports:   see http://grml.org/bugs/
-# License:       This file is licensed under the GPL v2 or any later version.
-################################################################################
-# Nowadays, grml's zsh setup lives in only *one* zshrc file.
-# That is the global one: /etc/zsh/zshrc (from grml-etc-core).
-# It is best to leave *this* file untouched and do personal changes to
-# your zsh setup via ${HOME}/.zshrc.local which is loaded at the end of
-# the global zshrc.
+# zshrc custom configuration file
+# Maintainer:	Gerardo Galindez
+# Created:	    25/Mar/2016
+# Last Updated: 25/Mar/2016
+# Version:      0.1
+# Sections:
+#    -> General                    [GEN]
+#    -> Aliases                    [ALI]
+#    -> Path                       [PAT]
 #
-# That way, we enable people on other operating systems to use our
-# setup, too, just by copying our global zshrc to their ${HOME}/.zshrc.
-# Adjustments would still go to the .zshrc.local file.
-################################################################################
+# WARNING: Here be dragons
 
-## Inform users about upgrade path for grml's old zshrc layout, assuming that:
-## /etc/skel/.zshrc was installed as ~/.zshrc,
-## /etc/zsh/zshrc was installed as ~/.zshrc.global and
-## ~/.zshrc.local does not exist yet.
-if [ -r ~/.zshrc -a -r ~/.zshrc.global -a ! -r ~/.zshrc.local ] ; then
-    printf '-!-\n'
-    printf '-!- Looks like you are using the old zshrc layout of grml.\n'
-    printf '-!- Please read the notes in the grml-zsh-refcard, being'
-    printf '-!- available at: http://grml.org/zsh/\n'
-    printf '-!-\n'
-    printf '-!- If you just want to get rid of this warning message execute:\n'
-    printf '-!-        touch ~/.zshrc.local\n'
-    printf '-!-\n'
-fi
+# ------------------------------------------------
+# General
+# ------------------------------------------------
+# ZSH Line Editor tweaks
 
-## Settings for umask
-#if (( EUID == 0 )); then
-#    umask 002
-#else
-#    umask 022
-#fi
+# Use the vi navigation keys (hjkl) besides cursor keys in menu completion
+bindkey -M menuselect 'h' vi-backward-char        # left
+bindkey -M menuselect 'k' vi-up-line-or-history   # up
+bindkey -M menuselect 'l' vi-forward-char         # right
+bindkey -M menuselect 'j' vi-down-line-or-history # bottom
 
-## Now, we'll give a few examples of what you might want to use in your
-## .zshrc.local file (just copy'n'paste and uncomment it there):
+# Set command prediction from history, see 'man 1 zshcontrib'
+is4 && zrcautoload predict-on && \
+zle -N predict-on         && \
+zle -N predict-off        && \
+bindkey "^X^Z" predict-on && \
+bindkey "^Z" predict-off
 
-## ZLE tweaks ##
+# ------------------------------------------------
+# Aliases
+# ------------------------------------------------
 
-## use the vi navigation keys (hjkl) besides cursor keys in menu completion
-#bindkey -M menuselect 'h' vi-backward-char        # left
-#bindkey -M menuselect 'k' vi-up-line-or-history   # up
-#bindkey -M menuselect 'l' vi-forward-char         # right
-#bindkey -M menuselect 'j' vi-down-line-or-history # bottom
+# ------------------------------------------------
+# Path
+# ------------------------------------------------
 
-## set command prediction from history, see 'man 1 zshcontrib'
-#is4 && zrcautoload predict-on && \
-#zle -N predict-on         && \
-#zle -N predict-off        && \
-#bindkey "^X^Z" predict-on && \
-#bindkey "^Z" predict-off
+# ----- Arch config
 
 ## press ctrl-q to quote line:
 #mquote () {
