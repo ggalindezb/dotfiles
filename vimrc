@@ -41,8 +41,8 @@ set undolevels=512
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Install Plug if it's not available
 if empty(glob("~/.vim/autoload/plug.vim"))
-    execute '!mkdir -p ~/.vim/autoload'
-    execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+  execute '!mkdir -p ~/.vim/autoload'
+  execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -202,10 +202,10 @@ set backspace=indent,eol,start
 " By VimCasts
 nmap <leader>s :call <SID>SynStack()<CR>
 function! <SID>SynStack()
-    if !exists("*synstack")
-        return
-    endif
-    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -230,7 +230,7 @@ autocmd! BufRead,BufNewFile *.fsy setfiletype fsharp
 " Don't change tabs for spaces in Makefiles
 autocmd FileType make setlocal noexpandtab
 
-" Delete trailing white space on save, useful for Python and CoffeeScript ;)
+" Delete trailing white space on sav
 func! DeleteTrailingWS()
   exe "normal mz"
   %s/\s\+$//ge
