@@ -1,8 +1,8 @@
 " vimrc custom configuration file
 " Maintainer:	Gerardo Galindez
 " Created:	    10/Sep/2012
-" Last Updated: 20/Mar/2016
-" Version:      0.8
+" Last Updated: 16/Apr/2016
+" Version:      0.9
 " Sections:
 "    -> General                    [GEN]
 "    -> Package Manager            [PKG]
@@ -110,7 +110,7 @@ Plug 'dahu/vim-asciidoc', {'for': 'asciidoc'}         " Vim support for Asciidoc
 Plug 'plasticboy/vim-markdown', {'for': 'mkd'}        " Vim support for Markdown
 
 " Colorschemes
-Plug 'Heldraug/vim-megara'                            " Colorscheme focused on template
+Plug 'Heldraug/vim-megara'                            " Colorscheme focused on contrast
 Plug 'whatyouhide/vim-gotham'                         " Code never sleeps in Gotham City
 Plug 'tomasr/molokai'                                 " Port of monokai
 Plug 'joshdick/onedark.vim'                           " Port of onedark
@@ -124,35 +124,29 @@ call plug#end()
 " Editing position aid
 set number
 set numberwidth=3
-set ruler
 set cursorline
 
-" Show matching pair
-set showmatch
-
-" Vim command line and Wildmenu
-set wildmenu
-set wildignore=*~,*.swp
-set showcmd
-set cmdheight=1
+" Vim command line
+set wildmenu                    " Autocomplete in cmd
+set wildignore=*~,*.swp         " Ignore temp files
+set showcmd                     " Show partial cmd
+set cmdheight=1                 " Short cmd line
 
 " Search options
-set smartcase       " Ignore casing unless search a cased word
-set hlsearch        " Highlight matches
-set incsearch		" Real time match
-set magic           " Parse regex in search
+set smartcase                   " Ignore casing unless search a cased word
+set hlsearch                    " Highlight matches
+set incsearch		                " Real time match
+set magic                       " Parse regex in search
 
-" Don't redraw while executing macros
-set lazyredraw
+" Interface improvments
+set novisualbell                " Disable flashes
+set t_vb=                       " No visual bell
+set noerrorbells                " Fuck bells!
+set lazyredraw                  " Don't redraw while executing macros
 
-" Bells are ugly
-set novisualbell
-set noerrorbells
-set t_vb=
-
-syntax on
-colorscheme onedark
-set t_Co=256        " 256 color term
+syntax on                       " Syntax highlight
+colorscheme onedark             " Set colorscheme
+set t_Co=256                    " 256 color term
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Files [FIL]
@@ -168,9 +162,6 @@ setlocal cryptmethod=blowfish
 " Filetypes
 filetype plugin on
 filetype indent on
-set omnifunc=syntaxcomplete#Complete
-augroup vimrcEx
-au!
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Editing [EDT]
