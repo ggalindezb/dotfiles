@@ -5,14 +5,15 @@
 " Version:      0.8
 " Sections:
 "    -> General                    [GEN]
-"    -> Packages                   [PKG]
-"    -> Keymaps                    [KEY]
+"    -> Package Manager            [PKG]
 "    -> Vim UI                     [VUI]
 "    -> Files                      [FIL]
 "    -> Editing                    [EDT]
-"    -> Autocmds and lang specific [AUT]
 "    -> Helpers                    [HLP]
-"    -> Plugin configuration       [PKC]
+"    -> Autocmds and lang specific [AUL]
+"    -> Keymaps                    [KEY]
+"    -> Plugin Keymaps             [PKM]
+"    -> Plugin configuration       [PCF]
 " References:
 "    -> Amix vimrc    [http://amix.dk/vim/vimrc.html]
 "    -> VimCasts      [http://vimcasts.org]
@@ -22,14 +23,14 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> General [GEN]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set to auto read when a file is changed from the outside
-set autoread
-
 " Use Vim settings
 set nocompatible
 set laststatus=2
 set encoding=utf-8
 set hidden
+
+" Set to auto read when a file is changed from the outside
+set autoread
 
 " Remember stuff
 set history=256
@@ -110,13 +111,135 @@ Plug 'plasticboy/vim-markdown', {'for': 'mkd'}        " Vim support for Markdown
 
 " Colorschemes
 Plug 'Heldraug/vim-megara'                            " Colorscheme focused on template
+Plug 'whatyouhide/vim-gotham'                         " Code never sleeps in Gotham City
 Plug 'tomasr/molokai'                                 " Port of monokai
 Plug 'joshdick/onedark.vim'                           " Port of onedark
 Plug 'sjl/badwolf'                                    " Woof Woof
 
 call plug#end()
 
-" Unused plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Vim UI [VUI]
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Editing position aid
+set number
+set numberwidth=3
+set ruler
+set cursorline
+
+" Show matching pair
+set showmatch
+
+" Vim command line and Wildmenu
+set wildmenu
+set wildignore=*~,*.swp
+set showcmd
+set cmdheight=1
+
+" Search options
+set smartcase       " Ignore casing unless search a cased word
+set hlsearch        " Highlight matches
+set incsearch		" Real time match
+set magic           " Parse regex in search
+
+" Don't redraw while executing macros
+set lazyredraw
+
+" Bells are ugly
+set novisualbell
+set noerrorbells
+set t_vb=
+
+syntax on
+colorscheme onedark
+set t_Co=256        " 256 color term
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Files [FIL]
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Don't write anything but the file
+set nobackup
+set nowb
+set noswapfile
+
+" Blowfish encryption
+setlocal cryptmethod=blowfish
+
+" Filetypes
+filetype plugin on
+filetype indent on
+set omnifunc=syntaxcomplete#Complete
+augroup vimrcEx
+au!
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Editing [EDT]
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Use 2-space tabs, standard
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+
+" Use spaces for tabs
+set expandtab
+set smarttab
+
+" Indent
+set autoindent
+set smartindent
+
+" Break long lines, per word, 80 chars per line
+set wrap
+set linebreak
+
+" Allow backspacing over everything
+set backspace=indent,eol,start
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"-> Helpers [HLP]
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Show syntax highlighting groups for word under cursor
+" By VimCasts
+nmap <leader>s :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"-> Autocmds and lang specific [AUL]
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd!
+
+" Set [...] to 2-space indent
+autocmd WinEnter,FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set sts=2 ts=2 sw=2
+
+" Text -> Git, Asciidoc
+autocmd FileType text setlocal textwidth=80
+autocmd FileType asciidoc setlocal textwidth=80
+
+" Set SASS to SASS. Duh
+autocmd! BufRead,BufNewFile *.sass setfiletype sass
+
+" Set F# lex to F#
+autocmd! BufRead,BufNewFile *.fsl setfiletype fsharp
+autocmd! BufRead,BufNewFile *.fsy setfiletype fsharp
+
+" Don't change tabs for spaces in Makefiles
+autocmd FileType make setlocal noexpandtab
+
+" Delete trailing white space on save, useful for Python and CoffeeScript ;)
+func! DeleteTrailingWS()
+  exe "normal mz"
+  %s/\s\+$//ge
+    exe "normal `z"
+endfunc
+
+autocmd BufWrite *.py :call DeleteTrailingWS()
+autocmd BufWrite *.coffee :call DeleteTrailingWS()
+autocmd BufWrite *.txt :call DeleteTrailingWS()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Keymaps [KEY]
@@ -162,13 +285,9 @@ nmap <leader>ww :wall!<cr>
 nmap <leader>wq :wqall!<cr>
 nmap <leader>qq :qall!<cr>
 
-"""""""""""""""""
-" Plugin keymaps
-"""""""""""""""""
-""""""""""
-" NERDTree
-""""""""""
-" nmap <leader>nt :NERDTreeToggle<cr>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Plugin keymaps [PKM]
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""
 " Commentary keymaps
@@ -182,135 +301,9 @@ nmap <Leader>cu <Plug>CommentaryUndo
 " Switch
 """""""""
 nnoremap - :Switch<cr>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" -> Vim UI [VUI]
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Editing position aid
-set number
-set numberwidth=4
-set ruler
-set cul
-set showmatch
-set backspace=indent,eol,start " Allow backspacing over everything
-
-" Vim command line and Wildmenu
-set wildmenu
-set wildignore=*~,*.swp
-set showcmd
-set cmdheight=1
-
-" Search options
-set ignorecase
-set smartcase
-set hlsearch
-set incsearch		" Real time match
-set magic           " Regex magic
-
-" Don't redraw while executing macros
-" Note: Dooesn't looks as cool
-set lazyredraw
-
-" Bells are ugly
-set novisualbell
-set noerrorbells
-set t_vb=
-
-syntax on
-colorscheme onedark
-set t_Co=256        " 256 color term
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" -> Files [FIL]
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Don't write anything but the file
-set nobackup
-set nowb
-set noswapfile
-
-" Blowfish encryption
-setlocal cryptmethod=blowfish
-
-" Filetypes
-filetype plugin on
-filetype indent on
-set omnifunc=syntaxcomplete#Complete
-augroup vimrcEx
-au!
-
-" Return to last edit position
-" autocmd BufReadPost *
-     " \ if line("'\"") > 1 && line("'\"") <= line("$") |
-     " \   exe "normal! g`\"" |
-     " \ endif
-
-" Remember info about open buffers on close
-" set viminfo^=%
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" -> Editing [EDT]
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use 4-space tabs
-set softtabstop=4
-set tabstop=4
-set shiftwidth=4
-
-" Use spaces for tabs
-set expandtab
-set smarttab
-
-" Indent
-set autoindent
-set smartindent
-set wrap
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"-> Autocmds and lang specific [AUT]
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd!
-
-" Set [...] to 2-space indent
-autocmd WinEnter,FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set sts=2 ts=2 sw=2
-
-" Text -> Git, Asciidoc
-autocmd FileType text setlocal textwidth=80
-autocmd FileType asciidoc setlocal textwidth=80
-
-" Set SASS to SASS. Duh
-autocmd! BufRead,BufNewFile *.sass setfiletype sass
-
-" Set F# lex to F#
-autocmd! BufRead,BufNewFile *.fsl setfiletype fsharp
-autocmd! BufRead,BufNewFile *.fsy setfiletype fsharp
-
-" Don't change tabs for spaces in Makefiles
-autocmd FileType make setlocal noexpandtab
-
-" Delete trailing white space on save, useful for Python and CoffeeScript ;)
-func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-    exe "normal `z"
-endfunc
-
-autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.coffee :call DeleteTrailingWS()
-autocmd BufWrite *.txt :call DeleteTrailingWS()
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"-> Helpers [HLP]
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Show syntax highlighting groups for word under cursor
-" By VimCasts
-nmap <leader>s :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-    if !exists("*synstack")
-        return
-    endif
-    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" -> Package configuration [PKC]
+" -> Plugin configuration [PCF]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""
 " CtrlP
