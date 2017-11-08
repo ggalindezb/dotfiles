@@ -64,6 +64,9 @@ Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing white
 " Plug 'christoomey/vim-tmux-navigator'               " Seamless navigation between tmux panes and vim splits
 " Plug 'wellle/tmux-complete.vim'                     " Insert mode completion of words in adjacent tmux panes
 
+" External bindings
+Plug 'vshih/vim-make'                                 " Better Make
+
 " File/Buffer searching
 Plug 'kien/ctrlp.vim'                                 " Fuzzy file/buffer finder
 Plug 'mileszs/ack.vim'                                " Wrapper for ack, beyond grep
@@ -100,7 +103,8 @@ Plug 'mattn/emmet-vim', {'for': 'html'}               " Emmet expanding abbrevia
 Plug 'vim-ruby/vim-ruby'                              " Vim support for Ruby
 Plug 'tpope/vim-rails'                                " Vim support for Rails
 Plug 'pangloss/vim-javascript', {'for': 'javascript'} " Vim support for Javascript
-Plug 'kchmck/vim-coffee-script', {'for': 'coffee'}    " Vim support for Coffeescript
+Plug 'isRuslan/vim-es6'                               " Vim support for ES6
+Plug 'mxw/vim-jsx'                                    " Vim support for React
 Plug 'othree/html5.vim', {'for': 'html'}              " Vim support for HTML5
 Plug 'slim-template/vim-slim', {'for': 'slim'}        " Vim support for Slim
 Plug 'tpope/vim-haml', {'for': 'haml'}                " Vim support for HAML/SASS
@@ -124,6 +128,7 @@ set relativenumber       " Show lines count relative to the current one
 set number               " Show the line number for the current line
 set numberwidth=3        " 3 columns reserved for the line gutter
 set cursorline           " Show the line's ruler
+set guicursor=
 
 " Vim command line
 set wildmenu             " Autocomplete in cmd
