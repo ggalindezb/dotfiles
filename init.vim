@@ -218,6 +218,9 @@ set linebreak
 " Allow backspacing over everything
 set backspace=indent,eol,start
 
+" Add an empty line at the end for UNIX compliance
+set eol
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "-> Autocmds and lang specific [AUL]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
