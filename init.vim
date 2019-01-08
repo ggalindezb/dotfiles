@@ -61,7 +61,7 @@ Plug 'airblade/vim-gitgutter'                         " Git diff in the gutter
 Plug 'bling/vim-airline'                              " Lean and mean status/tabline
 Plug 'vim-airline/vim-airline-themes'                 " Collection of themes for airline
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
-" Plug 'w0rp/ale'                                     " Asynchronous Lint Engine
+Plug 'w0rp/ale'                                       " Asynchronous Lint Engine
 " Plug 'majutsushi/tagbar'                            " Tags ordered by scope
 " Plug 'ludovicchabant/vim-gutentags'                 " Manages your tag files
 " Plug 'benmills/vimux'                               " Interact with tmux
@@ -69,7 +69,7 @@ Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing white
 " Plug 'wellle/tmux-complete.vim'                     " Insert mode completion of words in adjacent tmux panes
 
 " External bindings
-Plug 'vshih/vim-make'                                 " Better Make
+" Plug 'vshih/vim-make'                                 " Better Make
 
 " File/Buffer searching
 Plug 'kien/ctrlp.vim'                                 " Fuzzy file/buffer finder
@@ -193,9 +193,10 @@ nnoremap n nzz
 nnoremap N Nzz
 
 " Buffer keymaps
-map <Leader>j :bnext<cr>
-map <Leader>k :bprevious<cr>
+map <Leader>k :bnext<cr>
+map <Leader>j :bprevious<cr>
 map <Leader><BS> :bdelete<cr>
+map <Leader>f :echo expand('%r')<cr>
 
 " Window keymaps
 map <C-j> <C-W>j
@@ -214,6 +215,11 @@ nmap <Leader><Space> :nohl<cr>
 nmap <leader>ww :wall!<cr>
 nmap <leader>wq :wqall!<cr>
 nmap <leader>qq :qall!<cr>
+
+" Syntax groups
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Editing [EDT]
@@ -287,6 +293,20 @@ nmap <Leader>cu <Plug>CommentaryUndo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Plugin configuration [PCF]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""
+" ALE
+""""""
+let g:ale_sign_error = '!'
+let g:ale_sign_warning = '●'
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
+
+let g:ale_linters = {
+\   'ruby': ['rubocop'],
+\}
+
 """"""""""
 " CtrlP
 """"""""""
@@ -309,6 +329,7 @@ let g:airline_theme = 'powerlineish'
 """""""""
 " Use Tab to expand, integrate with React
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+let g:user_emmet_leader_key='<C-A>'
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {
     \      'extends' : 'jsx',
@@ -319,9 +340,9 @@ let g:user_emmet_settings = {
 "" NERDTree
 """""""""""
 "" Find current file in NERDTree
-"nnoremap <Leader>hf :NERDTreeFind<CR>
+nnoremap <Leader>hf :NERDTreeFind<CR>
 "" Open NERDTree
-"nnoremap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>n :NERDTreeToggle<CR>
 
 """""""""""""""""""""""
 " Rainbow Parentheses
