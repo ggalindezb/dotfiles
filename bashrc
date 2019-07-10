@@ -1,7 +1,5 @@
-#
 # ~/.bashrc
 # WARNING: Here be dragons
-#
 
 # ------------------------------------------------
 # Color bindings
@@ -40,7 +38,6 @@ bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
 # ------------------------------------------------
-# ------------------------------------------------
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -48,9 +45,17 @@ txtrst='\e[0m'    # Text Reset
 # ------------------------------------------------
 # Shell preferences
 # ------------------------------------------------
-alias ls='ls --color=auto'
+alias ls='ls -lFGpHh'
 alias tree='tree -C'
 complete -cf sudo
+
+# -- Init ---------------
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# ------------------------------------------------
+# Environment
+# ------------------------------------------------
+export LC_ALL=en_US.UTF-8
 
 # ------------------------------------------------
 # Prompt
@@ -62,7 +67,7 @@ function git_branch {
 }
 
 # Brackets
-open="\[$bldgrn\]["       # Opening bracket 
+open="\[$bldgrn\]["       # Opening bracket
 close="\[$bldgrn\]]"      # Closing bracket
 
 # Prompt setup
@@ -82,6 +87,7 @@ export PS1=$prompt
 # ------------------------------------------------
 # Path
 # ------------------------------------------------
+PATH=$PATH:/usr/local/sbin
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # ------------------------------------------------
