@@ -1,29 +1,21 @@
 " Neovim configuration file
 "
 " Maintainer:	Gerardo Galindez
-" Original File:    10/Sep/2012
-" Created:          06/Apr/2017
-" Last Updated:     26/Mar/2018
+" Original File:    2012/09/10
+" Created:          2017/04/06
+" Last Updated:     2019/07/10
 " Sections:
 "    -> General                    [GEN]
 "    -> Package Manager            [PKG]
 "    -> Vim UI                     [VUI]
 "    -> Files                      [FIL]
+"    -> Keymaps                    [KEY]
 "    -> Editing                    [EDT]
 "    -> Helpers                    [HLP]
 "    -> Autocmds and lang specific [AUL]
-"    -> Keymaps                    [KEY]
 "    -> Plugin Keymaps             [PKM]
 "    -> Plugin configuration       [PCF]
-"
-" References:
-"    -> Amix vimrc                 [http://amix.dk/vim/vimrc.html]
-"    -> VimCasts                   [http://vimcasts.org]
-"    -> Gary Berhardt              [https://github.com/garybernhardt/dotfiles/blob/master/.vimrc]
-"    -> Andrew Radev               [http://andrewradev.com]
-"
-"    -> Rafael Bodill              [https://github.com/arafi/vim-config/blob/master/config/general.vim]
-"    -> Kristijan Husak            [https://github.com/kristijanhusak/neovim-config/blob/master/init.vim]
+"    -> References                 [REF]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> General [GEN]
@@ -38,7 +30,7 @@ set autoread                                          " Set to auto read when a 
 set history=256                                       " Command line history
 
 set undolevels=512                                    " Undo history
-silent !mkdir ~/.config/nvim/backups > /dev/null 2>&1
+silent !mkdir ~/.config/nvim/backups > /dev/null 2>&1 " Remember file changes, even after closing
 set undodir=~/.config/nvim/backups
 set undofile
 
@@ -56,10 +48,11 @@ call plug#begin('~/.vim/plugged')
 
 " Vim interface extensions
 Plug 'fholgado/minibufexpl.vim'                       " Elegant buffer explorer
+" Plug 'ap/vim-buftabline'                            " Buffer list that lives in the tabline
 Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, it should be illegal
 Plug 'airblade/vim-gitgutter'                         " Git diff in the gutter
 Plug 'bling/vim-airline'                              " Lean and mean status/tabline
-Plug 'vim-airline/vim-airline-themes'                 " Collection of themes for airline
+" Plug 'vim-airline/vim-airline-themes'                 " Collection of themes for airline
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
 Plug 'w0rp/ale'                                       " Asynchronous Lint Engine
 " Plug 'majutsushi/tagbar'                            " Tags ordered by scope
@@ -118,14 +111,14 @@ Plug 'mxw/vim-jsx'                                    " Vim support for React
 Plug 'othree/html5.vim', {'for': 'html'}              " Vim support for HTML5
 
 " -> Document
-Plug 'asciidoc/vim-asciidoc', {'for': 'asciidoc'}     " Vim support for Asciidoc
 Plug 'plasticboy/vim-markdown', {'for': 'mkd'}        " Vim support for Markdown
 
 " Colorschemes
-Plug 'Heldraug/vim-megara'                            " Colorscheme focused on contrast
+Plug 'ggalindezb/vim-megara'                            " Colorscheme focused on contrast
 Plug 'whatyouhide/vim-gotham'                         " Code never sleeps in Gotham City
 Plug 'tomasr/molokai'                                 " Port of monokai
 Plug 'joshdick/onedark.vim'                           " Port of onedark
+Plug 'danilo-augusto/vim-afterglow'                   " Port of Afterglow
 Plug 'sjl/badwolf'                                    " Woof Woof
 
 call plug#end()
@@ -158,12 +151,28 @@ set noerrorbells         " Fuck bells!
 set novisualbell         " Disable flashes
 set lazyredraw           " Don't redraw while executing macros
 
+set termguicolors        " True color
 syntax enable            " Syntax highlight
-colorscheme onedark      " Set colorscheme
+colorscheme afterglow    " Set colorscheme
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" -> File handling [FIL]
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Don't write anything but the file
+set nobackup
+set nowb
+set noswapfile
+
+" Filetypes
+" Load filetype rules, not sure if this is needed in Neovim
+" filetype plugin on
+" filetype indent on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Keymaps [KEY]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TODO: This needs a bit of cleaning up too
+
 """"""""""""""
 " Vim keymaps
 """"""""""""""
@@ -248,14 +257,23 @@ set backspace=indent,eol,start
 set eol
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"-> Helpers [HLP]
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TODO: Clean up?
+" Currently empty
+" Everything in this sections was moved to other places or plugins
+" If this is left empty in a few months, I'll get rid of it
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "-> Autocmds and lang specific [AUL]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TODO: This needs a proper overhaul, haven't written some of those in years
+
 " Set [...] to 2-space indent
 autocmd WinEnter,FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set sts=2 ts=2 sw=2
 
 " Text -> Git, Asciidoc
-autocmd FileType text setlocal textwidth=80
-autocmd FileType asciidoc setlocal textwidth=80
+autocmd FileType text setlocal textwidth=150
 
 " Set SASS to SASS. Duh
 autocmd! BufRead,BufNewFile *.sass setfiletype sass
@@ -293,6 +311,8 @@ nmap <Leader>cu <Plug>CommentaryUndo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Plugin configuration [PCF]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TODO: Sort this by function or at least alphabetically, preferably both
+
 """"""
 " ALE
 """"""
@@ -315,6 +335,7 @@ let g:ctrlp_open_multiple_files = 'i'
 let g:ctrlp_max_files=0
 let g:ctrlp_max_depth=40
 
+" Ignore generated files
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_custom_ignore = '\v[\/]node_modules$'
 
@@ -322,7 +343,8 @@ let g:ctrlp_custom_ignore = '\v[\/]node_modules$'
 " Airline
 """"""""""""
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'powerlineish'
+" Currently using afterglow
+" let g:airline_theme = 'powerlineish'
 
 """""""""
 " Emmet
@@ -369,3 +391,31 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
+
+""""""""""""
+" Afterglow
+""""""""""""
+let g:afterglow_blackout=1
+let g:airline_theme='afterglow'
+
+" TODO: Fix this
+" For some reason, not all the syntax rules are being applied up until this
+" point. Something is probably triggering a reset. This will require a binary
+" search on the whole source
+syntax on
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" -> References [REF]
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" This are some of the places I've taken ideas from, to write my Vim config
+" over the years. I'm probably missing a lot of sources, since I only seldom
+" update properly my config.
+"
+" If you think I'm missing a source, please contact me.
+"
+" -> Amix vimrc    [http://amix.dk/vim/vimrc.html]
+" -> VimCasts      [http://vimcasts.org]
+" -> Gary Berhardt [https://github.com/garybernhardt/dotfiles/blob/master/.vimrc]
+" -> Andrew Radev  [http://andrewradev.com]
+" -> Rafael Bodill [https://github.com/arafi/vim-config/blob/master/config/general.vim]
+" -> Kristijan Husak [https://github.com/kristijanhusak/neovim-config/blob/master/init.vim]
