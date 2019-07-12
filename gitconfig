@@ -1,9 +1,9 @@
 [user]
 	name = Gerardo Galindez
-	email = gerardo.galindez@gmail.com
+	email = ggalindezb@gmail.com
 [core]
 	editor = vim
-	excludesfile = /home/heldraug/.gitignore_global
+	excludesfile = /home/ggalindezb/.gitignore_global
 [merge]
 	tool = vimdiff
 [diff]
