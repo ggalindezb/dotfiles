@@ -4,6 +4,7 @@
 " Original File:    2012/09/10
 " Created:          2017/04/06
 " Last Updated:     2019/07/10
+" File Location:    ~/.config/nvim/init.vim
 " Sections:
 "    -> General                    [GEN]
 "    -> Package Manager            [PKG]
@@ -97,21 +98,24 @@ Plug 'mattn/emmet-vim'                                " Emmet expanding abbrevia
 " Plug 'SirVer/ultisnips'                             " Ultimate snippet solution for Vim
 " Plug 'honza/vim-snippets'                           " Default snippets
 
-" Filetype
+" Filetypes
 " -> Ruby/Rails
-Plug 'vim-ruby/vim-ruby'                              " Vim support for Ruby
-Plug 'tpope/vim-rails'                                " Vim support for Rails
-Plug 'tpope/vim-haml', {'for': 'haml'}                " Vim support for HAML/SASS
-Plug 'slim-template/vim-slim', {'for': 'slim'}        " Vim support for Slim
+Plug 'vim-ruby/vim-ruby'                              " Ruby
+Plug 'tpope/vim-rails'                                " Rails
+Plug 'tpope/vim-haml', {'for': 'haml'}                " HAML/SASS
+Plug 'slim-template/vim-slim', {'for': 'slim'}        " Slim
 
 " -> JS/React
-Plug 'pangloss/vim-javascript', {'for': 'javascript'} " Vim support for Javascript
-Plug 'isRuslan/vim-es6'                               " Vim support for ES6
-Plug 'mxw/vim-jsx'                                    " Vim support for React
-Plug 'othree/html5.vim', {'for': 'html'}              " Vim support for HTML5
+Plug 'pangloss/vim-javascript', {'for': 'javascript'} " Javascript
+Plug 'isRuslan/vim-es6'                               " ES6
+Plug 'mxw/vim-jsx'                                    " React
+Plug 'othree/html5.vim', {'for': 'html'}              " HTML5
 
-" -> Document
-Plug 'plasticboy/vim-markdown', {'for': 'mkd'}        " Vim support for Markdown
+" -> Documents
+Plug 'plasticboy/vim-markdown', {'for': 'mkd'}        " Markdown
+
+" -> Shell
+Plug 'dag/vim-fish', {'for': 'fish' }                 " Fish script
 
 " Colorschemes
 Plug 'ggalindezb/vim-megara'                            " Colorscheme focused on contrast
@@ -403,6 +407,7 @@ let g:airline_theme='afterglow'
 " point. Something is probably triggering a reset. This will require a binary
 " search on the whole source
 syntax on
+hi Normal guibg=NONE ctermbg=NONE
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> References [REF]
