@@ -51,7 +51,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'fholgado/minibufexpl.vim'                       " Elegant buffer explorer
 " Plug 'ap/vim-buftabline'                            " Buffer list that lives in the tabline
 Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, it should be illegal
-Plug 'airblade/vim-gitgutter'                         " Git diff in the gutter
+Plug 'mhinz/vim-signify'                              " Inline git status
 Plug 'bling/vim-airline'                              " Lean and mean status/tabline
 " Plug 'vim-airline/vim-airline-themes'                 " Collection of themes for airline
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
