@@ -1,0 +1,14 @@
+config:
+  tags:
+    break:
+      title: Break
+      duration: 15
+    lunch:
+      title: Lunch time
+      duration: 60
+    pr:
+      title: Open pull request
+      duration: 10
+    code_review:
+      title: Code Review
+      duration: 35
