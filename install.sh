@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Check if Linux or OS X using uname
+
 # Probe for installed stuff
 # Check for arguments, maybe?
 
