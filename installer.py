@@ -17,48 +17,52 @@ import platform
 import sys
 import shutil
 
-CONFIGS = ['bash', 'fish', 'git', 'tlp', 'tmux', 'vim', 'zsh']
+class Config:
+    CONFIGS = ['bash', 'fish', 'git', 'tlp', 'tmux', 'vim', 'zsh']
 
-def print_info():
-    print('=' * 80)
-    print('- Runtime info')
-    print('=' * 80)
-    runtime_info()
-    platform_info()
-    package_info()
+    def __init__(self):
+        uname = os.uname()
+        self.os_type = uname.sysname
 
-def runtime_info():
-    print(f'Runtime: {sys.version}')
-    print(f'Arguments: {sys.argv}')
-    print()
+    def print_info(self):
+        print('=' * 80)
+        print('- Runtime info')
+        print('=' * 80)
+        self.runtime_info()
+        self.platform_info()
+        self.package_info()
 
-def platform_info():
-    print_subheader('Platform')
-    uname = os.uname()
+    def runtime_info(self):
+        print(f'Runtime: {sys.version}')
+        print(f'Arguments: {sys.argv}')
+        print()
 
-    print(f'OS Type: {uname.sysname}')
-    print(f'Kernel: {uname.release}')
-    print(f'Architecture: {uname.machine}')
-    print()
+    def platform_info(self):
+        self.print_subheader('Platform')
+        uname = os.uname()
 
-def package_info():
-    print_subheader('Packages')
+        print(f'OS Type: {uname.sysname}')
+        print(f'Kernel: {uname.release}')
+        print(f'Architecture: {uname.machine}')
+        print()
 
-    for package in CONFIGS:
-        if package_installed(package):
-            print(f'- {package}: Installed')
-        else:
-            print(f'- {package}: Missing')
-    print()
+    def package_info(self):
+        self.print_subheader('Packages')
 
-# Utility functions, should be private
+        for package in self.CONFIGS:
+            if self.package_installed(package):
+                print(f'- {package}: Installed')
+            else:
+                print(f'- {package}: Missing')
+        print()
 
-def print_subheader(title):
-    print(f'-> {title}')
-    print('-' * 20)
+    def print_subheader(self, title):
+        print(f'-> {title}')
+        print('-' * 20)
 
-def package_installed(name):
-    return True if shutil.which(name) else False
+    def package_installed(self, name):
+        return True if shutil.which(name) else False
 
 
-print_info()
+config = Config()
+config.print_info()
