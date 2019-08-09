@@ -43,13 +43,17 @@ class Timesheet
 
   def task_info(task, subtasks)
     <<~TASK
-      Task #{task}:\n
+      #{indention 1}Task #{task}:
       #{task_detail_list(subtasks)}
     TASK
   end
 
   def task_detail_list(subtasks)
-    subtasks.map { |subtask| "- #{subtask}" }.join("\n")
+    subtasks.map { |subtask| "#{indention 2}- #{subtask}" }.join("\n")
+  end
+
+  def indention(level)
+    ' ' * (level * 2)
   end
 end
 
