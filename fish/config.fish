@@ -23,6 +23,12 @@ direnv hook fish | source
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Aliases [ALI]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# [OS X/Linux] -l Long listing
+# [OS X/Linux] -F Classify, append indicator
+# [OS X]       -G Color output
+# [Linux]      --color Color output
+# [OS X/Linux] -H Follow symlinks
+# [OS X/Linux] -h Human readable
 # alias ls='ls -lFGpHh'                       # Proper ls, Mac
 # alias ls='-lFpHh'                           # Proper ls, Linux
 alias tree='tree -CAh'                      # Color tree
@@ -35,6 +41,18 @@ abbr --add gcb 'git checkout -b'            # Branching
 abbr --add gcm 'git commit -m '             # Fast commit
 abbr --add gp 'git push'                    # Push, needs upstream set
 abbr --add gts 'git tag -s v -m'            # Tag a version
+
+# Proper ls
+# Not working in Ubuntu
+if test uname = "Linux"
+  alias lsb='ls -lFHh --color'
+else
+  alias ls='ls -lFGpHh'
+end
+
+alias tree='tree -CAh'       # Color tree
+alias gst='git status -s -b' # Brief git status
+>>>>>>> - Progress bump
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]

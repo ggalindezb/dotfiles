@@ -12,6 +12,30 @@
 # - Create the config directories
 # - Move files into their places
 
+# Commands that need to run in Ubuntu. All of this needs an osx port
+# Toolkit
+# sudo apt install ack cowsay curl firefox fish fortune git gnupg2 guake guake neovim terminator timelimit tlp tmux tree zsh
+
+# Gnome tweaks
+# sudo apt install chrome-gnome-shell dkms gnome-tweak-tool
+# sudo apt remove gnome-shell-extension-ubuntu-dock
+
+# Package manager tasks
+# sudo apt update sudo apt upgrade sudo apt autoremove
+
+# DisplayLink driver, missing actual driver download
+# sudo ./displaylink-driver-5.2.14.run
+
+# Chrome install, probably not needed here
+# wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+# echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+# sudo apt-get update
+# sudo apt-get install google-chrome-stable
+
+
+# Once finished, change shells
+# chsh -s /usr/bin/fish
+
 import os
 import platform
 import sys
