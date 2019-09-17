@@ -45,8 +45,17 @@ class Config:
     CONFIGS = ['bash', 'fish', 'git', 'tlp', 'tmux', 'vim', 'zsh']
 
     def __init__(self):
+        set_environment_info()
+        set_configuration_info()
+
+    # Read the OS context and the currently available packages
+    def set_environment_info():
         uname = os.uname()
         self.os_type = uname.sysname
+
+    # Read the config params
+    def set_configuration_info():
+        return 0;
 
     def print_info(self):
         print('=' * 80)
