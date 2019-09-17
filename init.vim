@@ -73,7 +73,7 @@ Plug 'scrooloose/nerdtree'                            " A tree explorer
 
 " Motion
 Plug 'tmhedberg/matchit'                              " Extended % matching
-" Plug 'Lokaltog/vim-easymotion'                      " Vim motions on speed!
+" Plug 'easymotion/vim-easymotion'                    " Vim motions on speed!
 " Plug 'justinmk/vim-sneak'                           " The missing motion for Vim
 " Plug 'tpope/vim-repeat'                             " Repeating supported plugin maps
 
@@ -104,6 +104,7 @@ Plug 'vim-ruby/vim-ruby'                              " Ruby
 Plug 'tpope/vim-rails'                                " Rails
 Plug 'tpope/vim-haml', {'for': 'haml'}                " HAML/SASS
 Plug 'slim-template/vim-slim', {'for': 'slim'}        " Slim
+Plug 'kchmck/vim-coffee-script'                       " Coffeescript
 
 " -> JS/React
 Plug 'pangloss/vim-javascript', {'for': 'javascript'} " Javascript
@@ -124,6 +125,13 @@ Plug 'tomasr/molokai'                                 " Port of monokai
 Plug 'joshdick/onedark.vim'                           " Port of onedark
 Plug 'danilo-augusto/vim-afterglow'                   " Port of Afterglow
 Plug 'sjl/badwolf'                                    " Woof Woof
+
+" To check out next:
+" Plug 'zefei/vim-wintabs'
+" Plug 'terryma/vim-multiple-cursors'
+" Plug 'tpope/vim-eunuch'
+" Plug 'tpope/vim-surround'
+" Plug 'thaerkh/vim-indentguides'
 
 call plug#end()
 
@@ -185,6 +193,7 @@ nore <Space> .
 " Use . as :
 nore . :
 let mapleader = ","
+imap § <Esc>
 
 " Copy/Paste settings
 " Disable autoindent to paste from outside
