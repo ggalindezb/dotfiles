@@ -2,7 +2,7 @@
 " Maintainer:	Gerardo Galindez
 " Original File:    2012/09/10
 " Created:          2017/04/06
-" Last Updated:     2019/09/29
+" Last Updated:     2019/10/02
 " File Location:    ~/.config/nvim/init.vim
 " Sections:
 "    -> General                    [GEN]
@@ -44,13 +44,12 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-" ---------------------
-" Interface extensions
-" ---------------------
-Plug 'fholgado/minibufexpl.vim'                     " Elegant buffer explorer
-" Plug 'ap/vim-buftabline'                            " Buffer list that lives in the tabline
+" Still reluctant to remove
+" Plug 'fholgado/minibufexpl.vim'                     " Elegant buffer explorer
 " Plug 'zefei/vim-wintabs'                              " Modern buffer manager
 " Plug 'zefei/vim-wintabs-powerline'                    " Powerline fonts renderers
+
+" Shell extensions
 Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, it should be illegal
 Plug 'bling/vim-airline'                              " Lean and mean status/tabline
 Plug 'w0rp/ale'                                       " Asynchronous Lint Engine
@@ -88,7 +87,7 @@ Plug 'nelstrom/vim-textobj-rubyblock'                 " Selecting Ruby blocks
 
 " Completion
 Plug 'mattn/emmet-vim'                                " Emmet expanding abbreviations
-" Plug 'neoclide/coc.nvim'                            " Language server protocol support
+Plug 'neoclide/coc.nvim', {'branch': 'release'}       " Language server protocol support
 " Plug 'Shougo/deoplete.nvim'                         " Dark powered asynchronous completion framework
 " Plug 'SirVer/ultisnips'                             " Ultimate snippet solution for Vim
 " Plug 'honza/vim-snippets'                           " Default snippets
@@ -327,12 +326,11 @@ nmap <Leader>cu <Plug>CommentaryUndo
 let g:ale_sign_error = '!'
 let g:ale_sign_warning = '●'
 let g:airline#extensions#ale#enabled = 1
-
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 0
+let g:ale_lint_on_enter = 1
+let g:ale_lint_on_save = 1
 
 let g:ale_linters = {
-\   'ruby': ['rubocop'],
+\   'ruby': ['rubocop', 'solargraph'],
 \}
 
 """"""""""
@@ -351,8 +349,14 @@ let g:ctrlp_custom_ignore = '\v[\/]node_modules$'
 " Airline
 """"""""""""
 let g:airline_powerline_fonts = 1
-" Currently using afterglow
-" let g:airline_theme = 'powerlineish'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_nr_format = '%s:'
 
 """""""""
 " Emmet
