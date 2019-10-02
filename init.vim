@@ -1,9 +1,8 @@
 " Neovim configuration file
-"
 " Maintainer:	Gerardo Galindez
 " Original File:    2012/09/10
 " Created:          2017/04/06
-" Last Updated:     2019/07/10
+" Last Updated:     2019/09/29
 " File Location:    ~/.config/nvim/init.vim
 " Sections:
 "    -> General                    [GEN]
@@ -45,55 +44,51 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-" Dependencies
-
-" Vim interface extensions
-Plug 'fholgado/minibufexpl.vim'                       " Elegant buffer explorer
+" ---------------------
+" Interface extensions
+" ---------------------
+Plug 'fholgado/minibufexpl.vim'                     " Elegant buffer explorer
 " Plug 'ap/vim-buftabline'                            " Buffer list that lives in the tabline
+" Plug 'zefei/vim-wintabs'                              " Modern buffer manager
+" Plug 'zefei/vim-wintabs-powerline'                    " Powerline fonts renderers
 Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, it should be illegal
-Plug 'mhinz/vim-signify'                              " Inline git status
 Plug 'bling/vim-airline'                              " Lean and mean status/tabline
-" Plug 'vim-airline/vim-airline-themes'                 " Collection of themes for airline
-Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
 Plug 'w0rp/ale'                                       " Asynchronous Lint Engine
-" Plug 'majutsushi/tagbar'                            " Tags ordered by scope
-" Plug 'ludovicchabant/vim-gutentags'                 " Manages your tag files
+
+" Visual aid
+Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
+Plug 'mhinz/vim-signify'                              " Inline git status
+Plug 'kien/rainbow_parentheses.vim'                   " Better Rainbow Parentheses
+"
+" External integration
 " Plug 'benmills/vimux'                               " Interact with tmux
 " Plug 'christoomey/vim-tmux-navigator'               " Seamless navigation between tmux panes and vim splits
 " Plug 'wellle/tmux-complete.vim'                     " Insert mode completion of words in adjacent tmux panes
-
-" External bindings
-" Plug 'vshih/vim-make'                                 " Better Make
+" Plug 'mileszs/ack.vim'                              " Wrapper for ack/ag
 
 " File/Buffer searching
 Plug 'kien/ctrlp.vim'                                 " Fuzzy file/buffer finder
-Plug 'mileszs/ack.vim'                                " Wrapper for ack, beyond grep
 Plug 'scrooloose/nerdtree'                            " A tree explorer
 " Plug 'osyo-manga/vim-hopping'                       " Incremental buffer line filtering
-
-" Motion
+"
+" Extended motions/operators
 Plug 'tmhedberg/matchit'                              " Extended % matching
 " Plug 'easymotion/vim-easymotion'                    " Vim motions on speed!
 " Plug 'justinmk/vim-sneak'                           " The missing motion for Vim
 " Plug 'tpope/vim-repeat'                             " Repeating supported plugin maps
-
-" Text wrangling
 Plug 'tpope/vim-commentary'                           " Comment stuff out
 Plug 'godlygeek/tabular'                              " Text filtering and alignment
-
-Plug 'kien/rainbow_parentheses.vim'                   " Better Rainbow Parentheses
-" Plug 'luochen1990/rainbow'                            " Rainbow Parentheses Improved
-
 " Plug 'tpope/vim-surround'                           " Quoting/parenthesizing made simple
-" Plug 'maxbrunsfeld/vim-yankstack'                   " Lightweight implementation of emacs's kill-ring
 
-" Text objects / Operators
-" Plug 'kana/vim-textobj-user'                        " Create your own text objects
+" Text objects
+Plug 'kana/vim-textobj-user'                          " Text object lib
+Plug 'nelstrom/vim-textobj-rubyblock'                 " Selecting Ruby blocks
 " Plug 'wellle/targets.vim'                           " Additional text objects
 " Plug 'kana/vim-textobj-fold'                        " Text objects for foldings
 
 " Completion
 Plug 'mattn/emmet-vim'                                " Emmet expanding abbreviations
+" Plug 'neoclide/coc.nvim'                            " Language server protocol support
 " Plug 'Shougo/deoplete.nvim'                         " Dark powered asynchronous completion framework
 " Plug 'SirVer/ultisnips'                             " Ultimate snippet solution for Vim
 " Plug 'honza/vim-snippets'                           " Default snippets
@@ -119,12 +114,12 @@ Plug 'plasticboy/vim-markdown', {'for': 'mkd'}        " Markdown
 Plug 'dag/vim-fish', {'for': 'fish' }                 " Fish script
 
 " Colorschemes
-Plug 'ggalindezb/vim-megara'                            " Colorscheme focused on contrast
-Plug 'whatyouhide/vim-gotham'                         " Code never sleeps in Gotham City
-Plug 'tomasr/molokai'                                 " Port of monokai
-Plug 'joshdick/onedark.vim'                           " Port of onedark
+" Plug 'ggalindezb/vim-megara'                        " Colorscheme focused on contrast
+" Plug 'whatyouhide/vim-gotham'                       " Code never sleeps in Gotham City
+" Plug 'tomasr/molokai'                               " Port of monokai
+" Plug 'joshdick/onedark.vim'                         " Port of onedark
 Plug 'danilo-augusto/vim-afterglow'                   " Port of Afterglow
-Plug 'sjl/badwolf'                                    " Woof Woof
+" Plug 'sjl/badwolf'                                  " Woof Woof
 
 " To check out next:
 " Plug 'zefei/vim-wintabs'
