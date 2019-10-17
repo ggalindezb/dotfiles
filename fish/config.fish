@@ -3,7 +3,7 @@
 # Maintainer:	      Gerardo Galindez
 # Original File:    2012/09/10
 # Created:          2017/04/06
-# Last Updated:     2019/07/10
+# Last Updated:     2019/10/16
 # File Location:    ~/.config/fish/config.fish
 # Sections:
 #    -> General                    [GEN]
@@ -15,17 +15,24 @@
 # -> General [GEN]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 rvm default                                 # Load RVM
+status --is-interactive; and source (rbenv init -|psub)
+direnv hook fish | source
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Aliases [ALI]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 alias ls='ls -lFGpHh'                       # Proper ls
 alias tree='tree -CAh'                      # Color tree
+alias rm='rm -rfi'                          # Confirm rm overkill
+
+# Git
 alias gst='git status -s -b'                # Brief git status
+alias gco='git checkout'                    # Fast switch
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set -xg LC_ALL en_US.UTF-8
 #
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> References [REF]
