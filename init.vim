@@ -45,19 +45,20 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Still reluctant to remove
-" Plug 'fholgado/minibufexpl.vim'                     " Elegant buffer explorer
+" Plug 'fholgado/minibufexpl.vim'                       " Elegant buffer explorer
 " Plug 'zefei/vim-wintabs'                              " Modern buffer manager
 " Plug 'zefei/vim-wintabs-powerline'                    " Powerline fonts renderers
 
 " Shell extensions
-Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, it should be illegal
 Plug 'bling/vim-airline'                              " Lean and mean status/tabline
 Plug 'w0rp/ale'                                       " Asynchronous Lint Engine
+Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, it should be illegal
+Plug 'mhinz/vim-signify'                              " Inline git status
 
 " Visual aid
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
-Plug 'mhinz/vim-signify'                              " Inline git status
 Plug 'kien/rainbow_parentheses.vim'                   " Better Rainbow Parentheses
+Plug 'Yggdroot/indentLine'                            " Indention levels with thin vertical lines
 "
 " External integration
 " Plug 'benmills/vimux'                               " Interact with tmux
@@ -68,7 +69,6 @@ Plug 'kien/rainbow_parentheses.vim'                   " Better Rainbow Parenthes
 " File/Buffer searching
 Plug 'kien/ctrlp.vim'                                 " Fuzzy file/buffer finder
 Plug 'scrooloose/nerdtree'                            " A tree explorer
-" Plug 'osyo-manga/vim-hopping'                       " Incremental buffer line filtering
 "
 " Extended motions/operators
 Plug 'tmhedberg/matchit'                              " Extended % matching
@@ -121,7 +121,6 @@ Plug 'danilo-augusto/vim-afterglow'                   " Port of Afterglow
 " Plug 'sjl/badwolf'                                  " Woof Woof
 
 " To check out next:
-" Plug 'zefei/vim-wintabs'
 " Plug 'terryma/vim-multiple-cursors'
 " Plug 'tpope/vim-eunuch'
 " Plug 'tpope/vim-surround'
