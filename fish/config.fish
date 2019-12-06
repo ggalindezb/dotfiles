@@ -21,13 +21,16 @@ direnv hook fish | source
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Aliases [ALI]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-alias ls='ls -lFGpHh'                       # Proper ls, Mac
+# alias ls='ls -lFGpHh'                       # Proper ls, Mac
+# alias ls='-lFpHh'                           # Proper ls, Linux
 alias tree='tree -CAh'                      # Color tree
-alias rm='rm -rfi'                          # Confirm rm overkill
 
 # Git
-alias gst='git status -s -b'                # Brief git status
-alias gco='git checkout'                    # Fast switch
+abbr --add gst 'git status -s -b'           # Brief git status
+abbr --add gco 'git checkout'               # Fast switch
+abbr --add gcb 'git checkout -b'            # Branching
+abbr --add gcm 'git commit -m '             # Fast commit
+abbr --add gp 'git push'                    # Push, needs upstream set
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
