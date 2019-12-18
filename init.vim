@@ -280,6 +280,13 @@ autocmd WinEnter,FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set
 
 " Text -> Git, Asciidoc
 autocmd FileType text setlocal textwidth=150
+autocmd FileType markdown :call MarkdownConfig()
+autocmd FileType markdown set nofoldenable
+
+func! MarkdownConfig()
+  let g:vim_markdown_conceal = 0
+  let g:vim_markdown_conceal_code_blocks = 0
+endfunc
 
 " Set SASS to SASS. Duh
 autocmd! BufRead,BufNewFile *.sass setfiletype sass
