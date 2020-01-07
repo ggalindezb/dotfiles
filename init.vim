@@ -182,11 +182,11 @@ set noswapfile
 " Vim keymaps
 """"""""""""""
 " Use spacebar to repeat last command
-nore <Space> .
 " Use . as :
 nore . :
-let mapleader = ","
-imap § <Esc>
+nore , .
+nore \ ,
+let mapleader = " "
 
 " Copy/Paste settings
 " Disable autoindent to paste from outside
@@ -227,9 +227,12 @@ map <leader>tc :tabclose<cr>
 nmap <Leader><Space> :nohl<cr>
 
 " Giga save. Handle with care
-nmap <leader>ww :wall!<cr>
-nmap <leader>wq :wqall!<cr>
-nmap <leader>qq :qall!<cr>
+nmap <leader>q :wqall!<cr>
+
+" I'll probably get rid of this soon
+" Autosaving after leaving insert covers both cases with 0 keys
+" nmap <leader>ww :wall!<cr>
+" nmap <leader>qq :qall!<cr>
 
 " Syntax groups
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -282,6 +285,10 @@ autocmd WinEnter,FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set
 autocmd FileType text setlocal textwidth=150
 autocmd FileType markdown :call MarkdownConfig()
 autocmd FileType markdown set nofoldenable
+
+" Save on leaving insert mode
+autocmd InsertLeave * silent! write
+autocmd TextChanged * silent! write
 
 func! MarkdownConfig()
   let g:vim_markdown_conceal = 0
