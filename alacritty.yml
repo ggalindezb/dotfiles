@@ -1,4 +1,15 @@
-# Configuration for Alacritty, the GPU enhanced terminal emulator.
+# Neovim configuration file
+# Maintainer:	Gerardo Galindez
+# Original File:    2020/02/25
+# Created:          2020/04/06
+# Last Updated:     2019/10/02
+
+# Tmux configuration file
+#
+# Maintainer:	Gerardo Galindez
+# Created:          2020/02/25
+# Last Updated:     2020/02/25
+# File Location:    ~/.config/alacritty/alacritty.yml
 
 #env:
   #TERM: xterm-256color
