@@ -2,7 +2,7 @@
 " Maintainer:	Gerardo Galindez
 " Original File:    2012/09/10
 " Created:          2017/04/06
-" Last Updated:     2019/10/02
+" Last Updated:     2020/02/28
 " File Location:    ~/.config/nvim/init.vim
 " Sections:
 "    -> General                    [GEN]
@@ -197,20 +197,20 @@ vnoremap <C-c> "+y
 
 " Navigation keymaps
 " Fast jump
-nmap J 5j
-nmap K 5k
-xmap J 5j
-xmap K 5k
+nmap <M-j> 5j
+nmap <M-k> 5k
+xmap <M-j> 5j
+xmap <M-k> 5k
 " Jump through lines
-nnoremap j gj
-nnoremap k gk
+map <M-J> gj
+map <M-K> gk
 " Center match when finding
 nnoremap n nzz
 nnoremap N Nzz
 
 " Buffer keymaps
-map <Leader>k :bnext<cr>
-map <Leader>j :bprevious<cr>
+map <Leader>n :bnext<cr>
+map <Leader>p :bprevious<cr>
 map <Leader><BS> :bdelete<cr>
 map <Leader>f :echo expand('%r')<cr>
 
@@ -390,7 +390,7 @@ let g:user_emmet_settings = {
 "" Find current file in NERDTree
 nnoremap <Leader>hf :NERDTreeFind<CR>
 "" Open NERDTree
-nnoremap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>N :NERDTreeToggle<CR>
 
 """""""""""""""""""""""
 " Rainbow Parentheses
