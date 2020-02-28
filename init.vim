@@ -68,7 +68,7 @@ Plug 'Yggdroot/indentLine'                            " Indention levels with th
 " Plug 'jremmen/vim-ripgrep'
 
 " File/Buffer searching
-Plug 'kien/ctrlp.vim'                                 " Fuzzy file/buffer finder
+Plug 'cloudhead/neovim-fuzzy'                         " fzy fuzzy file finder integration
 Plug 'scrooloose/nerdtree'                            " A tree explorer
 "
 " Extended motions/operators
@@ -267,14 +267,6 @@ set backspace=indent,eol,start
 set eol
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"-> Helpers [HLP]
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" TODO: Clean up?
-" Currently empty
-" Everything in this sections was moved to other places or plugins
-" If this is left empty in a few months, I'll get rid of it
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "-> Autocmds and lang specific [AUL]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " TODO: This needs a proper overhaul, haven't written some of those in years
@@ -320,6 +312,11 @@ autocmd BufWrite *.txt :call DeleteTrailingWS()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Plugin keymaps [PKM]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""
+" fzy
+""""""""""""""""""""
+nnoremap <Leader>s :FuzzyOpen<CR>
+nnoremap <Leader>g :FuzzyGrep<CR>
 
 """"""""""""""""""""
 " Commentary keymaps
@@ -328,6 +325,14 @@ xmap <Leader>c  <Plug>Commentary
 nmap <Leader>c  <Plug>Commentary
 nmap <Leader>cc <Plug>CommentaryLine
 nmap <Leader>cu <Plug>CommentaryUndo
+
+"""""""""""
+"" NERDTree
+"""""""""""
+"" Find current file in NERDTree
+nnoremap <Leader>hf :NERDTreeFind<CR>
+"" Open NERDTree
+nnoremap <Leader>N :NERDTreeToggle<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Plugin configuration [PCF]
@@ -346,18 +351,6 @@ let g:ale_lint_on_save = 1
 let g:ale_linters = {
 \   'ruby': ['rubocop', 'solargraph'],
 \}
-
-""""""""""
-" CtrlP
-""""""""""
-" When opening multiple files, open them in the background
-let g:ctrlp_open_multiple_files = 'i'
-let g:ctrlp_max_files=0
-let g:ctrlp_max_depth=40
-
-" Ignore generated files
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-let g:ctrlp_custom_ignore = '\v[\/]node_modules$'
 
 """"""""""""
 " Airline
@@ -383,14 +376,6 @@ let g:user_emmet_settings = {
     \      'extends' : 'jsx',
     \  },
   \}
-
-"""""""""""
-"" NERDTree
-"""""""""""
-"" Find current file in NERDTree
-nnoremap <Leader>hf :NERDTreeFind<CR>
-"" Open NERDTree
-nnoremap <Leader>N :NERDTreeToggle<CR>
 
 """""""""""""""""""""""
 " Rainbow Parentheses
