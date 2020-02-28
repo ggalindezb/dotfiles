@@ -51,7 +51,7 @@ call plug#begin('~/.vim/plugged')
 
 " Shell extensions
 Plug 'bling/vim-airline'                              " Lean and mean status/tabline
-Plug 'w0rp/ale'                                       " Asynchronous Lint Engine
+Plug 'dense-analysis/ale'                             " Asynchronous Lint Engine
 Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, it should be illegal
 Plug 'mhinz/vim-signify'                              " Inline git status
 
@@ -59,12 +59,13 @@ Plug 'mhinz/vim-signify'                              " Inline git status
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
 Plug 'kien/rainbow_parentheses.vim'                   " Better Rainbow Parentheses
 Plug 'Yggdroot/indentLine'                            " Indention levels with thin vertical lines
-"
+
 " External integration
 " Plug 'benmills/vimux'                               " Interact with tmux
 " Plug 'christoomey/vim-tmux-navigator'               " Seamless navigation between tmux panes and vim splits
 " Plug 'wellle/tmux-complete.vim'                     " Insert mode completion of words in adjacent tmux panes
-" Plug 'mileszs/ack.vim'                              " Wrapper for ack/ag
+" Plug 'gevann/vim-rg'
+" Plug 'jremmen/vim-ripgrep'
 
 " File/Buffer searching
 Plug 'kien/ctrlp.vim'                                 " Fuzzy file/buffer finder
@@ -77,7 +78,7 @@ Plug 'tmhedberg/matchit'                              " Extended % matching
 " Plug 'tpope/vim-repeat'                             " Repeating supported plugin maps
 Plug 'tpope/vim-commentary'                           " Comment stuff out
 Plug 'godlygeek/tabular'                              " Text filtering and alignment
-" Plug 'tpope/vim-surround'                           " Quoting/parenthesizing made simple
+" Plug 'machakann/vim-sandwich'                       " Search/select/edit sandwiched textobjects
 
 " Text objects
 Plug 'kana/vim-textobj-user'                          " Text object lib
@@ -93,6 +94,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}       " Language server protocol
 " Plug 'honza/vim-snippets'                           " Default snippets
 
 " Filetypes
+Plug 'sheerun/vim-polyglot'                           " One ring to rule them all
+
 " -> Ruby/Rails
 Plug 'vim-ruby/vim-ruby'                              " Ruby
 Plug 'tpope/vim-rails'                                " Rails
@@ -123,8 +126,6 @@ Plug 'danilo-augusto/vim-afterglow'                   " Port of Afterglow
 " To check out next:
 " Plug 'terryma/vim-multiple-cursors'
 " Plug 'tpope/vim-eunuch'
-" Plug 'tpope/vim-surround'
-" Plug 'thaerkh/vim-indentguides'
 
 call plug#end()
 
