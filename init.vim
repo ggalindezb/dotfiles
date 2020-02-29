@@ -115,6 +115,9 @@ Plug 'plasticboy/vim-markdown', {'for': 'mkd'}        " Markdown
 " -> Shell
 Plug 'dag/vim-fish', {'for': 'fish' }                 " Fish script
 
+" -> Stuff
+Plug 'chr4/nginx.vim'                                 " Improved nginx
+
 " Colorschemes
 " Plug 'ggalindezb/vim-megara'                        " Colorscheme focused on contrast
 " Plug 'whatyouhide/vim-gotham'                       " Code never sleeps in Gotham City
