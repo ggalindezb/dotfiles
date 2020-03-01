@@ -11,8 +11,8 @@ live_config_reload: true
 working_directory: None
 
 window:
-  # startup_mode: SimpleFullscreen      # Mac
-  startup_mode: Fullscreen            # Linux
+  startup_mode: SimpleFullscreen      # Mac
+  # startup_mode: Fullscreen            # Linux
   title: Alacritty
 
 scrolling:
