@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 #
-# Installer script
-#
-# Maintainer:	Gerardo Galindez
+# Config installer script
+# Maintainer:       Gerardo Galindez
 # Created:          2019/08/09
+# Last Updated:     2020/02/28
 
 # Roadmap:
 # - Check if Linux or OS X using uname
