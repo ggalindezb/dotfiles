@@ -54,6 +54,7 @@ Plug 'bling/vim-airline'                              " Lean and mean status/tab
 Plug 'dense-analysis/ale'                             " Asynchronous Lint Engine
 Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, it should be illegal
 Plug 'mhinz/vim-signify'                              " Inline git status
+Plug 'axvr/zepl.vim'                                  " Lightweight REPL integration
 
 " Visual aid
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
