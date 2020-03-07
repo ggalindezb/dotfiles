@@ -24,6 +24,12 @@
 set -xg LC_ALL en_US.UTF-8
 set -xg GPG_TTY (tty)
 
+# Autostart tmux
+# If status is-interactive
+# and not set -q TMUX
+#     exec tmux
+# end
+
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Hooks [HOK]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
