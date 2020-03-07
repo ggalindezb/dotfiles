@@ -95,7 +95,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}       " Language server protocol
 " Plug 'honza/vim-snippets'                           " Default snippets
 
 " Filetypes
-Plug 'sheerun/vim-polyglot'                           " One ring to rule them all
+" Plug 'sheerun/vim-polyglot'                           " One ring to rule them all
 
 " -> Ruby/Rails
 Plug 'vim-ruby/vim-ruby'                              " Ruby
