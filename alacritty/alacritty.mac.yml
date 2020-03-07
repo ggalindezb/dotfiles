@@ -1,0 +1,112 @@
+# Alacritty [Mac] configuration file
+# Maintainer:	Gerardo Galindez
+# Original File:    2020/02/25
+# Last Updated:     2020/03/06
+# File Location:    ~/.config/alacritty/alacritty.yml
+
+alt_send_esc: false                   # Use Meta
+background_opacity: 0.85
+dynamic_title: true
+live_config_reload: true
+working_directory: None
+
+window:
+  startup_mode: SimpleFullscreen      # Mac
+  title: Alacritty
+
+scrolling:
+  history: 10000
+  multiplier: 3
+  tabspaces: 8
+
+font:
+  size: 14.0
+  normal:
+    family: "Roboto Mono for Powerline"
+    style: Regular
+  bold:
+    family: "Roboto Mono for Powerline"
+    style: Bold
+  italic:
+    family: "Roboto Mono for Powerline"
+    style: Italic
+  bold_italic:
+    family: "Roboto Mono for Powerline"
+    style: Bold Italic
+
+colors:
+  primary:
+    background: '0x000000'
+    foreground: '0xffffff'
+
+  cursor:
+    text: '0x000000'
+    cursor: '0xffffff'
+
+  selection:
+    text: '0xeaeaea'
+    background: '0x404040'
+
+  normal:
+    black: '0x000000'
+    red: '0xcc0000'
+    green: '0x59ff59'
+    yellow: '0xfcfc3f'
+    blue: '0x3064f2'
+    magenta: '0x942098'
+    cyan: '0x06989a'
+    white: '0xdedede'
+
+  bright:
+    black: '0x666666'
+    red: '0xff0000'
+    green: '0x56ef56'
+    yellow: '0xffff00'
+    blue: '0x376cfc'
+    magenta: '0xf700ff'
+    cyan: '0x09ffff'
+    white: '0xffffff'
+
+visual_bell:
+  animation: EaseOutExpo
+  duration: 0
+  color: '0xffffff'
+
+selection:
+  # semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+  save_to_clipboard: true
+
+cursor:
+  style: Block
+  unfocused_hollow: false
+
+shell:
+  program: /usr/local/bin/fish
+  args:
+    - --login
+
+key_bindings:
+  - { key: V,        mods: Command, action: Paste            }
+  - { key: C,        mods: Command, action: Copy             }
+  - { key: Key0,     mods: Command, action: ResetFontSize    }
+  - { key: Add,      mods: Command, action: IncreaseFontSize }
+  - { key: Subtract, mods: Command, action: DecreaseFontSize }
+  - { key: K,        mods: Command, action: ClearHistory     }
+
+  # Vim Meta fast-switch
+  - { key: J,        mods: Alt,     chars: "\x1bj"           }
+  - { key: K,        mods: Alt,     chars: "\x1bk"           }
+  - { key: H,        mods: Alt,     chars: "\x1bh"           }
+  - { key: L,        mods: Alt,     chars: "\x1bl"           }
+
+  # Tmux Meta bindings
+  - { key: Key1,     mods: Alt,     chars: "\x1b1"           }
+  - { key: Key2,     mods: Alt,     chars: "\x1b2"           }
+  - { key: Key3,     mods: Alt,     chars: "\x1b3"           }
+  - { key: Key4,     mods: Alt,     chars: "\x1b4"           }
+  - { key: Key5,     mods: Alt,     chars: "\x1b5"           }
+  - { key: Key6,     mods: Alt,     chars: "\x1b6"           }
+  - { key: Key7,     mods: Alt,     chars: "\x1b7"           }
+  - { key: Key8,     mods: Alt,     chars: "\x1b8"           }
+  - { key: Key9,     mods: Alt,     chars: "\x1b9"           }
+  - { key: Key0,     mods: Alt,     chars: "\x1b0"           }
