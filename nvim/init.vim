@@ -61,13 +61,6 @@ Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing white
 Plug 'kien/rainbow_parentheses.vim'                   " Better Rainbow Parentheses
 Plug 'Yggdroot/indentLine'                            " Indention levels with thin vertical lines
 
-" External integration
-" Plug 'benmills/vimux'                               " Interact with tmux
-" Plug 'christoomey/vim-tmux-navigator'               " Seamless navigation between tmux panes and vim splits
-" Plug 'wellle/tmux-complete.vim'                     " Insert mode completion of words in adjacent tmux panes
-" Plug 'gevann/vim-rg'
-" Plug 'jremmen/vim-ripgrep'
-
 " File/Buffer searching
 Plug 'cloudhead/neovim-fuzzy'                         " fzy fuzzy file finder integration
 Plug 'scrooloose/nerdtree'                            " A tree explorer
