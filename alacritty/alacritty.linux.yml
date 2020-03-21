@@ -1,7 +1,7 @@
 # Alacritty configuration file
 # Maintainer:	Gerardo Galindez
 # Original File:    2020/02/25
-# Last Updated:     2020/02/28
+# Last Updated:     2020/03/20
 # File Location:    ~/.config/alacritty/alacritty.yml
 
 alt_send_esc: false                  # Use Meta
@@ -11,8 +11,7 @@ live_config_reload: true
 working_directory: None
 
 window:
-  startup_mode: SimpleFullscreen      # Mac
-  # startup_mode: Fullscreen            # Linux
+  startup_mode: Fullscreen
   title: Alacritty
 
 scrolling:
@@ -21,19 +20,16 @@ scrolling:
   tabspaces: 8
 
 font:
+  size: 13.0
   normal:
     family: "Source Code Pro for Powerline"
     style: Regular
-  size: 13.0
-
   bold:
     family: "Source Code Pro for Powerline"
     style: Bold
-
   italic:
     family: "Source Code Pro for Powerline"
     style: Italic
-
   bold_italic:
     family: "Source Code Pro for Powerline"
     style: Bold Italic
@@ -42,15 +38,12 @@ colors:
   primary:
     background: '0x000000'
     foreground: '0xffffff'
-
   cursor:
     text: '0x000000'
     cursor: '0xffffff'
-
   selection:
     text: '0xeaeaea'
     background: '0x404040'
-
   normal:
     black: '0x000000'
     red: '0xcc0000'
@@ -60,7 +53,6 @@ colors:
     magenta: '0x942098'
     cyan: '0x06989a'
     white: '0xdedede'
-
   bright:
     black: '0x666666'
     red: '0xff0000'
@@ -78,7 +70,6 @@ visual_bell:
 
 
 selection:
-  #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
   save_to_clipboard: true
 
 cursor:
@@ -86,21 +77,16 @@ cursor:
   unfocused_hollow: false
 
 shell:
-  # Mac
-  # program: /usr/local/bin/fish
-  # Linux
   program: /usr/bin/fish
   args:
     - --login
 
-# Linux
 key_bindings:
   - { key: V,        mods: Control|Shift, action: Paste            }
   - { key: C,        mods: Control|Shift, action: Copy             }
   - { key: Key0,     mods: Control,       action: ResetFontSize    }
   - { key: Add,      mods: Control,       action: IncreaseFontSize }
   - { key: Subtract, mods: Control,       action: DecreaseFontSize }
-  - { key: K,        mods: Control,       chars: "\x0c"            }
 
   # Vim Meta fast-switch
   - { key: J,        mods: Alt,     chars: "\x1bj"                       }
