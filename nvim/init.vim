@@ -97,11 +97,12 @@ Plug 'tpope/vim-haml', {'for': 'haml'}                " HAML/SASS
 Plug 'slim-template/vim-slim', {'for': 'slim'}        " Slim
 Plug 'kchmck/vim-coffee-script'                       " Coffeescript
 
-" -> JS/React
+" -> JS
 Plug 'pangloss/vim-javascript', {'for': 'javascript'} " Javascript
+Plug 'othree/html5.vim', {'for': 'html'}              " HTML5
 Plug 'isRuslan/vim-es6'                               " ES6
 Plug 'mxw/vim-jsx'                                    " React
-Plug 'othree/html5.vim', {'for': 'html'}              " HTML5
+Plug 'posva/vim-vue'                                  " Vue
 
 " -> Documents
 Plug 'plasticboy/vim-markdown', {'for': 'mkd'}        " Markdown
