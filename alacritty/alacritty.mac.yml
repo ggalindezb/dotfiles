@@ -87,6 +87,7 @@ key_bindings:
   - { key: Add,      mods: Command, action: IncreaseFontSize }
   - { key: Subtract, mods: Command, action: DecreaseFontSize }
   - { key: K,        mods: Command, action: ClearHistory     }
+  - { key: N,        mods: Command, action: SpawnNewInstance }
 
   # Vim Meta fast-switch
   - { key: J,        mods: Alt,     chars: "\x1bj"           }
