@@ -3,30 +3,35 @@
 # Maintainer:	      Gerardo Galindez
 # Original File:    2012/09/10 [bashrc]
 # Created:          2017/04/06
-# Last Updated:     2020/03/01
+# Last Updated:     2020/03/27
 # File Location:    ~/.config/fish/config.fish
 # Sections:
-#    -> General                    [GEN]
+#    -> Environment                [ENV]
 #    -> Boot                       [BOO]
 #    -> Hooks                      [HOK]
+#    -> Packages                   [PKG]
 #    -> Aliases                    [ALI]
 #    -> References                 [REF]
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-# -> General [GEN]
+# -> Environment [ENV]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-# Homebrew sbin
-# set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
-
-# Node
-set -g fish_user_paths "/usr/local/opt/node@12/bin" $fish_user_paths
-# set -g fish_user_paths "/usr/local/opt/node@10/bin" $fish_user_paths
+set -xg LC_ALL en_US.UTF-8
+set -xg GPG_TTY (tty)
+set -xg RIPGREP_CONFIG_PATH ~/.config/rg/ripgreprc
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set -xg LC_ALL en_US.UTF-8
-set -xg GPG_TTY (tty)
+# set -gx PATH (yarn global bin) $PATH                   # Yarn global
+# set -gx PATH "/usr/local/sbin" $PATH                   # Homebrew sbin
+
+# Install Fisher if not available
+if not functions -q fisher
+  set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
+  curl https://git.io/fisher --create-dirs -sLo $XDG_CONFIG_HOME/fish/functions/fisher.fish
+  fish -c fisher
+end
 
 # Autostart tmux
 # If status is-interactive
