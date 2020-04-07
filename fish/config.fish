@@ -3,7 +3,7 @@
 # Maintainer:	      Gerardo Galindez
 # Original File:    2012/09/10 [bashrc]
 # Created:          2017/04/06
-# Last Updated:     2020/03/27
+# Last Updated:     2020/04/07
 # File Location:    ~/.config/fish/config.fish
 # Sections:
 #    -> Environment                [ENV]
@@ -19,6 +19,9 @@
 set -xg LC_ALL en_US.UTF-8
 set -xg GPG_TTY (tty)
 set -xg RIPGREP_CONFIG_PATH ~/.config/rg/ripgreprc
+
+# Homebrew sbin
+# set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
@@ -42,7 +45,6 @@ end
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Hooks [HOK]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-# rvm default                                                # Load RVM
 status --is-interactive; and source (rbenv init -|psub)    # Load rbenv
 direnv hook fish | source                                  # Load direnv
 
@@ -59,6 +61,8 @@ abbr --add gcb 'git checkout -b'            # Branching
 abbr --add gcm 'git commit -m '             # Fast commit
 abbr --add gp 'git push'                    # Push, needs upstream set
 abbr --add gts 'git tag -s v -m'            # Tag a version
+abbr --add gwc 'git whatchanged --since="2 weeks ago"' # Show repo changes
+abbr --add gsl 'git shortlog -n origin..'              # Show post branching changes
 
 # [OS X/Linux] -l Long listing
 # [OS X/Linux] -F Classify, append indicator
