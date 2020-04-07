@@ -83,7 +83,6 @@ Plug 'nelstrom/vim-textobj-rubyblock'                 " Selecting Ruby blocks
 " Completion
 Plug 'mattn/emmet-vim'                                " Emmet expanding abbreviations
 Plug 'neoclide/coc.nvim', {'branch': 'release'}       " Language server protocol support
-" Plug 'Shougo/deoplete.nvim'                         " Dark powered asynchronous completion framework
 " Plug 'SirVer/ultisnips'                             " Ultimate snippet solution for Vim
 " Plug 'honza/vim-snippets'                           " Default snippets
 
@@ -418,10 +417,8 @@ hi Normal guibg=NONE ctermbg=NONE
 " -> References [REF]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " This are some of the places I've taken ideas from, to write my Vim config
-" over the years. I'm probably missing a lot of sources, since I only seldom
-" update properly my config.
-"
-" If you think I'm missing a source, please contact me.
+" over the years. I'm probably missing a lot of sources because I'm lazy and
+" stupid.
 "
 " -> Amix vimrc    [http://amix.dk/vim/vimrc.html]
 " -> VimCasts      [http://vimcasts.org]
