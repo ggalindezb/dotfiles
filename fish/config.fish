@@ -19,6 +19,7 @@
 set -xg LC_ALL en_US.UTF-8
 set -xg GPG_TTY (tty)
 set -xg RIPGREP_CONFIG_PATH ~/.config/rg/ripgreprc
+set -xg EDITOR nvim
 
 # Homebrew sbin
 # set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
