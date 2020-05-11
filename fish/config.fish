@@ -18,7 +18,7 @@
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set -xg LC_ALL en_US.UTF-8
 set -xg GPG_TTY (tty)
-set -xg RIPGREP_CONFIG_PATH ~/.config/rg/ripgreprc
+set -xg RIPGREP_CONFIG_PATH ~/.config/ripgrep/ripgreprc
 set -xg EDITOR nvim
 
 # Homebrew sbin
