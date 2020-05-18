@@ -1,0 +1,107 @@
+# Alacritty configuration file
+# Maintainer:	Gerardo Galindez
+# Original File:    2020/02/25
+# Last Updated:     2020/03/20
+# File Location:    ~/.config/alacritty/alacritty.yml
+
+alt_send_esc: false                  # Use Meta
+background_opacity: 0.90
+dynamic_title: true
+live_config_reload: true
+working_directory: None
+
+window:
+  startup_mode: Fullscreen
+  title: Alacritty
+
+scrolling:
+  history: 10000
+  multiplier: 3
+  tabspaces: 8
+
+font:
+  size: 9.0
+  normal:
+    family: "Space Mono for Powerline"
+    style: Regular
+  bold:
+    family: "Space Mono for Powerline"
+    style: Bold
+  italic:
+    family: "Space Mono for Powerline"
+    style: Italic
+  bold_italic:
+    family: "Space Mono for Powerline"
+    style: Bold Italic
+
+colors:
+  primary:
+    background: '0x000000'
+    foreground: '0xffffff'
+  cursor:
+    text: '0x000000'
+    cursor: '0xffffff'
+  selection:
+    text: '0xeaeaea'
+    background: '0x404040'
+  normal:
+    black: '0x000000'
+    red: '0xcc0000'
+    green: '0x59ff59'
+    yellow: '0xfcfc3f'
+    blue: '0x003be0'
+    magenta: '0x942098'
+    cyan: '0x06989a'
+    white: '0xdedede'
+  bright:
+    black: '0x666666'
+    red: '0xff0000'
+    green: '0x19ff00'
+    yellow: '0xffff00'
+    blue: '0x0044ff'
+    magenta: '0xf700ff'
+    cyan: '0x09ffff'
+    white: '0xffffff'
+
+visual_bell:
+  animation: EaseOutExpo
+  duration: 0
+  color: '0xffffff'
+
+
+selection:
+  save_to_clipboard: true
+
+cursor:
+  style: Block
+  unfocused_hollow: false
+
+shell:
+  program: /usr/bin/fish
+  args:
+    - --login
+
+key_bindings:
+  - { key: V,        mods: Control|Shift, action: Paste            }
+  - { key: C,        mods: Control|Shift, action: Copy             }
+  - { key: Key0,     mods: Control,       action: ResetFontSize    }
+  - { key: Add,      mods: Control,       action: IncreaseFontSize }
+  - { key: Subtract, mods: Control,       action: DecreaseFontSize }
+
+  # Vim Meta fast-switch
+  - { key: J,        mods: Alt,     chars: "\x1bj"                       }
+  - { key: K,        mods: Alt,     chars: "\x1bk"                       }
+  - { key: H,        mods: Alt,     chars: "\x1bh"                       }
+  - { key: L,        mods: Alt,     chars: "\x1bl"                       }
+
+  # Tmux Meta bindings
+  - { key: Key1,     mods: Alt,     chars: "\x1b1"                       }
+  - { key: Key2,     mods: Alt,     chars: "\x1b2"                       }
+  - { key: Key3,     mods: Alt,     chars: "\x1b3"                       }
+  - { key: Key4,     mods: Alt,     chars: "\x1b4"                       }
+  - { key: Key5,     mods: Alt,     chars: "\x1b5"                       }
+  - { key: Key6,     mods: Alt,     chars: "\x1b6"                       }
+  - { key: Key7,     mods: Alt,     chars: "\x1b7"                       }
+  - { key: Key8,     mods: Alt,     chars: "\x1b8"                       }
+  - { key: Key9,     mods: Alt,     chars: "\x1b9"                       }
+  - { key: Key0,     mods: Alt,     chars: "\x1b0"                       }
