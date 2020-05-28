@@ -52,8 +52,7 @@ Plug 'mhinz/vim-signify'                              " Inline git status
 
 " Visual aid
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
-Plug 'kien/rainbow_parentheses.vim'                   " Better Rainbow Parentheses
-" Plug 'luochen1990/rainbow'                            " Rainbow Parentheses Improved,
+Plug 'luochen1990/rainbow'                            " Rainbow Parentheses Improved,
 Plug 'Yggdroot/indentLine'                            " Indention levels with thin vertical lines
 
 " File/Buffer searching
@@ -375,40 +374,13 @@ let g:user_emmet_settings = {
 """""""""""""""""""""""
 " Rainbow Parentheses
 """""""""""""""""""""""
-" This can probably be configured in the colorscheme. Makes more sense
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3']]
-
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+let g:rainbow_active = 1
 
 """"""""""""
 " Afterglow
 """"""""""""
 let g:afterglow_blackout=1
 let g:airline_theme='afterglow'
-
-" TODO: Fix this
-" For some reason, not all the syntax rules are being applied up until this
-" point. Something is probably triggering a reset. This will require a binary
-" search on the whole source
-syntax on
 hi Normal guibg=NONE ctermbg=NONE
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -418,9 +390,9 @@ hi Normal guibg=NONE ctermbg=NONE
 " over the years. I'm probably missing a lot of sources because I'm lazy and
 " stupid.
 "
-" -> Amix vimrc    [http://amix.dk/vim/vimrc.html]
-" -> VimCasts      [http://vimcasts.org]
-" -> Gary Berhardt [https://github.com/garybernhardt/dotfiles/blob/master/.vimrc]
-" -> Andrew Radev  [http://andrewradev.com]
-" -> Rafael Bodill [https://github.com/arafi/vim-config/blob/master/config/general.vim]
+" -> Amix vimrc      [http://amix.dk/vim/vimrc.html]
+" -> VimCasts        [http://vimcasts.org]
+" -> Gary Berhardt   [https://github.com/garybernhardt/dotfiles/blob/master/.vimrc]
+" -> Andrew Radev    [http://andrewradev.com]
+" -> Rafael Bodill   [https://github.com/arafi/vim-config/blob/master/config/general.vim]
 " -> Kristijan Husak [https://github.com/kristijanhusak/neovim-config/blob/master/init.vim]
