@@ -1,9 +1,8 @@
 # Fish shell configuration file
 #
 # Maintainer:	      Gerardo Galindez
-# Original File:    2012/09/10 [bashrc]
 # Created:          2017/04/06
-# Last Updated:     2020/04/12
+# Last Updated:     2020/05/27
 # File Location:    ~/.config/fish/config.fish
 # Sections:
 #    -> Environment                [ENV]
@@ -21,15 +20,14 @@ set -xg GPG_TTY (tty)
 # set -xg RIPGREP_CONFIG_PATH ~/.config/rg/ripgreprc
 set -xg EDITOR nvim
 
-# Homebrew sbin
-# set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
+set -gx NODE_VERSIONS ~/.config/nvm
+set -gx NODE_VERSION_PREFIX ''
+
+set -gx fish_user_paths $HOME/.rbenv/libexec $fish_user_paths
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-# set -gx PATH (yarn global bin) $PATH                   # Yarn global
-# set -gx PATH "/usr/local/sbin" $PATH                   # Homebrew sbin
-
 # Install Fisher if not available
 if not functions -q fisher
   set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
@@ -46,8 +44,8 @@ end
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Hooks [HOK]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-direnv hook fish | source                                  # Load direnv
 status --is-interactive; and rbenv init - | source         # Load rbenv
+direnv hook fish | source                                  # Load direnv
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Aliases [ALI]
@@ -60,6 +58,7 @@ abbr --add ls 'ls -lFpHh --color'
 abbr --add gst 'git status -s -b'           # Brief git status
 abbr --add gco 'git checkout'               # Fast switch
 abbr --add gcb 'git checkout -b'            # Branching
+abbr --add gsl 'git fetch -p'               # Fetch and prune
 abbr --add gcm 'git commit -m '             # Fast commit
 abbr --add gp 'git push'                    # Push, needs upstream set
 abbr --add gts 'git tag -s v -m'            # Tag a version
