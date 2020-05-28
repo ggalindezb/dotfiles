@@ -70,6 +70,7 @@ Plug 'tpope/vim-commentary'                           " Comment stuff out
 Plug 'godlygeek/tabular'                              " Text filtering and alignment
 " Plug 'junegunn/vim-easy-align'                        " A Vim alignment plugin
 " Plug 'machakann/vim-sandwich'                       " Search/select/edit sandwiched textobjects
+Plug 'arthurxavierx/vim-caser'                        " Easily change word casing
 
 " Text objects
 Plug 'kana/vim-textobj-user'                          " Text object lib
