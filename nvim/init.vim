@@ -2,7 +2,7 @@
 " Maintainer:	Gerardo Galindez
 " Original File:    2012/09/10
 " Created:          2017/04/06
-" Last Updated:     2020/02/28
+" Last Updated:     2020/05/27
 " File Location:    ~/.config/nvim/init.vim
 " Sections:
 "    -> General                    [GEN]
@@ -44,34 +44,32 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-" Still reluctant to remove
-" Plug 'fholgado/minibufexpl.vim'                       " Elegant buffer explorer
-" Plug 'zefei/vim-wintabs'                              " Modern buffer manager
-" Plug 'zefei/vim-wintabs-powerline'                    " Powerline fonts renderers
-
 " Shell extensions
 Plug 'bling/vim-airline'                              " Lean and mean status/tabline
 Plug 'dense-analysis/ale'                             " Asynchronous Lint Engine
 Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, it should be illegal
 Plug 'mhinz/vim-signify'                              " Inline git status
-Plug 'axvr/zepl.vim'                                  " Lightweight REPL integration
 
 " Visual aid
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
 Plug 'kien/rainbow_parentheses.vim'                   " Better Rainbow Parentheses
+" Plug 'luochen1990/rainbow'                            " Rainbow Parentheses Improved,
 Plug 'Yggdroot/indentLine'                            " Indention levels with thin vertical lines
 
 " File/Buffer searching
 Plug 'cloudhead/neovim-fuzzy'                         " fzy fuzzy file finder integration
-Plug 'scrooloose/nerdtree'                            " A tree explorer
-"
+" Plug 'preservim/nerdtree'                            " A tree explorer
+
 " Extended motions/operators
-Plug 'tmhedberg/matchit'                              " Extended % matching
+Plug 'adelarsq/vim-matchit'                           " Extended % matching
+Plug 'andymass/vim-matchup'                           " Even better %
 " Plug 'easymotion/vim-easymotion'                    " Vim motions on speed!
 " Plug 'justinmk/vim-sneak'                           " The missing motion for Vim
 " Plug 'tpope/vim-repeat'                             " Repeating supported plugin maps
 Plug 'tpope/vim-commentary'                           " Comment stuff out
+" Plug 'preservim/nerdcommenter' " Intensely nerdy commenting powers
 Plug 'godlygeek/tabular'                              " Text filtering and alignment
+" Plug 'junegunn/vim-easy-align'                        " A Vim alignment plugin
 " Plug 'machakann/vim-sandwich'                       " Search/select/edit sandwiched textobjects
 
 " Text objects
