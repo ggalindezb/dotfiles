@@ -57,7 +57,8 @@ Plug 'Yggdroot/indentLine'                            " Indention levels with th
 
 " File/Buffer searching
 Plug 'cloudhead/neovim-fuzzy'                         " fzy fuzzy file finder integration
-" Plug 'preservim/nerdtree'                            " A tree explorer
+Plug 'preservim/nerdtree'                             " A tree explorer
+Plug 'Xuyuanp/nerdtree-git-plugin'                    " NERDTree git status
 
 " Extended motions/operators
 Plug 'adelarsq/vim-matchit'                           " Extended % matching
@@ -69,7 +70,7 @@ Plug 'tpope/vim-commentary'                           " Comment stuff out
 " Plug 'preservim/nerdcommenter' " Intensely nerdy commenting powers
 Plug 'godlygeek/tabular'                              " Text filtering and alignment
 " Plug 'junegunn/vim-easy-align'                        " A Vim alignment plugin
-" Plug 'machakann/vim-sandwich'                       " Search/select/edit sandwiched textobjects
+Plug 'machakann/vim-sandwich'                         " Search/select/edit sandwiched textobjects
 Plug 'arthurxavierx/vim-caser'                        " Easily change word casing
 
 " Text objects
