@@ -64,6 +64,7 @@ abbr --add gts 'git tag -s v -m'               # Tag a version
 abbr --add g2w 'git log --since="2 weeks ago"' # Show repo changes
 abbr --add gsl 'git shortlog -n origin..'      # Show post branching changes
 abbr --add gfp 'git fetch -p'                  # Fetch sync and prune stale
+abbr --add gdf 'git diff --names-only HEAD'    # Show changed files since branching out
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> References [REF]
