@@ -2,7 +2,7 @@
 #
 # Maintainer:	      Gerardo Galindez
 # Created:          2017/04/06
-# Last Updated:     2020/05/27
+# Last Updated:     2020/06/03
 # File Location:    ~/.config/fish/config.fish
 # Sections:
 #    -> Environment                [ENV]
@@ -20,15 +20,9 @@ set -xg GPG_TTY (tty)
 set -xg RIPGREP_CONFIG_PATH ~/.config/ripgrep/ripgreprc
 set -xg EDITOR nvim
 
-# Homebrew sbin
-# set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
-
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-# set -gx PATH (yarn global bin) $PATH                   # Yarn global
-# set -gx PATH "/usr/local/sbin" $PATH                   # Homebrew sbin
-
 # Install Fisher if not available
 if not functions -q fisher
   set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
@@ -53,31 +47,18 @@ direnv hook fish | source                                  # Load direnv
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 alias tree='tree -CAh'                      # Color tree
 abbr --add - 'cd -'                         # cd back
+abbr --add ls 'ls -lFGpHh'
 
 # Git
-abbr --add gst 'git status -s -b'           # Brief git status
-abbr --add gco 'git checkout'               # Fast switch
-abbr --add gcb 'git checkout -b'            # Branching
-abbr --add gcm 'git commit -m '             # Fast commit
-abbr --add gp 'git push'                    # Push, needs upstream set
-abbr --add gts 'git tag -s v -m'            # Tag a version
-abbr --add gwc 'git whatchanged --since="2 weeks ago"' # Show repo changes
-abbr --add gsl 'git shortlog -n origin..'              # Show post branching changes
-
-# [OS X/Linux] -l Long listing
-# [OS X/Linux] -F Classify, append indicator
-# [OS X]       -G Color output
-# [Linux]      --color Color output
-# [OS X/Linux] -H Follow symlinks
-# [OS X/Linux] -h Human readable
-if test uname = "Linux"
-  abbr --add ls 'ls -lFHh --color'
-else
-  abbr --add ls 'ls -lFGpHh'
-end
-
-alias tree='tree -CAh'       # Color tree
-alias gst='git status -s -b' # Brief git status
+abbr --add gst 'git status -s -b'              # Brief git status
+abbr --add gco 'git checkout'                  # Fast switch
+abbr --add gcb 'git checkout -b'               # Branching
+abbr --add gcm "git commit -m '"               # Fast commit
+abbr --add gpf 'git push -f'                   # Push, needs upstream set
+abbr --add gts 'git tag -s v -m'               # Tag a version
+abbr --add g2w 'git log --since="2 weeks ago"' # Show repo changes
+abbr --add gsl 'git shortlog -n origin..'      # Show post branching changes
+abbr --add gfp 'git fetch -p'                  # Fetch sync and prune stale
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> References [REF]

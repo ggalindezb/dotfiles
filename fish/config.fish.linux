@@ -2,7 +2,7 @@
 #
 # Maintainer:	      Gerardo Galindez
 # Created:          2017/04/06
-# Last Updated:     2020/05/27
+# Last Updated:     2020/06/03
 # File Location:    ~/.config/fish/config.fish
 # Sections:
 #    -> Environment                [ENV]
@@ -55,18 +55,15 @@ abbr --add - 'cd -'                         # cd back
 abbr --add ls 'ls -lFpHh --color'
 
 # Git
-abbr --add gst 'git status -s -b'           # Brief git status
-abbr --add gco 'git checkout'               # Fast switch
-abbr --add gcb 'git checkout -b'            # Branching
-abbr --add gsl 'git fetch -p'               # Fetch and prune
-abbr --add gcm 'git commit -m '             # Fast commit
-abbr --add gp 'git push'                    # Push, needs upstream set
-abbr --add gts 'git tag -s v -m'            # Tag a version
-abbr --add gwc 'git log --since="2 weeks ago"' # Show repo changes
-abbr --add gsl 'git shortlog -n origin..'              # Show post branching changes
-
-alias tree='tree -CAh'       # Color tree
-alias gst='git status -s -b' # Brief git status
+abbr --add gst 'git status -s -b'              # Brief git status
+abbr --add gco 'git checkout'                  # Fast switch
+abbr --add gcb 'git checkout -b'               # Branching
+abbr --add gcm "git commit -m '"               # Fast commit
+abbr --add gpf 'git push -f'                   # Push, needs upstream set
+abbr --add gts 'git tag -s v -m'               # Tag a version
+abbr --add g2w 'git log --since="2 weeks ago"' # Show repo changes
+abbr --add gsl 'git shortlog -n origin..'      # Show post branching changes
+abbr --add gfp 'git fetch -p'                  # Fetch sync and prune stale
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> References [REF]
