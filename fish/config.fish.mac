@@ -20,6 +20,9 @@ set -xg GPG_TTY (tty)
 set -xg RIPGREP_CONFIG_PATH ~/.config/ripgrep/ripgreprc
 set -xg EDITOR nvim
 
+set -gx NODE_VERSIONS ~/.config/nvm
+set -gx NODE_VERSION_PREFIX ''
+
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
