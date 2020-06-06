@@ -23,8 +23,6 @@ set -xg EDITOR nvim
 set -gx NODE_VERSIONS ~/.config/nvm
 set -gx NODE_VERSION_PREFIX ''
 
-set -gx fish_user_paths $HOME/.rbenv/libexec $fish_user_paths
-
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
