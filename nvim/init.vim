@@ -2,7 +2,7 @@
 " Maintainer:	Gerardo Galindez
 " Original File:    2012/09/10
 " Created:          2017/04/06
-" Last Updated:     2020/05/27
+" Last Updated:     2020/06/06
 " File Location:    ~/.config/nvim/init.vim
 " Sections:
 "    -> General                    [GEN]
@@ -132,7 +132,8 @@ call plug#end()
 " Editing position aid
 set relativenumber       " Show lines count relative to the current one
 set number               " Show the line number for the current line
-set numberwidth=3        " 3 columns reserved for the line gutter
+set numberwidth=2        " 3 columns reserved for the line gutter
+set signcolumn="yes:1"   " Set signcolumn
 set cursorline           " Show the line's ruler
 set guicursor=
 
@@ -309,49 +310,35 @@ autocmd BufWrite *.txt :call DeleteTrailingWS()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Plugin keymaps [PKM]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""
-" fzy
-""""""""""""""""""""
+"============================
+" File/Buffer searching
+"============================
+" -> fzy
 nnoremap <Leader>s :FuzzyOpen<CR>
 nnoremap <Leader>g :FuzzyGrep<CR>
 
-""""""""""""""""""""
-" Commentary keymaps
-""""""""""""""""""""
+"============================
+" Extended motions/operators
+"============================
+" -> Commentary keymaps
 xmap <Leader>c  <Plug>Commentary
 nmap <Leader>c  <Plug>Commentary
 nmap <Leader>cc <Plug>CommentaryLine
 nmap <Leader>cu <Plug>CommentaryUndo
 
-"""""""""""
-"" NERDTree
-"""""""""""
-"" Find current file in NERDTree
+" -> NERDTree
+" Find current file in NERDTree
 nnoremap <Leader>hf :NERDTreeFind<CR>
-"" Open NERDTree
+" Open NERDTree
 nnoremap <Leader>N :NERDTreeToggle<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Plugin configuration [PCF]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" TODO: Sort this by function or at least alphabetically, preferably both
-
-""""""
-" ALE
-""""""
-let g:ale_sign_error = '!'
-let g:ale_sign_warning = '●'
-let g:airline#extensions#ale#enabled = 1
-let g:ale_lint_on_enter = 1
-let g:ale_lint_on_save = 1
-
-let g:ale_linters = {
-\   'ruby': ['rubocop', 'solargraph'],
-\}
-
-""""""""""""
-" Airline
-""""""""""""
+"============================
+" Shell extensions
+"============================
+" -> Airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ''
@@ -362,9 +349,28 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#buffer_nr_format = '%s:'
 
-"""""""""
-" Emmet
-"""""""""
+" -> ALE
+let g:airline#extensions#ale#enabled = 1
+let g:ale_lint_on_enter = 1
+let g:ale_lint_on_save = 1
+let g:ale_sign_error = '!'
+let g:ale_sign_warning = '●'
+
+let g:ale_linters = {
+\   'ruby': ['rubocop', 'solargraph'],
+\}
+
+"============================
+" Visual aid
+"============================
+" -> Rainbow Parentheses
+let g:rainbow_active = 1
+
+"============================
+" Completion
+"============================
+" -> Emmet
+" TODO: Review this, I keep tripping on it
 " Use Tab to expand, integrate with React
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 let g:user_emmet_leader_key='<C-A>'
@@ -374,17 +380,21 @@ let g:user_emmet_settings = {
     \  },
   \}
 
-"""""""""""""""""""""""
-" Rainbow Parentheses
-"""""""""""""""""""""""
-let g:rainbow_active = 1
-
-""""""""""""
-" Afterglow
-""""""""""""
+"============================
+" Colorschemes
+"============================
+" -> Afterglow
 let g:afterglow_blackout=1
 let g:airline_theme='afterglow'
-hi Normal guibg=NONE ctermbg=NONE
+
+" Slight tweaks
+hi LineNr guibg=NONE
+hi Normal guibg=NONE
+hi SignColumn guibg=NONE
+
+hi SignifySignAdd guifg=#b4c973 cterm=NONE gui=NONE
+hi SignifySignDelete guifg=#ac4142 cterm=NONE gui=NONE
+hi SignifySignChange guifg=#e5b567 cterm=NONE gui=NONE
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> References [REF]
