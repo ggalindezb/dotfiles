@@ -61,7 +61,6 @@ Plug 'preservim/nerdtree'                             " A tree explorer
 Plug 'Xuyuanp/nerdtree-git-plugin'                    " NERDTree git status
 
 " Extended motions/operators
-Plug 'adelarsq/vim-matchit'                           " Extended % matching
 Plug 'andymass/vim-matchup'                           " Even better %
 " Plug 'easymotion/vim-easymotion'                    " Vim motions on speed!
 " Plug 'justinmk/vim-sneak'                           " The missing motion for Vim
@@ -390,11 +389,12 @@ let g:airline_theme='afterglow'
 " Slight tweaks
 hi LineNr guibg=NONE
 hi Normal guibg=NONE
+hi MatchParen guibg=#3a3a3a
 hi SignColumn guibg=NONE
-
 hi SignifySignAdd guifg=#b4c973 cterm=NONE gui=NONE
 hi SignifySignDelete guifg=#ac4142 cterm=NONE gui=NONE
 hi SignifySignChange guifg=#e5b567 cterm=NONE gui=NONE
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> References [REF]
