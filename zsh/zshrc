@@ -14,8 +14,8 @@
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-HISTFILE=~/.histfile
-HISTSIZE=1000
+HISTFILE=~/.histfile    # Big ass histfile
+HISTSIZE=10000
 SAVEHIST=1000
 
 export LC_ALL='en_US.UTF-8'
@@ -23,7 +23,7 @@ export GPG_TTY=$(tty)
 
 # - ZSH config
 export ZSH="/home/ggalindezb/.oh-my-zsh"                 # Path to oh-my-zsh
-ZSH_THEME='random'
+ZSH_THEME='awesomepanda'
 
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
@@ -32,11 +32,13 @@ source $ZSH/oh-my-zsh.sh
 # -> Autogen [GEN]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # Starting again, with autogen config
-setopt autocd beep extendedglob nomatch notify            # Set autocompletion
-bindkey -e                                                # Use emacs keys
-zstyle :compinstall filename '/Users/ggalindezb/.zshrc'
+setopt autocd beep extendedglob nomatch notify          # Set autocompletion
+unsetopt beep                                           # No beep
+bindkey -e                                              # Use emacs keys
+zstyle :compinstall filename '/Users/ggalindezb/.zshrc' # Auto
 autoload -Uz compinit
 compinit
+
 # End of lines added by compinstall
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
