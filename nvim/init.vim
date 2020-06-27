@@ -52,7 +52,7 @@ Plug 'mhinz/vim-signify'                              " Inline git status
 
 " Visual aid
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
-Plug 'luochen1990/rainbow'                            " Rainbow Parentheses Improved,
+Plug 'luochen1990/rainbow'                            " Rainbow Parentheses Improved
 Plug 'Yggdroot/indentLine'                            " Indention levels with thin vertical lines
 
 " File/Buffer searching
@@ -81,8 +81,7 @@ Plug 'nelstrom/vim-textobj-rubyblock'                 " Selecting Ruby blocks
 " Completion
 Plug 'mattn/emmet-vim'                                " Emmet expanding abbreviations
 Plug 'neoclide/coc.nvim', {'branch': 'release'}       " Language server protocol support
-" Plug 'SirVer/ultisnips'                             " Ultimate snippet solution for Vim
-" Plug 'honza/vim-snippets'                           " Default snippets
+Plug 'honza/vim-snippets'                             " One bunch of snips
 
 " Filetypes
 " Plug 'sheerun/vim-polyglot'                           " One ring to rule them all
@@ -368,10 +367,24 @@ let g:rainbow_active = 1
 "============================
 " Completion
 "============================
+" -> CoC
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? coc#_select_confirm() :
+  \ coc#expandableOrJumpable() ?
+  \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
 " -> Emmet
-" TODO: Review this, I keep tripping on it
 " Use Tab to expand, integrate with React
-imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+" imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 let g:user_emmet_leader_key='<C-A>'
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {
@@ -394,7 +407,6 @@ hi SignColumn guibg=NONE
 hi SignifySignAdd guifg=#b4c973 cterm=NONE gui=NONE
 hi SignifySignDelete guifg=#ac4142 cterm=NONE gui=NONE
 hi SignifySignChange guifg=#e5b567 cterm=NONE gui=NONE
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> References [REF]
