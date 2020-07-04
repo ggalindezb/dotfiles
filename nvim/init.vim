@@ -117,6 +117,7 @@ Plug 'chr4/nginx.vim'                                 " Improved nginx
 " Plug 'joshdick/onedark.vim'                         " Port of onedark
 Plug 'danilo-augusto/vim-afterglow'                   " Port of Afterglow
 " Plug 'sjl/badwolf'                                  " Woof Woof
+Plug 'morhetz/gruvbox'                                " Bright pastel 'retro groove'
 
 " To check out next:
 " Plug 'terryma/vim-multiple-cursors'
@@ -155,7 +156,7 @@ set lazyredraw           " Don't redraw while executing macros
 
 set termguicolors        " True color
 syntax enable            " Syntax highlight
-colorscheme afterglow    " Set colorscheme
+colorscheme gruvbox      " Set colorscheme
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> File handling [FIL]
