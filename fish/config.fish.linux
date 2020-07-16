@@ -44,6 +44,7 @@ end
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 status --is-interactive; and rbenv init - | source         # Load rbenv
 direnv hook fish | source                                  # Load direnv
+starship init fish | source                                # Load starship
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Aliases [ALI]
