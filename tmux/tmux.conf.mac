@@ -1,0 +1,178 @@
+# Tmux configuration file
+#
+# Maintainer:	Gerardo Galindez
+# Created:          2019/05/15
+# Last Updated:     2020/03/06
+# File Location:    ~/.tmux.conf
+# Sections:
+#    -> General                    [GEN]
+#    -> Plugins                    [PLG]
+#    -> Interface                  [INT]
+#    -> Keymaps                    [KEY]
+#    -> References                 [REF]
+#    -> Stash                      [STH]
+
+#""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# -> General [GEN]
+#""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set-option -g default-shell /usr/local/bin/fish    # Set default to fish
+set-option -g default-terminal "screen-256color"   # Set $TERM
+set-option -sa terminal-overrides ',XXX:RGB'       # Enable true color
+set-option -s escape-time 0                        # Don't wait for Esc-sequence
+set-option -g base-index 1                         # Indexes starts at 1
+setw -g pane-base-index 1                          # Pane's indexes start to 1
+set-option -g focus-events on                      # Pass/request terminal events
+set -g mouse on                                    # Allow mouse scrollback
+
+#""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# -> Plugin [PLG]
+#""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# # Startup tmux plugins
+# if "test ! -d ~/.tmux/plugins/tpm" \
+#      "run 'git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins'"
+
+# set -g @plugin 'tmux-plugins/tpm'
+# set -g @plugin 'tmux-plugins/tmux-sensible'
+# set -g @plugin 'tmux-plugins/tmux-resurrect'
+# set -g @plugin 'tmux-plugins/tmux-battery'
+
+
+#""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# -> Interface [INT]
+#""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# -> Status bar
+set-option -g status-style fg=white,bg='#303030'   # Carabina 30-30
+set-option -g status-left ' #S '
+set-option -g status-left-style fg='#FFFFFF',bg='#5f5f87'
+set-option -g status-right '#[fg=colour148]#(date "+%H:%M")#[default] #[bg=colour252]#[fg=colour236] #(whoami)@#h #[default]'
+set-option -g status-interval 5
+set-option -g status-right-length 60
+set-option -g status-keys vi
+
+# -> Panes
+set-option -g pane-active-border-style fg='#585858'
+set-option -g pane-border-style fg='#585858'
+
+# -> Notifications
+set-option -g activity-action any
+setw -g monitor-activity off
+set-option -g window-status-activity-style fg=green,bright
+set-option -g message-style fg='black',bg='#F5DA81'
+set -g display-time 2500
+
+# Feedback
+set -g visual-activity off
+set -g visual-bell on
+set -g visual-silence on
+set -g bell-action any
+
+#""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# -> Keymaps [KEY]
+#""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# ====================
+# -> Resets
+# ====================
+unbind C-b                          # Prefix
+unbind '"'                          # Vertical pane
+unbind C-s
+unbind %                            # Horizontal pane
+unbind C-v
+
+# Use C-s for prefix
+set-option -g prefix C-s
+bind C-s send-pref
+
+# set-window-option -g mode-keys vi # Vi style keybindings
+# bind -t vi-copy 'v' begin-selection # Visual
+# bind -t vi-copy 'y' copy-selection # Yank
+
+# Reload config file
+bind R source-file ~/.tmux.conf \; display-message "source-file done"
+
+# Vim-style splits
+bind C-v split-window -h
+bind C-s split-window -v
+
+# Vim-style window flow
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+#""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# -> References [REF]
+#""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# -> The Tao of Tmux [https://leanpub.com/the-tao-of-tmux]
+# -> Ham Vocke [https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/]
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+# run '~/.tmux/plugins/tpm/tpm'
+
+#""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# -> Stash [STH]
+#""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# Stuff I don't know how to use but don't want to loose anyway
+
+# -------------- - General
+# --------------
+
+# switch panes using Alt-arrow without prefix
+# bind -n M-Left select-pane -L
+# bind -n M-Right select-pane -R
+# bind -n M-Up select-pane -U
+# bind -n M-Down select-pane -D
+
+# don't rename windows automatically
+# set-option -g allow-rename off
+
+# --------------
+# - Interface
+# --------------
+
+#  modes
+# setw -g clock-mode-colour colour5
+# setw -g mode-style 'fg=colour1 bg=colour18 bold'
+
+# panes
+# set -g pane-border-style 'fg=colour19 bg=colour0'
+# set -g pane-active-border-style 'bg=colour0 fg=colour9'
+# set -g pane-border-bg colour235
+# set -g pane-border-fg colour238
+# set -g pane-active-border-bg colour236
+# set -g pane-active-border-fg colour51
+
+# statusbar
+# set -g status-utf8 on
+# set -g status-interval 2
+# set -g status-position bottom
+# set -g status-justify left
+# set -g status-style 'bg=colour18 fg=colour137 dim'
+# set -g status-left ''
+# set -g status-right '#[fg=colour233,bg=colour19] %d/%m #[fg=colour233,bg=colour8] %H:%M:%S '
+# set -g status-right-length 50
+# set -g status-left-length 20
+
+# messages
+# set -g message-style 'fg=colour232 bg=colour16 bold'
+# set -g message-attr bold
+# set -g message-fg black
+# set -g message-bg yellow
+# set -g message-command-fg blue
+# set -g message-command-bg black
+
+# window status
+# setw -g window-status-format " #F#I:#W#F "
+# setw -g window-status-current-format " #F#I:#W#F "
+# setw -g window-status-format "#[fg=magenta]#[bg=black] #I #[bg=cyan]#[fg=colour8] #W "
+# setw -g window-status-current-format "#[bg=brightmagenta]#[fg=colour8] #I #[fg=colour8]#[bg=colour14] #W "
+# setw -g window-status-current-bg colour0
+# setw -g window-status-current-fg colour11
+# setw -g window-status-current-attr dim
+# setw -g window-status-bg green
+# setw -g window-status-fg black
+# setw -g window-status-attr reverse
+# setw -g window-status-current-style 'fg=colour1 bg=colour19 bold'
+# setw -g window-status-current-format ' #I#[fg=colour249]:#[fg=colour255]#W#[fg=colour249]#F '
+# setw -g window-status-style 'fg=colour9 bg=colour18'
+# setw -g window-status-format ' #I#[fg=colour237]:#[fg=colour250]#W#[fg=colour244]#F '
+# setw -g window-status-bell-style 'fg=colour255 bg=colour1 bold'
