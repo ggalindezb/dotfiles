@@ -99,6 +99,8 @@ Plug 'othree/es.next.syntax.vim', {'for': 'javascript'}
 Plug 'othree/html5.vim', {'for': 'html'}              " HTML5
 Plug 'isRuslan/vim-es6'                               " ES6
 Plug 'MaxMEllon/vim-jsx-pretty'                       " React
+Plug 'leafgarland/typescript-vim'                     " Typescript
+Plug 'peitalin/vim-jsx-typescript'                    " TSX
 Plug 'leafOfTree/vim-vue-plugin'                      " Vue
 
 " -> Documents
@@ -156,7 +158,7 @@ set lazyredraw           " Don't redraw while executing macros
 
 set termguicolors        " True color
 syntax enable            " Syntax highlight
-colorscheme gruvbox      " Set colorscheme
+colorscheme afterglow      " Set colorscheme
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> File handling [FIL]
