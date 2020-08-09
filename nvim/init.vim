@@ -117,10 +117,12 @@ Plug 'chr4/nginx.vim'                                 " Improved nginx
 " Plug 'ggalindezb/vim-megara'                        " Colorscheme focused on contrast
 " Plug 'whatyouhide/vim-gotham'                       " Code never sleeps in Gotham City
 " Plug 'tomasr/molokai'                               " Port of monokai
-" Plug 'joshdick/onedark.vim'                         " Port of onedark
+Plug 'joshdick/onedark.vim'                           " Port of onedark
 Plug 'danilo-augusto/vim-afterglow'                   " Port of Afterglow
 " Plug 'sjl/badwolf'                                  " Woof Woof
 Plug 'morhetz/gruvbox'                                " Bright pastel 'retro groove'
+Plug 'cocopon/iceberg.vim'                            " Well-designed, bluish color
+Plug 'nanotech/jellybeans.vim'
 
 " To check out next:
 " Plug 'terryma/vim-multiple-cursors'
