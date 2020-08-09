@@ -84,7 +84,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}       " Language server protocol
 Plug 'honza/vim-snippets'                             " One bunch of snips
 
 " Filetypes
-" Plug 'sheerun/vim-polyglot'                           " One ring to rule them all
+Plug 'othree/html5.vim', {'for': 'html'}              " HTML5
+Plug 'hail2u/vim-css3-syntax'                         " CSS 3
+Plug 'styled-components/vim-styled-components', {'branch': 'main'}
 
 " -> Ruby/Rails
 Plug 'vim-ruby/vim-ruby'                              " Ruby
@@ -95,13 +97,12 @@ Plug 'kchmck/vim-coffee-script'                       " Coffeescript
 
 " -> JS
 Plug 'othree/yajs.vim', {'for': 'javascript'}         " Javascript
-Plug 'othree/es.next.syntax.vim', {'for': 'javascript'}
-Plug 'othree/html5.vim', {'for': 'html'}              " HTML5
 Plug 'isRuslan/vim-es6'                               " ES6
-Plug 'MaxMEllon/vim-jsx-pretty'                       " React
+Plug 'othree/es.next.syntax.vim', {'for': 'javascript'}
 Plug 'leafgarland/typescript-vim'                     " Typescript
+Plug 'MaxMEllon/vim-jsx-pretty'                       " JSX
 Plug 'peitalin/vim-jsx-typescript'                    " TSX
-Plug 'leafOfTree/vim-vue-plugin'                      " Vue
+Plug 'leafOfTree/vim-vue-plugin', {'for': 'vue'}      " Vue
 
 " -> Documents
 Plug 'plasticboy/vim-markdown', {'for': 'mkd'}        " Markdown
