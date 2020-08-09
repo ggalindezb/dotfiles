@@ -2,7 +2,7 @@
 " Maintainer:	Gerardo Galindez
 " Original File:    2012/09/10
 " Created:          2017/04/06
-" Last Updated:     2020/06/06
+" Last Updated:     2020/08/10
 " File Location:    ~/.config/nvim/init.vim
 " Sections:
 "    -> General                    [GEN]
@@ -271,49 +271,54 @@ set eol
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "-> Autocmds and lang specific [AUL]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" TODO: This needs a proper overhaul, haven't written some of those in years
-
-" Set [...] to 2-space indent
+" 2-space indents
 autocmd WinEnter,FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set sts=2 ts=2 sw=2
 
-" Text -> Git, Asciidoc
-autocmd FileType text setlocal textwidth=150
-autocmd FileType markdown :call MarkdownConfig()
-autocmd FileType markdown set nofoldenable
-
-" Save on leaving insert mode
+" Auto save
 autocmd InsertLeave * silent! write
 autocmd TextChanged * silent! write
+
+" Text
+autocmd FileType text setlocal textwidth=150
+
+" JS
+" Full scan sync highlight
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+
+" Markdown
+autocmd FileType markdown :call MarkdownConfig()
+autocmd FileType markdown set nofoldenable
+autocmd FileType markdown set conceallevel=0
 
 func! MarkdownConfig()
   let g:vim_markdown_conceal = 0
   let g:vim_markdown_conceal_code_blocks = 0
 endfunc
 
-" Set SASS to SASS. Duh
-autocmd! BufRead,BufNewFile *.sass setfiletype sass
-
-" Set F# lex to F#
-autocmd! BufRead,BufNewFile *.fsl setfiletype fsharp
-autocmd! BufRead,BufNewFile *.fsy setfiletype fsharp
-
+" Makefile
 " Don't change tabs for spaces in Makefiles
 autocmd FileType make setlocal noexpandtab
-
-" Delete trailing white space on sav
-func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-    exe "normal `z"
-endfunc
-
-autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.coffee :call DeleteTrailingWS()
-autocmd BufWrite *.txt :call DeleteTrailingWS()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Plugin keymaps [PKM]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"============================
+" Completion
+"============================
+" -> CoC
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gr <Plug>(coc-references)
+
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+nnoremap <Leader>cls :<C-u>CocList -I symbols<cr>
+nnoremap <Leader>cld :<C-u>CocList diagnostics<cr>
+nmap <Leader>cdo <Plug>(coc-codeaction)
+nmap <Leader>cr <Plug>(coc-rename)
+
 "============================
 " File/Buffer searching
 "============================
@@ -325,8 +330,7 @@ nnoremap <Leader>g :FuzzyGrep<CR>
 " Extended motions/operators
 "============================
 " -> Commentary keymaps
-xmap <Leader>c  <Plug>Commentary
-nmap <Leader>c  <Plug>Commentary
+vmap <Leader>c  <Plug>Commentary
 nmap <Leader>cc <Plug>CommentaryLine
 nmap <Leader>cu <Plug>CommentaryUndo
 
@@ -387,6 +391,17 @@ function! s:check_back_space() abort
 endfunction
 
 let g:coc_snippet_next = '<tab>'
+
+let g:coc_global_extensions = [
+      \ 'coc-solargraph',
+      \ 'coc-tsserver',
+      \ 'coc-vetur',
+      \ 'coc-html',
+      \ 'coc-css',
+      \ 'coc-json',
+      \ 'coc-fish',
+      \ 'coc-lists',
+      \ ]
 
 " -> Emmet
 " Use Tab to expand, integrate with React
