@@ -6,13 +6,13 @@
 
 alt_send_esc: false                  # Use Meta
 background_opacity: 0.90
-dynamic_title: true
 live_config_reload: true
 working_directory: None
 
 window:
   startup_mode: Fullscreen
   title: Alacritty
+  dynamic_title: true
 
 scrolling:
   history: 10000
@@ -31,7 +31,7 @@ font:
     family: "Space Mono Nerd Font"
     style: Italic
   bold_italic:
-    family: "Space Mono for Powerline"
+    family: "Space Mono Nerd Font"
     style: Bold Italic
 
 colors:
@@ -63,7 +63,7 @@ colors:
     cyan: '0x09ffff'
     white: '0xffffff'
 
-visual_bell:
+bell:
   animation: EaseOutExpo
   duration: 0
   color: '0xffffff'
