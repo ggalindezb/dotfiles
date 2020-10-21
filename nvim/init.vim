@@ -83,6 +83,9 @@ Plug 'mattn/emmet-vim'                                " Emmet expanding abbrevia
 Plug 'neoclide/coc.nvim', {'branch': 'release'}       " Language server protocol support
 Plug 'honza/vim-snippets'                             " One bunch of snips
 
+" External services
+Plug 'wakatime/vim-wakatime'                          " Wakatime tracking
+
 " Filetypes
 Plug 'othree/html5.vim', {'for': 'html'}              " HTML5
 Plug 'hail2u/vim-css3-syntax'                         " CSS 3
