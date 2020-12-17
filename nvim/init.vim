@@ -268,6 +268,9 @@ set linebreak
 " Allow backspacing over everything
 set backspace=indent,eol,start
 
+" Use clipboard provider
+set clipboard+=unnamedplus
+
 " Add an empty line at the end for UNIX compliance
 set eol
 
