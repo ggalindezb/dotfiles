@@ -6,13 +6,13 @@
 
 alt_send_esc: false                   # Use Meta
 background_opacity: 0.85
-dynamic_title: true
 live_config_reload: true
 working_directory: None
 
 window:
   startup_mode: SimpleFullscreen
   title: Alacritty
+  dynamic_title: true
 
 scrolling:
   history: 10000
@@ -63,7 +63,7 @@ colors:
     cyan: '0x09ffff'
     white: '0xffffff'
 
-visual_bell:
+bell:
   animation: EaseOutExpo
   duration: 0
   color: '0xffffff'
@@ -84,8 +84,8 @@ key_bindings:
   - { key: V,        mods: Command, action: Paste            }
   - { key: C,        mods: Command, action: Copy             }
   - { key: Key0,     mods: Command, action: ResetFontSize    }
-  - { key: Add,      mods: Command, action: IncreaseFontSize }
-  - { key: Subtract, mods: Command, action: DecreaseFontSize }
+  - { key: Plus,     mods: Command, action: IncreaseFontSize }
+  - { key: Minus,    mods: Command, action: DecreaseFontSize }
   - { key: K,        mods: Command, action: ClearHistory     }
   - { key: N,        mods: Command, action: SpawnNewInstance }
 
