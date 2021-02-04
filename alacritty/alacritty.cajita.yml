@@ -20,18 +20,18 @@ scrolling:
   tabspaces: 8
 
 font:
-  size: 9.0
+  size: 11.0
   normal:
-    family: "Space Mono Nerd Font"
+    family: "FiraCode Nerd Font Mono"
     style: Regular
   bold:
-    family: "Space Mono Nerd Font"
+    family: "FiraCode Nerd Font Mono"
     style: Bold
   italic:
-    family: "Space Mono Nerd Font"
+    family: "FiraCode Nerd Font Mono"
     style: Italic
   bold_italic:
-    family: "Space Mono for Powerline"
+    family: "FiraCode Nerd Font Mono"
     style: Bold Italic
 
 colors:
@@ -63,7 +63,7 @@ colors:
     cyan: '0x09ffff'
     white: '0xffffff'
 
-visual_bell:
+bell:
   animation: EaseOutExpo
   duration: 0
   color: '0xffffff'
@@ -85,8 +85,8 @@ key_bindings:
   - { key: V,        mods: Control|Shift, action: Paste            }
   - { key: C,        mods: Control|Shift, action: Copy             }
   - { key: Key0,     mods: Control,       action: ResetFontSize    }
-  - { key: Add,      mods: Control,       action: IncreaseFontSize }
-  - { key: Subtract, mods: Control,       action: DecreaseFontSize }
+  - { key: Plus,      mods: Control,       action: IncreaseFontSize }
+  - { key: Minus, mods: Control,       action: DecreaseFontSize }
 
   # Vim Meta fast-switch
   - { key: J,        mods: Alt,     chars: "\x1bj"                       }
