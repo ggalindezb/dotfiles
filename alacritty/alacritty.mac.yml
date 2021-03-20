@@ -15,12 +15,12 @@ window:
   dynamic_title: true
 
 scrolling:
-  history: 10000
+  history: 100000
   multiplier: 3
   tabspaces: 8
 
 font:
-  size: 15.5
+  size: 15
   normal:
     family: "RobotoMono Nerd Font"
     style: Regular
