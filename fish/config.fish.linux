@@ -22,6 +22,7 @@ set -xg EDITOR nvim
 
 set -gx NODE_VERSIONS ~/.config/nvm
 set -gx NODE_VERSION_PREFIX ''
+set -gx PATH /usr/local/sbin /usr/local/opt/postgresql@9.6/bin $PATH
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]

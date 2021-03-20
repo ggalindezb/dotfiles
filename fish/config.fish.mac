@@ -22,6 +22,7 @@ set -xg EDITOR nvim
 
 set -gx NODE_VERSIONS ~/.config/nvm
 set -gx NODE_VERSION_PREFIX ''
+set -gx PATH /usr/local/sbin /usr/local/opt/postgresql@9.6/bin $PATH
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
@@ -50,6 +51,7 @@ starship init fish | source                                # Load starship
 # -> Aliases [ALI]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 alias tree='tree -CAh'                      # Color tree
+alias serve='python3 -m http.server'
 abbr --add - 'cd -'                         # cd back
 abbr --add ls 'ls -lFGpHh'
 
