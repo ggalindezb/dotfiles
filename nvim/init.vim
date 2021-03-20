@@ -2,7 +2,7 @@
 " Maintainer:	Gerardo Galindez
 " Original File:    2012/09/10
 " Created:          2017/04/06
-" Last Updated:     2020/08/10
+" Last Updated:     2021/02/21
 " File Location:    ~/.config/nvim/init.vim
 " Sections:
 "    -> General                    [GEN]
@@ -79,7 +79,7 @@ Plug 'nelstrom/vim-textobj-rubyblock'                 " Selecting Ruby blocks
 " Plug 'kana/vim-textobj-fold'                        " Text objects for foldings
 
 " Completion
-Plug 'mattn/emmet-vim'                                " Emmet expanding abbreviations
+Plug 'mattn/emmet-vim', {'for': ['html', 'jsx', 'tsx']}                                " Emmet expanding abbreviations
 Plug 'neoclide/coc.nvim', {'branch': 'release'}       " Language server protocol support
 Plug 'honza/vim-snippets'                             " One bunch of snips
 
@@ -412,7 +412,7 @@ let g:coc_global_extensions = [
 " -> Emmet
 " Use Tab to expand, integrate with React
 " imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-let g:user_emmet_leader_key='<C-A>'
+let g:user_emmet_leader_key='<C-m>'
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {
     \      'extends' : 'jsx',
@@ -423,7 +423,7 @@ let g:user_emmet_settings = {
 " Colorschemes
 "============================
 " -> Afterglow
-let g:afterglow_blackout=1
+let g:afterglow_blackout=-1
 let g:airline_theme='afterglow'
 
 " Slight tweaks
