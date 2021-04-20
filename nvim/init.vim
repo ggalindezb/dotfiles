@@ -199,6 +199,7 @@ let mapleader = " "
 set pastetoggle=<Leader>p
 " Copy to the clipboard
 vnoremap <C-c> "+y
+set clipboard+=unnamedplus
 
 " Navigation keymaps
 " Fast jump
