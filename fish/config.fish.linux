@@ -24,6 +24,8 @@ set -gx NODE_VERSIONS ~/.config/nvm
 set -gx NODE_VERSION_PREFIX ''
 set -gx PATH /usr/local/sbin /usr/local/opt/postgresql@9.6/bin $PATH
 
+set -gx PATH $HOME/.rbenv/libexec $HOME/.npm-global/bin/ $PATH
+
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -43,7 +45,7 @@ end
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Hooks [HOK]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-status --is-interactive; and rbenv init - | source         # Load rbenv
+rvm default
 direnv hook fish | source                                  # Load direnv
 starship init fish | source                                # Load starship
 
@@ -64,7 +66,7 @@ abbr --add gts 'git tag -s v -m'               # Tag a version
 abbr --add g2w 'git log --since="2 weeks ago"' # Show repo changes
 abbr --add gsl 'git shortlog -n origin..'      # Show post branching changes
 abbr --add gfp 'git fetch -p'                  # Fetch sync and prune stale
-abbr --add gdf 'git diff --name-only HEAD'     # Show changed files since branching out
+abbr --add gdf 'git diff --name-only HEAD origin/develop'     # Show changed files since branching out
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> References [REF]
