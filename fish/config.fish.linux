@@ -20,12 +20,6 @@ set -xg GPG_TTY (tty)
 # set -xg RIPGREP_CONFIG_PATH ~/.config/rg/ripgreprc
 set -xg EDITOR nvim
 
-set -gx NODE_VERSIONS ~/.config/nvm
-set -gx NODE_VERSION_PREFIX ''
-set -gx PATH /usr/local/sbin /usr/local/opt/postgresql@9.6/bin $PATH
-
-set -gx PATH $HOME/.rbenv/libexec $HOME/.npm-global/bin/ $PATH
-
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -45,9 +39,9 @@ end
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Hooks [HOK]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-rvm default
 direnv hook fish | source                                  # Load direnv
 starship init fish | source                                # Load starship
+source /opt/asdf-vm/asdf.fish                              # Load asdf
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Aliases [ALI]
