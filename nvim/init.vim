@@ -79,12 +79,12 @@ Plug 'nelstrom/vim-textobj-rubyblock'                 " Selecting Ruby blocks
 " Plug 'kana/vim-textobj-fold'                        " Text objects for foldings
 
 " Completion
-Plug 'mattn/emmet-vim', {'for': ['html', 'jsx', 'tsx']}                                " Emmet expanding abbreviations
+Plug 'mattn/emmet-vim'                                " Emmet expanding abbreviations
 Plug 'neoclide/coc.nvim', {'branch': 'release'}       " Language server protocol support
 Plug 'honza/vim-snippets'                             " One bunch of snips
 
 " External services
-Plug 'wakatime/vim-wakatime'                          " Wakatime tracking
+" Plug 'wakatime/vim-wakatime'                          " Wakatime tracking
 
 " Filetypes
 Plug 'othree/html5.vim', {'for': 'html'}              " HTML5
@@ -411,9 +411,7 @@ let g:coc_global_extensions = [
       \ ]
 
 " -> Emmet
-" Use Tab to expand, integrate with React
-" imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-let g:user_emmet_leader_key='<C-m>'
+let g:user_emmet_leader_key='<C-z>'
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {
     \      'extends' : 'jsx',
