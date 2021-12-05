@@ -400,14 +400,15 @@ endfunction
 let g:coc_snippet_next = '<tab>'
 
 let g:coc_global_extensions = [
+      \ 'coc-angular',
+      \ 'coc-css',
+      \ 'coc-fish',
+      \ 'coc-html',
+      \ 'coc-json',
+      \ 'coc-lists',
       \ 'coc-solargraph',
       \ 'coc-tsserver',
       \ 'coc-vetur',
-      \ 'coc-html',
-      \ 'coc-css',
-      \ 'coc-json',
-      \ 'coc-fish',
-      \ 'coc-lists',
       \ ]
 
 " -> Emmet
