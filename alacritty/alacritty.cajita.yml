@@ -5,7 +5,6 @@
 # File Location:    ~/.config/alacritty/alacritty.yml
 
 alt_send_esc: false                  # Use Meta
-background_opacity: 0.90
 live_config_reload: true
 working_directory: None
 
@@ -13,6 +12,7 @@ window:
   startup_mode: Fullscreen
   title: Alacritty
   dynamic_title: true
+  opacity: 0.85
 
 scrolling:
   history: 100000
