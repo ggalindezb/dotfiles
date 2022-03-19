@@ -140,7 +140,7 @@ call plug#end()
 set relativenumber       " Show lines count relative to the current one
 set number               " Show the line number for the current line
 set numberwidth=2        " 3 columns reserved for the line gutter
-set signcolumn="yes:1"   " Set signcolumn
+" set signcolumn="yes:1"   " Set signcolumn
 set cursorline           " Show the line's ruler
 set guicursor=
 
