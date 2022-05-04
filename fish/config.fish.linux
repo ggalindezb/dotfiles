@@ -63,6 +63,12 @@ abbr --add gfp 'git fetch -p'                  # Fetch sync and prune stale
 abbr --add gdf 'git diff --name-only HEAD origin/'     # Show changed files since branching out
 abbr --add gdif 'git diff origin/ HEAD'     # Show changed files since branching out
 
+# Asdf
+abbr --add be 'bin/bundle exec'
+abbr --add bera 'bin/bundle exec rake'
+abbr --add bers 'bin/bundle exec rspec'
+abbr --add rc 'bin/rails c'
+
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> References [REF]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
