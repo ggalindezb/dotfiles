@@ -2,7 +2,7 @@
 " Maintainer:	Gerardo Galindez
 " Original File:    2012/09/10
 " Created:          2017/04/06
-" Last Updated:     2021/02/21
+" Last Updated:     2022/05/07
 " File Location:    ~/.config/nvim/init.vim
 " Sections:
 "    -> General                    [GEN]
@@ -344,7 +344,7 @@ nmap <Leader>cr <Plug>(coc-rename)
 " File/Buffer searching
 "============================
 " -> fzy
-nnoremap <Leader>s :FuzzyOpen<CR>
+nnoremap <Leader>s :Telescope find_files<CR>
 nnoremap <Leader>g :FuzzyGrep<CR>
 
 "============================
