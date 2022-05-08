@@ -49,11 +49,15 @@ Plug 'bling/vim-airline'                              " Lean and mean status/tab
 Plug 'dense-analysis/ale'                             " Asynchronous Lint Engine
 Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, it should be illegal
 Plug 'mhinz/vim-signify'                              " Inline git status
+Plug 'nvim-lua/plenary.nvim'                          " Neovim Lua lib
+Plug 'nvim-telescope/telescope.nvim'
 
 " Visual aid
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
 Plug 'luochen1990/rainbow'                            " Rainbow Parentheses Improved
 Plug 'Yggdroot/indentLine'                            " Indention levels with thin vertical lines
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'kyazdani42/nvim-web-devicons'                   " Icons and colors
 
 " File/Buffer searching
 Plug 'cloudhead/neovim-fuzzy'                         " fzy fuzzy file finder integration
@@ -127,6 +131,16 @@ Plug 'morhetz/gruvbox'                                " Bright pastel 'retro gro
 Plug 'cocopon/iceberg.vim'                            " Well-designed, bluish color
 Plug 'nanotech/jellybeans.vim'
 
+Plug 'shaeinst/roshnivim-cs'
+Plug 'rafamadriz/neon'
+Plug 'tomasiser/vim-code-dark'
+Plug 'sainnhe/sonokai'
+Plug 'bluz71/vim-moonfly-colors'
+Plug 'rebelot/kanagawa.nvim'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'olimorris/onedarkpro.nvim'
+Plug 'marko-cerovac/material.nvim'
+
 " To check out next:
 " Plug 'terryma/vim-multiple-cursors'
 " Plug 'tpope/vim-eunuch'
@@ -164,7 +178,7 @@ set lazyredraw           " Don't redraw while executing macros
 
 set termguicolors        " True color
 syntax enable            " Syntax highlight
-colorscheme afterglow      " Set colorscheme
+colorscheme material
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> File handling [FIL]
@@ -423,14 +437,19 @@ let g:user_emmet_settings = {
 " Colorschemes
 "============================
 " -> Afterglow
-let g:afterglow_blackout=-1
+" let g:afterglow_blackout=-1
+let g:material_disable_background = 1
 let g:airline_theme='afterglow'
+let g:lightline = {'colorscheme': 'tokyonight'}
+let g:tokyonight_style = "night"
 
 " Slight tweaks
-hi LineNr guibg=NONE
-hi Normal guibg=NONE
-hi MatchParen guibg=#3a3a3a
-hi SignColumn guibg=NONE
+hi LineNr cterm=NONE guibg=NONE
+" hi Normal cterm=NONE guibg=NONE
+" hi MatchParen guibg=#3a3a3a
+hi CursorColumn cterm=NONE guibg=NONE
+hi ColorColumn cterm=NONE guibg=NONE
+hi SignColumn cterm=NONE guibg=NONE
 hi SignifySignAdd guifg=#b4c973 cterm=NONE gui=NONE
 hi SignifySignDelete guifg=#ac4142 cterm=NONE gui=NONE
 hi SignifySignChange guifg=#e5b567 cterm=NONE gui=NONE
@@ -448,3 +467,26 @@ hi SignifySignChange guifg=#e5b567 cterm=NONE gui=NONE
 " -> Andrew Radev    [http://andrewradev.com]
 " -> Rafael Bodill   [https://github.com/arafi/vim-config/blob/master/config/general.vim]
 " -> Kristijan Husak [https://github.com/kristijanhusak/neovim-config/blob/master/init.vim]
+
+lua <<EOF
+require('material').setup({
+	disable = {
+		background = false
+  }
+})
+
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    custom_captures = {
+      -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+      ["foo.bar"] = "Identifier",
+    },
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
