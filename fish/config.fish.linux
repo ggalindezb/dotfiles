@@ -2,7 +2,7 @@
 #
 # Maintainer:	      Gerardo Galindez
 # Created:          2017/04/06
-# Last Updated:     2020/06/03
+# Last Updated:     2022/05/21
 # File Location:    ~/.config/fish/config.fish
 # Sections:
 #    -> Environment                [ENV]
@@ -30,38 +30,42 @@ if not functions -q fisher
   fish -c fisher
 end
 
-# Autostart tmux
-# if status is-interactive
-# and not set -q TMUX
-#     exec tmux
-# end
-
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Hooks [HOK]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 direnv hook fish | source                                  # Load direnv
 starship init fish | source                                # Load starship
-source /opt/asdf-vm/asdf.fish                              # Load asdf
+
+set label (cat /etc/lsb-release | head -n 1 | cut -d = -f 2)
+
+# Load asdf
+if test "$label" = 'Pop'
+  source ~/.asdf/asdf.fish
+else
+  source /opt/asdf-vm/asdf.fish
+end
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Aliases [ALI]
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 alias tree='tree -CAh'                      # Color tree
 abbr --add - 'cd -'                         # cd back
-abbr --add ls 'ls -lFpHh --color'
+abbr --add ls 'ls -lFpHh --color'           # Better ls
+abbr --add exal 'exa -lFh'                  # Exa long
+abbr --add exat 'exa -lT -L2'               # Exa tree
 
 # Git
-abbr --add gst 'git status -s -b'              # Brief git status
-abbr --add gco 'git checkout'                  # Fast switch
-abbr --add gcb 'git checkout -b'               # Branching
-abbr --add gcm "git commit -m '"               # Fast commit
-abbr --add gpf 'git push -f'                   # Push, needs upstream set
-abbr --add gts 'git tag -s v -m'               # Tag a version
-abbr --add g2w 'git log --since="2 weeks ago"' # Show repo changes
-abbr --add gsl 'git shortlog -n origin..'      # Show post branching changes
-abbr --add gfp 'git fetch -p'                  # Fetch sync and prune stale
-abbr --add gdf 'git diff --name-only HEAD origin/'     # Show changed files since branching out
-abbr --add gdif 'git diff origin/ HEAD'     # Show changed files since branching out
+abbr --add gst 'git status -s -b'                  # Brief git status
+abbr --add gco 'git checkout'                      # Checkout
+abbr --add gcb 'git checkout -b'                   # Branching
+abbr --add gcm "git commit -m '"                   # Fast commit
+abbr --add gpf 'git push -f'                       # Push, needs upstream set
+abbr --add gts 'git tag -s v -m'                   # Tag a version
+abbr --add g2w 'git log --since="2 weeks ago"'     # Show repo changes
+abbr --add gsl 'git shortlog -n origin..'          # Show post branching changes
+abbr --add gfp 'git fetch -p'                      # Fetch sync and prune stale
+abbr --add gdf 'git diff --name-only HEAD origin/' # Show changed files since branching out
+abbr --add gdif 'git diff origin/ HEAD'            # Show changed files since branching out
 
 # Asdf
 abbr --add be 'bin/bundle exec'
