@@ -51,7 +51,7 @@ end
 alias tree='tree -CAh'                      # Color tree
 abbr --add - 'cd -'                         # cd back
 abbr --add ls 'ls -lFpHh --color'           # Better ls
-abbr --add exal 'exa -lFh'                  # Exa long
+abbr --add exal 'exa -lFhg'                 # Exa long
 abbr --add exat 'exa -lT -L2'               # Exa tree
 
 # Git
