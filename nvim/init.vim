@@ -2,7 +2,7 @@
 " Maintainer:	Gerardo Galindez
 " Original File:    2012/09/10
 " Created:          2017/04/06
-" Last Updated:     2022/05/07
+" Last Updated:     2022/05/25
 " File Location:    ~/.config/nvim/init.vim
 " Sections:
 "    -> General                    [GEN]
@@ -60,7 +60,6 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'kyazdani42/nvim-web-devicons'                   " Icons and colors
 
 " File/Buffer searching
-Plug 'cloudhead/neovim-fuzzy'                         " fzy fuzzy file finder integration
 Plug 'preservim/nerdtree'                             " A tree explorer
 Plug 'Xuyuanp/nerdtree-git-plugin'                    " NERDTree git status
 
@@ -343,9 +342,9 @@ nmap <Leader>cr <Plug>(coc-rename)
 "============================
 " File/Buffer searching
 "============================
-" -> fzy
+" -> Fuzzy file / grep
 nnoremap <Leader>s :Telescope find_files<CR>
-nnoremap <Leader>g :FuzzyGrep<CR>
+nnoremap <Leader>g :Telescope live_grep<CR>
 
 "============================
 " Extended motions/operators
@@ -426,7 +425,7 @@ let g:coc_global_extensions = [
       \ ]
 
 " -> Emmet
-let g:user_emmet_leader_key='<C-z>'
+let g:user_emmet_leader_key='<C-q>'
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {
     \      'extends' : 'jsx',
