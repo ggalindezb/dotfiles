@@ -59,7 +59,8 @@ Plug 'Yggdroot/indentLine'                            " Indention levels with th
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'kyazdani42/nvim-web-devicons'                   " Icons and colors
 
-" File/Buffer searching
+" File/Buffer handling
+Plug 'romgrk/barbar.nvim'
 Plug 'preservim/nerdtree'                             " A tree explorer
 Plug 'Xuyuanp/nerdtree-git-plugin'                    " NERDTree git status
 
@@ -228,9 +229,14 @@ nnoremap n nzz
 nnoremap N Nzz
 
 " Buffer keymaps
-map <Leader>n :bnext<cr>
-map <Leader>p :bprevious<cr>
-map <Leader><BS> :bdelete<cr>
+
+map('n', '<A-,>', ':BufferPrevious<CR>', opts)
+map('n', '<A-.>', ':BufferNext<CR>', opts)
+
+map <Leader>n :BufferNext<cr>
+map <Leader>p :BufferPrevious<cr>
+map <Leader>b<BS> :BufferClose<cr>
+map <Leader>bp :BufferPick<cr>
 map <Leader>f :echo expand('%r')<cr>
 
 " Window keymaps
@@ -368,14 +374,6 @@ nnoremap <Leader>N :NERDTreeToggle<CR>
 "============================
 " -> Airline
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ''
-let g:airline#extensions#tabline#left_alt_sep = ''
-let g:airline#extensions#tabline#right_sep = ''
-let g:airline#extensions#tabline#right_alt_sep = ''
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#buffer_nr_format = '%s:'
 
 " -> ALE
 let g:airline#extensions#ale#enabled = 1
