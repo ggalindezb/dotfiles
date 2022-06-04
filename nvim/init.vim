@@ -228,16 +228,31 @@ map <M-K> gk
 nnoremap n nzz
 nnoremap N Nzz
 
-" Buffer keymaps
+" ---------------------------
+" Buffer keymaps / Bar Bar
+" ---------------------------
+" Navigate buffers
+nnoremap <Leader>n :BufferNext<CR>
+nnoremap <Leader>p :BufferPrevious<CR>
+nnoremap <Leader>bp :BufferPick<CR>
 
-map('n', '<A-,>', ':BufferPrevious<CR>', opts)
-map('n', '<A-.>', ':BufferNext<CR>', opts)
+" Close buffers
+nnoremap <Leader><BS> :BufferClose<CR>
+nnoremap <Leader>b<BS> :BufferWipeout<CR>
 
-map <Leader>n :BufferNext<cr>
-map <Leader>p :BufferPrevious<cr>
-map <Leader>b<BS> :BufferClose<cr>
-map <Leader>bp :BufferPick<cr>
+" Print buffer path
 map <Leader>f :echo expand('%r')<cr>
+
+" Jump to buffer by index
+nnoremap <Leader>b1 :BufferGoto 1<CR>
+nnoremap <Leader>b2 :BufferGoto 2<CR>
+nnoremap <Leader>b3 :BufferGoto 3<CR>
+nnoremap <Leader>b4 :BufferGoto 4<CR>
+nnoremap <Leader>b5 :BufferGoto 5<CR>
+nnoremap <Leader>b6 :BufferGoto 6<CR>
+nnoremap <Leader>b7 :BufferGoto 7<CR>
+nnoremap <Leader>b8 :BufferGoto 8<CR>
+nnoremap <Leader>b9 :BufferGoto 9<CR>
 
 " Window keymaps
 map <C-j> <C-W>j
@@ -450,6 +465,7 @@ hi SignColumn cterm=NONE guibg=NONE
 hi SignifySignAdd guifg=#b4c973 cterm=NONE gui=NONE
 hi SignifySignDelete guifg=#ac4142 cterm=NONE gui=NONE
 hi SignifySignChange guifg=#e5b567 cterm=NONE gui=NONE
+hi BufferTabpageFill guifg=#FFFFFF cterm=NONE guibg=#2C2C2C
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> References [REF]
