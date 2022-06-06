@@ -45,7 +45,7 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Shell extensions
-Plug 'bling/vim-airline'                              " Lean and mean status/tabline
+Plug 'nvim-lualine/lualine.nvim'                      " A blazing fast statusline
 Plug 'dense-analysis/ale'                             " Asynchronous Lint Engine
 Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, it should be illegal
 Plug 'mhinz/vim-signify'                              " Inline git status
@@ -121,23 +121,12 @@ Plug 'dag/vim-fish', {'for': 'fish' }                 " Fish script
 Plug 'chr4/nginx.vim'                                 " Improved nginx
 
 " Colorschemes
+" Unused colorschemes commented for historic reasons
+" ... And fun
 " Plug 'ggalindezb/vim-megara'                        " Colorscheme focused on contrast
 " Plug 'whatyouhide/vim-gotham'                       " Code never sleeps in Gotham City
 " Plug 'tomasr/molokai'                               " Port of monokai
-Plug 'joshdick/onedark.vim'                           " Port of onedark
-Plug 'danilo-augusto/vim-afterglow'                   " Port of Afterglow
-" Plug 'sjl/badwolf'                                  " Woof Woof
-Plug 'morhetz/gruvbox'                                " Bright pastel 'retro groove'
-Plug 'cocopon/iceberg.vim'                            " Well-designed, bluish color
-Plug 'nanotech/jellybeans.vim'
-
-Plug 'shaeinst/roshnivim-cs'
-Plug 'rafamadriz/neon'
-Plug 'tomasiser/vim-code-dark'
-Plug 'sainnhe/sonokai'
-Plug 'bluz71/vim-moonfly-colors'
-Plug 'rebelot/kanagawa.nvim'
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+" Plug 'danilo-augusto/vim-afterglow'                 " Port of Afterglow
 Plug 'olimorris/onedarkpro.nvim'
 Plug 'marko-cerovac/material.nvim'
 
@@ -179,6 +168,15 @@ set lazyredraw           " Don't redraw while executing macros
 set termguicolors        " True color
 syntax enable            " Syntax highlight
 colorscheme material
+
+lua << END
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'ayu_mirage',
+  }
+}
+END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> File handling [FIL]
@@ -387,9 +385,6 @@ nnoremap <Leader>N :NERDTreeToggle<CR>
 "============================
 " Shell extensions
 "============================
-" -> Airline
-let g:airline_powerline_fonts = 1
-
 " -> ALE
 let g:airline#extensions#ale#enabled = 1
 let g:ale_lint_on_enter = 1
@@ -450,10 +445,8 @@ let g:user_emmet_settings = {
 "============================
 " -> Afterglow
 " let g:afterglow_blackout=-1
+
 let g:material_disable_background = 1
-let g:airline_theme='afterglow'
-let g:lightline = {'colorscheme': 'tokyonight'}
-let g:tokyonight_style = "night"
 
 " Slight tweaks
 hi LineNr cterm=NONE guibg=NONE
