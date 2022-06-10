@@ -48,13 +48,13 @@ call plug#begin('~/.vim/plugged')
 Plug 'nvim-lualine/lualine.nvim'                      " A blazing fast statusline
 Plug 'dense-analysis/ale'                             " Asynchronous Lint Engine
 Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, it should be illegal
-Plug 'mhinz/vim-signify'                              " Inline git status
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lua/plenary.nvim'                          " Neovim Lua lib
 Plug 'nvim-telescope/telescope.nvim'
 
 " Visual aid
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
-Plug 'luochen1990/rainbow'                            " Rainbow Parentheses Improved
+Plug 'p00f/nvim-ts-rainbow'                           " Rainbow parentheses for neovim using tree-sitter
 Plug 'Yggdroot/indentLine'                            " Indention levels with thin vertical lines
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'kyazdani42/nvim-web-devicons'                   " Icons and colors
@@ -136,6 +136,19 @@ Plug 'marko-cerovac/material.nvim'
 
 call plug#end()
 
+" Explicitly enable plugins
+" Redo this section when porting to Lua
+lua << END
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'ayu_mirage',
+  }
+}
+
+require('gitsigns').setup()
+END
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Vim UI [VUI]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -168,15 +181,6 @@ set lazyredraw           " Don't redraw while executing macros
 set termguicolors        " True color
 syntax enable            " Syntax highlight
 colorscheme material
-
-lua << END
-require('lualine').setup {
-  options = {
-    icons_enabled = true,
-    theme = 'ayu_mirage',
-  }
-}
-END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> File handling [FIL]
@@ -483,16 +487,14 @@ require('material').setup({
 
 require'nvim-treesitter.configs'.setup {
   highlight = {
-    enable = true,
-    custom_captures = {
-      -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-      ["foo.bar"] = "Identifier",
-    },
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
+    enable = true
   },
+  rainbow = {
+    enable = true,
+    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    max_file_lines = nil  -- Do not enable for files with more than n lines, int
+    -- colors = {}, -- table of hex strings
+    -- termcolors = {} -- table of colour name strings
+  }
 }
 EOF
