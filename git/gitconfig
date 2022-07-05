@@ -1,20 +1,31 @@
 [user]
 	name = Gerardo Galindez
-	email = ggalindezb@gmail.com
+	email = REPLACE_ME
 	signingkey = REPLACE_ME
 [core]
 	editor = nvim
 	excludesfile = /Users/ggalindezb/.gitignore_global
+  pager = delta
 [merge]
-	tool = nvim -d
+	tool = nvimdiff
+  conflictstyle = diff3
 [diff]
-    tool = nvim -d
+  tool = nvimdiff
+  colorMoved = default
 [color]
 	status = auto
 	branch = auto
 	interactive = auto
 	diff = auto
+	ui = true
 [gpg]
 	program = gpg
 [commit]
 	gpgsign = true
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true  # use n and N to move between diff sections
+  light = false    # dark mode
+  line-numbers = true
+  side-by-side = true
