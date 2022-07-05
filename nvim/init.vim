@@ -66,15 +66,13 @@ Plug 'Xuyuanp/nerdtree-git-plugin'                    " NERDTree git status
 
 " Extended motions/operators
 Plug 'andymass/vim-matchup'                           " Even better %
-" Plug 'easymotion/vim-easymotion'                    " Vim motions on speed!
-" Plug 'justinmk/vim-sneak'                           " The missing motion for Vim
-" Plug 'tpope/vim-repeat'                             " Repeating supported plugin maps
+Plug 'tpope/vim-repeat'                               " Repeating supported plugin maps
 Plug 'tpope/vim-commentary'                           " Comment stuff out
-" Plug 'preservim/nerdcommenter' " Intensely nerdy commenting powers
+Plug 'phaazon/hop.nvim'                               "
 Plug 'godlygeek/tabular'                              " Text filtering and alignment
-" Plug 'junegunn/vim-easy-align'                        " A Vim alignment plugin
 Plug 'machakann/vim-sandwich'                         " Search/select/edit sandwiched textobjects
 Plug 'arthurxavierx/vim-caser'                        " Easily change word casing
+" Plug 'junegunn/vim-easy-align'                        " A Vim alignment plugin
 
 " Text objects
 Plug 'kana/vim-textobj-user'                          " Text object lib
@@ -447,21 +445,20 @@ let g:user_emmet_settings = {
 "============================
 " Colorschemes
 "============================
-" -> Afterglow
-" let g:afterglow_blackout=-1
-
 let g:material_disable_background = 1
 
 " Slight tweaks
 hi LineNr cterm=NONE guibg=NONE
-" hi Normal cterm=NONE guibg=NONE
-" hi MatchParen guibg=#3a3a3a
 hi CursorColumn cterm=NONE guibg=NONE
 hi ColorColumn cterm=NONE guibg=NONE
 hi SignColumn cterm=NONE guibg=NONE
-hi SignifySignAdd guifg=#b4c973 cterm=NONE gui=NONE
-hi SignifySignDelete guifg=#ac4142 cterm=NONE gui=NONE
-hi SignifySignChange guifg=#e5b567 cterm=NONE gui=NONE
+
+hi BufferVisible guibg=#2C2C2C
+hi BufferVisibleIndex guibg=#2C2C2C
+hi BufferVisibleMod guibg=#2C2C2C
+hi BufferVisibleSign guibg=#2C2C2C
+hi BufferVisibleTarget guibg=#2C2C2C
+
 hi BufferTabpageFill guifg=#FFFFFF cterm=NONE guibg=#2C2C2C
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -479,9 +476,11 @@ hi BufferTabpageFill guifg=#FFFFFF cterm=NONE guibg=#2C2C2C
 " -> Kristijan Husak [https://github.com/kristijanhusak/neovim-config/blob/master/init.vim]
 
 lua <<EOF
+require'hop'.setup()
+
 require('material').setup({
 	disable = {
-		background = false
+		background = true
   }
 })
 
