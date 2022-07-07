@@ -381,6 +381,11 @@ nnoremap <Leader>hf :NERDTreeFind<CR>
 " Open NERDTree
 nnoremap <Leader>N :NERDTreeToggle<CR>
 
+" -> Hop
+nnoremap <Leader>hw :HopWordMW<CR>
+nnoremap <Leader>hc :HopChar1MW<CR>
+nnoremap <Leader>ha :HopAnywhereMW<CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Plugin configuration [PCF]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
