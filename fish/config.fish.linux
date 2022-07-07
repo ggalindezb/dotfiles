@@ -36,6 +36,7 @@ end
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 direnv hook fish | source                                  # Load direnv
 starship init fish | source                                # Load starship
+zoxide init --hook prompt fish | source                    # Load zoxide
 
 set label (cat /etc/lsb-release | head -n 1 | cut -d = -f 2)
 
