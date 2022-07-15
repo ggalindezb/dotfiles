@@ -2,7 +2,7 @@
 " Maintainer:	Gerardo Galindez
 " Original File:    2012/09/10
 " Created:          2017/04/06
-" Last Updated:     2022/05/25
+" Last Updated:     2022/07/14
 " File Location:    ~/.config/nvim/init.vim
 " Sections:
 "    -> General                    [GEN]
@@ -132,6 +132,8 @@ Plug 'marko-cerovac/material.nvim'
 " Plug 'terryma/vim-multiple-cursors'
 " Plug 'tpope/vim-eunuch'
 
+Plug 'folke/which-key.nvim'
+
 call plug#end()
 
 " Explicitly enable plugins
@@ -145,6 +147,12 @@ require('lualine').setup {
 }
 
 require('gitsigns').setup()
+
+require("which-key").setup {
+  -- your configuration comes here
+  -- or leave it empty to use the default settings
+  -- refer to the configuration section below
+  }
 END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
