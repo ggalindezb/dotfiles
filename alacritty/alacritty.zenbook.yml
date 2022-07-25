@@ -1,7 +1,7 @@
 # Alacritty configuration file
 # Maintainer:	Gerardo Galindez
 # Original File:    2020/02/25
-# Last Updated:     2020/03/20
+# Last Updated:     2022/03/18
 # File Location:    ~/.config/alacritty/alacritty.yml
 
 alt_send_esc: false                  # Use Meta
