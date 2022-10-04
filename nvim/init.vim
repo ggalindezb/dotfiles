@@ -92,6 +92,7 @@ Plug 'honza/vim-snippets'                             " One bunch of snips
 Plug 'othree/html5.vim', {'for': 'html'}              " HTML5
 Plug 'hail2u/vim-css3-syntax'                         " CSS 3
 Plug 'styled-components/vim-styled-components', {'branch': 'main'}
+Plug 'ap/vim-css-color'
 
 " -> Ruby/Rails
 Plug 'vim-ruby/vim-ruby'                              " Ruby
@@ -148,11 +149,7 @@ require('lualine').setup {
 
 require('gitsigns').setup()
 
-require("which-key").setup {
-  -- your configuration comes here
-  -- or leave it empty to use the default settings
-  -- refer to the configuration section below
-  }
+require("which-key").setup()
 END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -367,7 +364,6 @@ nnoremap <Leader>cls :<C-u>CocList -I symbols<cr>
 nnoremap <Leader>cld :<C-u>CocList diagnostics<cr>
 nmap <Leader>cdo <Plug>(coc-codeaction)
 nmap <Leader>cr <Plug>(coc-rename)
-
 "============================
 " File/Buffer searching
 "============================
@@ -421,12 +417,8 @@ let g:rainbow_active = 1
 " Completion
 "============================
 " -> CoC
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? coc#_select_confirm() :
-  \ coc#expandableOrJumpable() ?
-  \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ coc#refresh()
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -442,6 +434,7 @@ let g:coc_global_extensions = [
       \ 'coc-html',
       \ 'coc-json',
       \ 'coc-lists',
+      \ 'coc-pyright',
       \ 'coc-solargraph',
       \ 'coc-tsserver',
       \ 'coc-vetur',
