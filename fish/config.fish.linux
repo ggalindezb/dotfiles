@@ -20,6 +20,7 @@ set -xg GPG_TTY (tty)
 # set -xg RIPGREP_CONFIG_PATH ~/.config/rg/ripgreprc
 set -xg EDITOR nvim
 set -xg PATH "$HOME/.cargo/bin" $PATH
+set -xg PATH "$HOME/.local/bin" $PATH
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
