@@ -147,8 +147,6 @@ require('lualine').setup {
   }
 }
 
-require('gitsigns').setup()
-
 require("which-key").setup()
 END
 
@@ -484,11 +482,7 @@ hi BufferTabpageFill guifg=#FFFFFF cterm=NONE guibg=#2C2C2C
 lua <<EOF
 require'hop'.setup()
 
-require('material').setup({
-	disable = {
-		background = true
-  }
-})
+require('gitsigns').setup()
 
 require'nvim-treesitter.configs'.setup {
   highlight = {
