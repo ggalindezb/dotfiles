@@ -2,7 +2,7 @@
 " Maintainer:	Gerardo Galindez
 " Original File:    2012/09/10
 " Created:          2017/04/06
-" Last Updated:     2022/07/14
+" Last Updated:     2022/12/11
 " File Location:    ~/.config/nvim/init.vim
 " Sections:
 "    -> General                    [GEN]
@@ -128,6 +128,8 @@ Plug 'chr4/nginx.vim'                                 " Improved nginx
 " Plug 'danilo-augusto/vim-afterglow'                 " Port of Afterglow
 Plug 'olimorris/onedarkpro.nvim'
 Plug 'marko-cerovac/material.nvim'
+Plug 'bluz71/vim-moonfly-colors'
+Plug 'rafamadriz/neon'
 
 " To check out next:
 " Plug 'terryma/vim-multiple-cursors'
@@ -181,7 +183,6 @@ set lazyredraw           " Don't redraw while executing macros
 
 set termguicolors        " True color
 syntax enable            " Syntax highlight
-colorscheme material
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> File handling [FIL]
@@ -450,6 +451,8 @@ let g:user_emmet_settings = {
 " Colorschemes
 "============================
 let g:material_disable_background = 1
+let g:moonflyTransparent = v:true
+colorscheme moonfly
 
 " Slight tweaks
 hi LineNr cterm=NONE guibg=NONE
