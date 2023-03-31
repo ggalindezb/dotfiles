@@ -56,7 +56,7 @@ abbr --add exat 'exa -lT -L2'               # Exa tree
 # Git
 abbr --add gst 'git status -s -b'                  # Brief git status
 abbr --add gco 'git checkout'                      # Checkout
-abbr --add gcb 'git checkout -b'                   # Branching
+abbr --add gsc 'git switch -c '                    # Branching
 abbr --add gcm "git commit -m '"                   # Fast commit
 abbr --add gpf 'git push -f'                       # Push, needs upstream set
 abbr --add gts 'git tag -s v -m'                   # Tag a version
