@@ -93,6 +93,7 @@ Plug 'othree/html5.vim', {'for': 'html'}              " HTML5
 Plug 'hail2u/vim-css3-syntax'                         " CSS 3
 Plug 'styled-components/vim-styled-components', {'branch': 'main'}
 Plug 'ap/vim-css-color'
+Plug 'leafOfTree/vim-svelte-plugin'
 
 " -> Ruby/Rails
 Plug 'vim-ruby/vim-ruby'                              " Ruby
@@ -437,6 +438,7 @@ let g:coc_global_extensions = [
       \ 'coc-solargraph',
       \ 'coc-tsserver',
       \ 'coc-vetur',
+      \ 'coc-svelte',
       \ ]
 
 " -> Emmet
