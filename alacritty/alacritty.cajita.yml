@@ -4,7 +4,6 @@
 # Last Updated:     2022/03/18
 # File Location:    ~/.config/alacritty/alacritty.yml
 
-alt_send_esc: false                  # Use Meta
 live_config_reload: true
 working_directory: None
 
@@ -20,18 +19,18 @@ scrolling:
   tabspaces: 8
 
 font:
-  size: 11.5
+  size: 12
   normal:
-    family: "FiraCode Nerd Font Mono"
+    family: "FiraCode Nerd Font"
     style: Regular
   bold:
-    family: "FiraCode Nerd Font Mono"
+    family: "FiraCode Nerd Font"
     style: Bold
   italic:
-    family: "FiraCode Nerd Font Mono"
+    family: "FiraCode Nerd Font"
     style: Italic
   bold_italic:
-    family: "FiraCode Nerd Font Mono"
+    family: "FiraCode Nerd Font"
     style: Bold Italic
 
 colors:
