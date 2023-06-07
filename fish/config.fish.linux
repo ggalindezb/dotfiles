@@ -42,7 +42,7 @@ zoxide init --hook prompt fish | source                    # Load zoxide
 set label (cat /etc/lsb-release | head -n 1 | cut -d = -f 2)
 
 # Load asdf
-source ~/.asdf/asdf.fish
+source /opt/asdf-vm/asdf.fish
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Aliases [ALI]
