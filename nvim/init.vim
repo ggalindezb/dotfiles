@@ -89,11 +89,12 @@ Plug 'honza/vim-snippets'                             " One bunch of snips
 " Plug 'wakatime/vim-wakatime'                          " Wakatime tracking
 
 " Filetypes
-Plug 'othree/html5.vim', {'for': 'html'}              " HTML5
+Plug 'othree/html5.vim'                               " HTML5
 Plug 'hail2u/vim-css3-syntax'                         " CSS 3
 Plug 'styled-components/vim-styled-components', {'branch': 'main'}
 Plug 'ap/vim-css-color'
-Plug 'leafOfTree/vim-svelte-plugin'
+" Plug 'leafOfTree/vim-svelte-plugin'
+Plug 'evanleck/vim-svelte'
 
 " -> Ruby/Rails
 Plug 'vim-ruby/vim-ruby'                              " Ruby
@@ -103,9 +104,9 @@ Plug 'slim-template/vim-slim', {'for': 'slim'}        " Slim
 Plug 'kchmck/vim-coffee-script'                       " Coffeescript
 
 " -> JS
-Plug 'othree/yajs.vim', {'for': 'javascript'}         " Javascript
+Plug 'othree/yajs.vim'                                " Javascript
 Plug 'isRuslan/vim-es6'                               " ES6
-Plug 'othree/es.next.syntax.vim', {'for': 'javascript'}
+Plug 'othree/es.next.syntax.vim'
 Plug 'leafgarland/typescript-vim'                     " Typescript
 Plug 'MaxMEllon/vim-jsx-pretty'                       " JSX
 Plug 'peitalin/vim-jsx-typescript'                    " TSX
@@ -393,6 +394,12 @@ nnoremap <Leader>ha :HopAnywhereMW<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Plugin configuration [PCF]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:svelte_preprocessor_tags = [
+  \ { 'name': 'postcss', 'tag': 'style', 'as': 'scss' }
+  \ ]
+let g:svelte_preprocessors = ['postcss']
+let g:vim_svelte_plugin_load_full_syntax = 1
+
 "============================
 " Shell extensions
 "============================
