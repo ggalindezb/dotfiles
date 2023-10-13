@@ -4,7 +4,6 @@
 # Last Updated:     2022/03/18
 # File Location:    ~/.config/alacritty/alacritty.yml
 
-alt_send_esc: false                  # Use Meta
 live_config_reload: true
 working_directory: None
 
