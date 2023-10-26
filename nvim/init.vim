@@ -51,6 +51,7 @@ Plug 'tpope/vim-fugitive'                             " Git wrapper so awesome, 
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lua/plenary.nvim'                          " Neovim Lua lib
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'declancm/maximize.nvim'
 
 " Visual aid
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
@@ -93,7 +94,6 @@ Plug 'othree/html5.vim'                               " HTML5
 Plug 'hail2u/vim-css3-syntax'                         " CSS 3
 Plug 'styled-components/vim-styled-components', {'branch': 'main'}
 Plug 'ap/vim-css-color'
-" Plug 'leafOfTree/vim-svelte-plugin'
 Plug 'evanleck/vim-svelte'
 
 " -> Ruby/Rails
@@ -104,13 +104,12 @@ Plug 'slim-template/vim-slim', {'for': 'slim'}        " Slim
 Plug 'kchmck/vim-coffee-script'                       " Coffeescript
 
 " -> JS
-Plug 'othree/yajs.vim'                                " Javascript
+Plug 'othree/yajs.vim'                                " JS
 Plug 'isRuslan/vim-es6'                               " ES6
 Plug 'othree/es.next.syntax.vim'
 Plug 'leafgarland/typescript-vim'                     " Typescript
 Plug 'MaxMEllon/vim-jsx-pretty'                       " JSX
 Plug 'peitalin/vim-jsx-typescript'                    " TSX
-Plug 'leafOfTree/vim-vue-plugin', {'for': 'vue'}      " Vue
 
 " -> Documents
 Plug 'plasticboy/vim-markdown', {'for': 'mkd'}        " Markdown
@@ -508,4 +507,6 @@ require'nvim-treesitter.configs'.setup {
     -- termcolors = {} -- table of colour name strings
   }
 }
+
+require('maximize').setup()
 EOF
