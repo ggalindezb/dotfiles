@@ -95,6 +95,7 @@ Plug 'hail2u/vim-css3-syntax'                         " CSS 3
 Plug 'styled-components/vim-styled-components', {'branch': 'main'}
 Plug 'ap/vim-css-color'
 Plug 'evanleck/vim-svelte'
+Plug 'HiPhish/jinja.vim'
 
 " -> Ruby/Rails
 Plug 'vim-ruby/vim-ruby'                              " Ruby
