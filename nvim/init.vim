@@ -55,8 +55,8 @@ Plug 'declancm/maximize.nvim'
 
 " Visual aid
 Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing whitespace
-Plug 'p00f/nvim-ts-rainbow'                           " Rainbow parentheses for neovim using tree-sitter
-Plug 'Yggdroot/indentLine'                            " Indention levels with thin vertical lines
+Plug 'HiPhish/rainbow-delimiters.nvim'                " Rainbow parentheses for neovim
+Plug 'lukas-reineke/indent-blankline.nvim'            " Indentation guides to Neovim
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'kyazdani42/nvim-web-devicons'                   " Icons and colors
 
@@ -318,6 +318,10 @@ set eol
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "-> Autocmds and lang specific [AUL]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set foldlevel=99
+
 " 2-space indents
 autocmd WinEnter,FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set sts=2 ts=2 sw=2
 
@@ -335,9 +339,6 @@ autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
 " Markdown
 autocmd FileType markdown :call MarkdownConfig()
-autocmd FileType markdown set nofoldenable
-autocmd FileType markdown set conceallevel=0
-
 func! MarkdownConfig()
   let g:vim_markdown_conceal = 0
   let g:vim_markdown_conceal_code_blocks = 0
@@ -501,13 +502,78 @@ require'nvim-treesitter.configs'.setup {
     enable = true
   },
   rainbow = {
-    enable = true,
-    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-    max_file_lines = nil  -- Do not enable for files with more than n lines, int
-    -- colors = {}, -- table of hex strings
-    -- termcolors = {} -- table of colour name strings
+    enable = true
   }
 }
 
 require('maximize').setup()
+
+vim.g.barbar_auto_setup = false -- disable auto-setup
+
+require'barbar'.setup {
+  focus_on_close = 'right'
+}
+
+vim.api.nvim_create_augroup("cmdwin_treesitter", { clear = true })
+vim.api.nvim_create_autocmd("CmdwinEnter", {
+  pattern = "*",
+  command = "TSBufDisable incremental_selection",
+  group = "cmdwin_treesitter",
+  desc = "Disable treesitter's incremental selection in Command-line window",
+})
+
+-- This module contains a number of default definitions
+local rainbow_delimiters = require 'rainbow-delimiters'
+
+---@type rainbow_delimiters.config
+vim.g.rainbow_delimiters = {
+    strategy = {
+        [''] = rainbow_delimiters.strategy['global'],
+        vim = rainbow_delimiters.strategy['local'],
+    },
+    query = {
+        [''] = 'rainbow-delimiters',
+        lua = 'rainbow-blocks',
+    },
+    priority = {
+        [''] = 110,
+        lua = 210,
+    },
+    highlight = {
+        'RainbowDelimiterRed',
+        'RainbowDelimiterYellow',
+        'RainbowDelimiterBlue',
+        'RainbowDelimiterOrange',
+        'RainbowDelimiterGreen',
+        'RainbowDelimiterViolet',
+        'RainbowDelimiterCyan',
+    },
+}
+
+local highlight = {
+    "RainbowRed",
+    "RainbowYellow",
+    "RainbowBlue",
+    "RainbowOrange",
+    "RainbowGreen",
+    "RainbowViolet",
+    "RainbowCyan",
+}
+local hooks = require "ibl.hooks"
+-- create the highlight groups in the highlight setup hook, so they are reset
+-- every time the colorscheme changes
+hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+    vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+    vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+    vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+    vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+    vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+    vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+    vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+end)
+
+vim.g.rainbow_delimiters = { highlight = highlight }
+require("ibl").setup { scope = { highlight = highlight } }
+
+hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
 EOF
