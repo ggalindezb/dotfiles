@@ -85,6 +85,7 @@ Plug 'nelstrom/vim-textobj-rubyblock'                 " Selecting Ruby blocks
 Plug 'mattn/emmet-vim'                                " Emmet expanding abbreviations
 Plug 'neoclide/coc.nvim', {'branch': 'release'}       " Language server protocol support
 Plug 'honza/vim-snippets'                             " One bunch of snips
+Plug 'github/copilot.vim'
 
 " External services
 " Plug 'wakatime/vim-wakatime'                          " Wakatime tracking
