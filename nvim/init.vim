@@ -216,8 +216,6 @@ nore \ ,
 let mapleader = " "
 
 " Copy/Paste settings
-" Disable autoindent to paste from outside
-set pastetoggle=<Leader>p
 " Copy to the clipboard
 vnoremap <C-c> "+y
 set clipboard+=unnamedplus
