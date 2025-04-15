@@ -19,8 +19,8 @@ set -xg LC_ALL en_US.UTF-8
 set -xg GPG_TTY (tty)
 # set -xg RIPGREP_CONFIG_PATH ~/.config/rg/ripgreprc
 set -xg EDITOR nvim
-set -xg PATH "$HOME/.cargo/bin" $PATH
-set -xg PATH "$HOME/.local/bin" $PATH
+fish_add_path "$HOME/.cargo/bin"
+fish_add_path "$HOME/.local/bin"
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
@@ -42,7 +42,12 @@ zoxide init --hook prompt fish | source                    # Load zoxide
 set label (cat /etc/lsb-release | head -n 1 | cut -d = -f 2)
 
 # Load asdf
-source ~/.asdf/asdf.fish
+set _asdf_shims "$HOME/.asdf/shims"
+if not contains $_asdf_shims $PATH
+    set -gx --prepend PATH $_asdf_shims
+    fish_add_path $_asdf_shims
+end
+set --erase _asdf_shims
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # -> Aliases [ALI]
