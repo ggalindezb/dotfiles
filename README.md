@@ -30,7 +30,7 @@ Here's a brief breakdown of the tools that I use.
 ### Frequently used, handy to have around
 
 - **fdfind**. Better `find`, recursively search by filename
-- **exa**. Better `ls`, full color support, sane defaults
+- **eza**. Better `ls`, full color support, sane defaults
 - **batcat**. Better `cat` with syntax highlight
 - **htop**. Better `top` with color support and context tooling integrated
 - **ctop**. Container monitor for Docker
