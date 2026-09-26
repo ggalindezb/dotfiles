@@ -12,9 +12,9 @@
 #    -> Aliases                    [ALI]
 #    -> References                 [REF]
 
-# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# """"""""""""""""""""""""""""""""""""""""""""""""
 # -> Environment [ENV]
-# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# """"""""""""""""""""""""""""""""""""""""""""""""
 set -xg LC_ALL en_US.UTF-8
 set -xg GPG_TTY (tty)
 # set -xg RIPGREP_CONFIG_PATH ~/.config/rg/ripgreprc
@@ -22,9 +22,9 @@ set -xg EDITOR nvim
 fish_add_path "$HOME/.cargo/bin"
 fish_add_path "$HOME/.local/bin"
 
-# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# """"""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
-# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# """"""""""""""""""""""""""""""""""""""""""""""""
 # Install Fisher if not available
 if not functions -q fisher
   set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
@@ -32,12 +32,12 @@ if not functions -q fisher
   fish -c fisher
 end
 
-# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# """"""""""""""""""""""""""""""""""""""""""""""""
 # -> Hooks [HOK]
-# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-direnv hook fish | source                                  # Load direnv
-starship init fish | source                                # Load starship
-zoxide init --hook prompt fish | source                    # Load zoxide
+# """"""""""""""""""""""""""""""""""""""""""""""""
+direnv hook fish | source
+starship init fish | source
+zoxide init --hook prompt fish | source
 
 set label (cat /etc/lsb-release | head -n 1 | cut -d = -f 2)
 
@@ -49,9 +49,9 @@ if not contains $_asdf_shims $PATH
 end
 set --erase _asdf_shims
 
-# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# """"""""""""""""""""""""""""""""""""""""""""""""
 # -> Aliases [ALI]
-# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# """"""""""""""""""""""""""""""""""""""""""""""""
 alias tree='tree -CAh'                      # Color tree
 abbr --add - 'cd -'                         # cd back
 abbr --add ls 'ls -lFpHh --color'           # Better ls
@@ -77,7 +77,28 @@ abbr --add bera 'bin/bundle exec rake'
 abbr --add bers 'bin/bundle exec rspec'
 abbr --add rc 'bin/rails c'
 
-# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# """"""""""""""""""""""""""""""""""""""""""""""""
+# -> Color scheme
+# """"""""""""""""""""""""""""""""""""""""""""""""
+set -g fish_color_normal 'white'
+set -g fish_color_command '#f79952' --bold
+set -g fish_color_keyword '#33abd6'
+set -g fish_color_quote '#ffe14a'
+set -g fish_color_redirection '#92b04c' --bold
+set -g fish_color_end '#bf0083'
+set -g fish_color_error '#bf0d00' --bold
+set -g fish_color_param '#78e0fa'
+set -g fish_color_valid_path '#386bf5'
+set -g fish_color_option '#78e0fa'
+set -g fish_color_comment '#777'
+set -g fish_color_operator '#ffe14a'
+set -g fish_color_escape '#189e03'
+set -g fish_color_autosuggestion '999' --dim
+
+set -g LS_COLORS 'di=1;32:fi=0:ln=4;33'
+
+# """"""""""""""""""""""""""""""""""""""""""""""""
 #-> References [REF]
-# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# """"""""""""""""""""""""""""""""""""""""""""""""
 # -> Fish shell docs (2019/08/01) [https://fishshell.com/docs/current/tutorial.html]
+# -> LS_COLORS https://gist.github.com/thomd/7667642

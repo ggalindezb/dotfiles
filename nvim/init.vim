@@ -85,7 +85,7 @@ Plug 'nelstrom/vim-textobj-rubyblock'                 " Selecting Ruby blocks
 Plug 'mattn/emmet-vim'                                " Emmet expanding abbreviations
 Plug 'neoclide/coc.nvim', {'branch': 'release'}       " Language server protocol support
 Plug 'honza/vim-snippets'                             " One bunch of snips
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 
 " External services
 " Plug 'wakatime/vim-wakatime'                          " Wakatime tracking
@@ -97,6 +97,7 @@ Plug 'styled-components/vim-styled-components', {'branch': 'main'}
 Plug 'ap/vim-css-color'
 Plug 'evanleck/vim-svelte'
 Plug 'lepture/vim-jinja'
+Plug 'rust-lang/rust.vim'
 
 " -> Ruby/Rails
 Plug 'vim-ruby/vim-ruby'                              " Ruby
@@ -174,6 +175,7 @@ set cmdheight=1          " Short cmd line
 set laststatus=2         " Always show the status line
 
 " Search options
+set ignorecase
 set smartcase            " Ignore casing unless search a cased word
 set hlsearch             " Highlight matches
 set incsearch            " Real time match
@@ -435,17 +437,13 @@ endfunction
 let g:coc_snippet_next = '<tab>'
 
 let g:coc_global_extensions = [
-      \ 'coc-angular',
       \ 'coc-css',
       \ 'coc-fish',
       \ 'coc-html',
       \ 'coc-json',
       \ 'coc-lists',
-      \ 'coc-pyright',
-      \ 'coc-solargraph',
       \ 'coc-tsserver',
-      \ 'coc-vetur',
-      \ 'coc-svelte',
+      \ 'coc-python',
       \ ]
 
 " -> Emmet
@@ -474,7 +472,6 @@ hi BufferVisibleIndex guibg=#2C2C2C
 hi BufferVisibleMod guibg=#2C2C2C
 hi BufferVisibleSign guibg=#2C2C2C
 hi BufferVisibleTarget guibg=#2C2C2C
-
 hi BufferTabpageFill guifg=#FFFFFF cterm=NONE guibg=#2C2C2C
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -496,14 +493,19 @@ require'hop'.setup()
 
 require('gitsigns').setup()
 
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter').setup {
   highlight = {
     enable = true
   },
   rainbow = {
     enable = true
+  },
+  indent = {
+    enable = true
   }
 }
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
 require('maximize').setup()
 
@@ -575,4 +577,12 @@ vim.g.rainbow_delimiters = { highlight = highlight }
 require("ibl").setup { scope = { highlight = highlight } }
 
 hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+
+local orig_notify = vim.notify
+vim.notify = function(msg, level, opts)
+  if type(msg) == "string" and msg:match("Client .* quit with exit code") then
+    return
+  end
+  orig_notify(msg, level, opts)
+end
 EOF
