@@ -91,37 +91,13 @@ Plug 'honza/vim-snippets'                             " One bunch of snips
 " Plug 'wakatime/vim-wakatime'                          " Wakatime tracking
 
 " Filetypes
-Plug 'othree/html5.vim'                               " HTML5
-Plug 'hail2u/vim-css3-syntax'                         " CSS 3
-Plug 'styled-components/vim-styled-components', {'branch': 'main'}
+" Most syntax comes from treesitter parsers (see the Lua block at the bottom).
+" Only filetypes without a parser or without native Neovim support stay here.
 Plug 'ap/vim-css-color'
-Plug 'evanleck/vim-svelte'
-Plug 'lepture/vim-jinja'
-Plug 'rust-lang/rust.vim'
 
 " -> Ruby/Rails
 Plug 'vim-ruby/vim-ruby'                              " Ruby
 Plug 'tpope/vim-rails'                                " Rails
-Plug 'tpope/vim-haml', {'for': 'haml'}                " HAML/SASS
-Plug 'slim-template/vim-slim', {'for': 'slim'}        " Slim
-Plug 'kchmck/vim-coffee-script'                       " Coffeescript
-
-" -> JS
-Plug 'othree/yajs.vim'                                " JS
-Plug 'isRuslan/vim-es6'                               " ES6
-Plug 'othree/es.next.syntax.vim'
-Plug 'leafgarland/typescript-vim'                     " Typescript
-Plug 'MaxMEllon/vim-jsx-pretty'                       " JSX
-Plug 'peitalin/vim-jsx-typescript'                    " TSX
-
-" -> Documents
-Plug 'plasticboy/vim-markdown', {'for': 'mkd'}        " Markdown
-
-" -> Shell
-Plug 'dag/vim-fish', {'for': 'fish' }                 " Fish script
-
-" -> Stuff
-Plug 'chr4/nginx.vim'                                 " Improved nginx
 
 " Colorschemes
 " Unused colorschemes commented for historic reasons
@@ -319,8 +295,7 @@ set eol
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "-> Autocmds and lang specific [AUL]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+" Treesitter folding is set per buffer in the Lua block below
 set foldlevel=99
 
 " 2-space indents
@@ -332,18 +307,6 @@ autocmd TextChanged * silent! write
 
 " Text
 autocmd FileType text setlocal textwidth=150
-
-" JS
-" Full scan sync highlight
-autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
-autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
-
-" Markdown
-autocmd FileType markdown :call MarkdownConfig()
-func! MarkdownConfig()
-  let g:vim_markdown_conceal = 0
-  let g:vim_markdown_conceal_code_blocks = 0
-endfunc
 
 " Makefile
 " Don't change tabs for spaces in Makefiles
@@ -396,12 +359,6 @@ nnoremap <Leader>ha :HopAnywhereMW<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Plugin configuration [PCF]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:svelte_preprocessor_tags = [
-  \ { 'name': 'postcss', 'tag': 'style', 'as': 'scss' }
-  \ ]
-let g:svelte_preprocessors = ['postcss']
-let g:vim_svelte_plugin_load_full_syntax = 1
-
 "============================
 " Shell extensions
 "============================
@@ -493,19 +450,30 @@ require'hop'.setup()
 
 require('gitsigns').setup()
 
-require('nvim-treesitter').setup {
-  highlight = {
-    enable = true
-  },
-  rainbow = {
-    enable = true
-  },
-  indent = {
-    enable = true
-  }
+-- nvim-treesitter (main branch) only installs parsers/queries; highlighting,
+-- folding and indent have to be enabled per buffer.
+-- Installing parsers needs tree-sitter-cli >= 0.26.1 (cargo install tree-sitter-cli)
+require('nvim-treesitter').install {
+  'bash', 'css', 'dockerfile', 'embedded_template', 'fish', 'html', 'javascript',
+  'jinja', 'json', 'lua', 'markdown', 'markdown_inline', 'nginx', 'python',
+  'ruby', 'rust', 'scss', 'slim', 'sql', 'styled', 'svelte', 'toml', 'tsx',
+  'typescript', 'vim', 'vimdoc', 'yaml',
 }
-vim.wo.foldmethod = 'expr'
-vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
+vim.filetype.add({ extension = { j2 = 'jinja' } })
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('treesitter_start', { clear = true }),
+  desc = 'Enable treesitter highlight, folds and indent when a parser exists',
+  callback = function(args)
+    if not pcall(vim.treesitter.start, args.buf) then
+      return
+    end
+    vim.wo[0][0].foldmethod = 'expr'
+    vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
+})
 
 require('maximize').setup()
 
@@ -514,14 +482,6 @@ vim.g.barbar_auto_setup = false -- disable auto-setup
 require'barbar'.setup {
   focus_on_close = 'right'
 }
-
-vim.api.nvim_create_augroup("cmdwin_treesitter", { clear = true })
-vim.api.nvim_create_autocmd("CmdwinEnter", {
-  pattern = "*",
-  command = "TSBufDisable incremental_selection",
-  group = "cmdwin_treesitter",
-  desc = "Disable treesitter's incremental selection in Command-line window",
-})
 
 -- This module contains a number of default definitions
 local rainbow_delimiters = require 'rainbow-delimiters'
