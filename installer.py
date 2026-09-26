@@ -27,6 +27,14 @@
 # Once finished, change shells
 # chsh -s /usr/bin/fish
 
+# Install curl
+# Install system node, ruby, python and packages for neovim
+# Install starship
+# Compositor tweaks
+# Install direnv
+# Install git-delta
+# Install jq, batcat, httpie
+
 import os
 import platform
 import sys
