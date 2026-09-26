@@ -1,6 +1,10 @@
 [Unit]
 Description=ASUS Zenbook Duo keyboard hotkeys (userspace hid-asus stand-in)
 After=systemd-udevd.service
+# Let go of the keyboard over suspend: with its hidraw node held open across sleep, the docked
+# keyboard drops off USB onto Bluetooth ~15s after resume. zenbook-kbd-resume starts it again.
+Conflicts=sleep.target
+Before=sleep.target
 
 [Service]
 ExecStart=/usr/bin/python3 /usr/local/lib/zenbook-kbd/zenbook-kbd.py

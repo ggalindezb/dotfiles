@@ -52,6 +52,7 @@ rm -f /tmp/duo/backlight.py
 # --- zenbook-kbd --------------------------------------------------------------
 install -Dm755 zenbook-kbd.py /usr/local/lib/zenbook-kbd/zenbook-kbd.py
 install -Dm644 zenbook-kbd.service /etc/systemd/system/zenbook-kbd.service
+install -Dm644 zenbook-kbd-resume.service /etc/systemd/system/zenbook-kbd-resume.service
 
 # --- duo ----------------------------------------------------------------------
 # Replace via rename so running copies of the script aren't disturbed mid-read.
@@ -62,7 +63,7 @@ install -Dm644 zenbook-duo-user.service /etc/systemd/user/zenbook-duo-user.servi
 
 # --- Enable -------------------------------------------------------------------
 systemctl daemon-reload
-systemctl enable zenbook-kbd.service zenbook-duo.service
+systemctl enable zenbook-kbd.service zenbook-kbd-resume.service zenbook-duo.service
 # reenable: the unit moved from default.target to graphical-session.target
 systemctl --global reenable zenbook-duo-user.service
 systemctl restart zenbook-kbd.service

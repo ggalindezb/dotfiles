@@ -18,6 +18,7 @@ sudo ./uninstall.sh
 |---|---|---|
 | `zenbook-kbd.py` | `/usr/local/lib/zenbook-kbd/` | Keyboard daemon (see below) |
 | `zenbook-kbd.service` | `/etc/systemd/system/` | Runs the daemon as root. Settings: `FNLOCK`, `BACKLIGHT` |
+| `zenbook-kbd-resume.service` | `/etc/systemd/system/` | Restarts the daemon after resume; it is stopped over sleep so the keyboard stays on USB |
 | `duo.sh` | `/usr/local/bin/duo` | Bottom screen on/off with keyboard, rotation, brightness sync, wifi/bt restore |
 | `zenbook-duo.service` | `/etc/systemd/system/` | `duo boot` / `duo shutdown` |
 | `zenbook-duo-user.service` | `/etc/systemd/user/` (global) | `duo` watcher in each session |
