@@ -21,6 +21,9 @@ set -xg GPG_TTY (tty)
 set -xg EDITOR nvim
 fish_add_path "$HOME/.cargo/bin"
 fish_add_path "$HOME/.local/bin"
+if [ -f '/home/ggalindezb/.local/google-cloud-sdk/path.fish.inc' ]; . '/home/ggalindezb/.local/google-cloud-sdk/path.fish.inc'; end
+
+export ANDROID_HOME="$HOME/Android/Sdk"
 
 # """"""""""""""""""""""""""""""""""""""""""""""""
 #-> Boot [BOO]
@@ -53,6 +56,7 @@ set --erase _asdf_shims
 # -> Aliases [ALI]
 # """"""""""""""""""""""""""""""""""""""""""""""""
 alias tree='tree -CAh'                      # Color tree
+alias precommit='pre-commit'
 abbr --add - 'cd -'                         # cd back
 abbr --add ls 'ls -lFpHh --color'           # Better ls
 abbr --add exal 'exa -lFhg'                 # Exa long
@@ -102,3 +106,7 @@ set -g LS_COLORS 'di=1;32:fi=0:ln=4;33'
 # """"""""""""""""""""""""""""""""""""""""""""""""
 # -> Fish shell docs (2019/08/01) [https://fishshell.com/docs/current/tutorial.html]
 # -> LS_COLORS https://gist.github.com/thomd/7667642
+
+
+# Added by Antigravity CLI installer
+set -gx PATH "/home/ggalindezb/.local/bin" $PATH
