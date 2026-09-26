@@ -1,0 +1,12 @@
+[Unit]
+Description=Zenbook Duo User Handler
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/local/bin/duo
+Restart=no
+Environment=XDG_CURRENT_DESKTOP=GNOME
+
+[Install]
+WantedBy=graphical-session.target

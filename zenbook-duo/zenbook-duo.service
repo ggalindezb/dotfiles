@@ -1,0 +1,14 @@
+[Unit]
+Description=Zenbook Duo Power Events Handler (boot & shutdown)
+DefaultDependencies=no
+Before=shutdown.target
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/duo boot
+ExecStop=/usr/local/bin/duo shutdown
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
