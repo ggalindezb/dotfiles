@@ -6,6 +6,8 @@
 #   - Removed keyboard backlight control (embedded backlight.py, duo-set-kb-backlight, `duo kbb`);
 #     zenbook-kbd.py handles the keyboard now.
 #   - DEFAULT_SCALE=1.5 (setup.sh used to substitute this at install time).
+# Modified 2026-09-26:
+#   - Restart the Hide Top Bar extension after enabling/disabling the bottom screen.
 #   - Debounced keyboard detach (recheck after 5s) so a USB blip after resume doesn't
 #     flip the bottom screen on and off.
 #   - Wait for Mutter's DisplayConfig before the first monitor check at login.
@@ -116,6 +118,18 @@ function duo-watch-lock() {
     done < <(gdbus monitor -y -d org.freedesktop.login1 | grep --line-buffered "LockedHint")
 }
 
+# Hide Top Bar stops hiding the panel if the monitor layout changes after it starts
+# (e.g. at login); re-enabling it makes it pick up the new layout.
+HIDETOPBAR=hidetopbar@mathieu.bidon.ca
+function duo-refresh-hidetopbar() {
+    if gnome-extensions info ${HIDETOPBAR} 2>/dev/null | grep -q 'State: ACTIVE'; then
+        echo "$(date) - MONITOR - Restarting Hide Top Bar"
+        gnome-extensions disable ${HIDETOPBAR}
+        sleep 1
+        gnome-extensions enable ${HIDETOPBAR}
+    fi
+}
+
 function duo-check-monitor() {
     . /tmp/duo/status
     KEYBOARD_ATTACHED=false
@@ -149,6 +163,7 @@ function duo-check-monitor() {
         if ((${MONITOR_COUNT} > 1)); then
             echo "$(date) - MONITOR - Disabling bottom monitor"
             gdctl set --logical-monitor --primary --scale ${SCALE} --monitor eDP-1
+            duo-refresh-hidetopbar
             NEW_MONITOR_COUNT=$(gdctl show | grep 'Logical monitor #' | wc -l)
             if ((${NEW_MONITOR_COUNT} == 1)); then
                 MESSAGE="Disabled bottom display"
@@ -168,6 +183,7 @@ function duo-check-monitor() {
         if ((${MONITOR_COUNT} < 2)); then
             echo "$(date) - MONITOR - Enabling bottom monitor"
             gdctl set --logical-monitor --primary --scale ${SCALE} --monitor eDP-1 --logical-monitor --scale ${SCALE} --monitor eDP-2 --below eDP-1
+            duo-refresh-hidetopbar
             NEW_MONITOR_COUNT=$(gdctl show | grep 'Logical monitor #' | wc -l)
             if ((${NEW_MONITOR_COUNT} == 2)); then
                 MESSAGE="Enabled bottom display"
