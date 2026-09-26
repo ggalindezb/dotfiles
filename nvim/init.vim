@@ -60,14 +60,13 @@ Plug 'nvim-tree/nvim-web-devicons'                    " Icons and colors
 
 " File/Buffer handling
 Plug 'romgrk/barbar.nvim'
-Plug 'preservim/nerdtree'                             " A tree explorer
-Plug 'Xuyuanp/nerdtree-git-plugin'                    " NERDTree git status
+Plug 'MunifTanjim/nui.nvim'                           " UI components, needed by neo-tree
+Plug 'nvim-neo-tree/neo-tree.nvim', {'branch': 'v3.x'} " File tree with git status
 
 " Extended motions/operators
 Plug 'andymass/vim-matchup'                           " Even better %
 Plug 'tpope/vim-repeat'                               " Repeating supported plugin maps
-Plug 'tpope/vim-commentary'                           " Comment stuff out
-Plug 'phaazon/hop.nvim'                               "
+Plug 'folke/flash.nvim'                               " Jump anywhere with labels
 Plug 'godlygeek/tabular'                              " Text filtering and alignment
 Plug 'machakann/vim-sandwich'                         " Search/select/edit sandwiched textobjects
 Plug 'arthurxavierx/vim-caser'                        " Easily change word casing
@@ -171,11 +170,6 @@ set noswapfile
 """"""""""""""
 " Vim keymaps
 """"""""""""""
-" Use spacebar to repeat last command
-" Use . as :
-nore . :
-nore , .
-nore \ ,
 let mapleader = " "
 
 " Copy/Paste settings
@@ -277,9 +271,9 @@ set foldlevel=99
 " 2-space indents
 autocmd WinEnter,FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set sts=2 ts=2 sw=2
 
-" Auto save
-autocmd InsertLeave * silent! write
-autocmd TextChanged * silent! write
+" Auto save, update only writes when the buffer actually changed
+autocmd InsertLeave * silent! update
+autocmd TextChanged * silent! update
 
 " Text
 autocmd FileType text setlocal textwidth=150
@@ -295,6 +289,13 @@ autocmd FileType make setlocal noexpandtab
 " Completion
 "============================
 " -> CoC
+" Drop Neovim's built-in LSP maps (grr, gri, gra, grn, grt), they make gr wait
+" for timeoutlen and only work with the native LSP client
+for s:lhs in ['grr', 'gri', 'gra', 'grn', 'grt']
+  silent! execute 'unmap ' . s:lhs
+endfor
+silent! xunmap gra
+
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gr <Plug>(coc-references)
@@ -316,21 +317,18 @@ nnoremap <Leader>g :Telescope live_grep<CR>
 "============================
 " Extended motions/operators
 "============================
-" -> Commentary keymaps
-vmap <Leader>c  <Plug>Commentary
-nmap <Leader>cc <Plug>CommentaryLine
-nmap <Leader>cu <Plug>CommentaryUndo
+" -> Comments
+" Built into Neovim: gcc toggles a line, gc{motion} / visual gc toggles a range,
+" gcgc uncomments the adjacent commented block
 
-" -> NERDTree
-" Find current file in NERDTree
-nnoremap <Leader>hf :NERDTreeFind<CR>
-" Open NERDTree
-nnoremap <Leader>N :NERDTreeToggle<CR>
+" -> Neo-tree
+" Find current file in the tree
+nnoremap <Leader>hf :Neotree reveal<CR>
+" Open the tree
+nnoremap <Leader>N :Neotree toggle<CR>
 
-" -> Hop
-nnoremap <Leader>hw :HopWordMW<CR>
-nnoremap <Leader>hc :HopChar1MW<CR>
-nnoremap <Leader>ha :HopAnywhereMW<CR>
+" -> Flash
+" <Leader>hw / <Leader>hc / <Leader>ha are defined in the Lua block below
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Plugin configuration [PCF]
@@ -339,13 +337,16 @@ nnoremap <Leader>ha :HopAnywhereMW<CR>
 " Shell extensions
 "============================
 " -> ALE
+" ALE runs the plain linters (rubocop, eslint...), coc runs the language
+" servers and shows its diagnostics through ALE, so each issue appears once
+let g:ale_disable_lsp = 1
 let g:ale_lint_on_enter = 1
 let g:ale_lint_on_save = 1
 let g:ale_sign_error = '!'
 let g:ale_sign_warning = '●'
 
 let g:ale_linters = {
-\   'ruby': ['rubocop', 'solargraph'],
+\   'ruby': ['rubocop'],
 \}
 
 "============================
@@ -354,6 +355,8 @@ let g:ale_linters = {
 " -> CoC
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+call coc#config('diagnostic', { 'displayByAle': v:true })
 
 let g:coc_global_extensions = [
       \ 'coc-css',
@@ -412,7 +415,60 @@ hi BufferTabpageFill guifg=#FFFFFF cterm=NONE guibg=#2C2C2C
 " -> Kristijan Husak [https://github.com/kristijanhusak/neovim-config/blob/master/init.vim]
 
 lua <<EOF
-require'hop'.setup()
+-- Flash, mapped to the old hop keys (s is taken by vim-sandwich)
+local flash = require('flash')
+flash.setup()
+
+-- Word jump like HopWord: two-char labels on every word start
+-- Recipe from the flash.nvim README
+local function flash_word()
+  local function format(opts)
+    return {
+      { opts.match.label1, 'FlashMatch' },
+      { opts.match.label2, 'FlashLabel' },
+    }
+  end
+
+  flash.jump({
+    search = { mode = 'search' },
+    label = { after = false, before = { 0, 0 }, uppercase = false, format = format },
+    pattern = [[\<]],
+    action = function(match, state)
+      state:hide()
+      flash.jump({
+        search = { max_length = 0 },
+        highlight = { matches = false },
+        label = { format = format },
+        matcher = function(win)
+          return vim.tbl_filter(function(m)
+            return m.label == match.label and m.win == win
+          end, state.results)
+        end,
+        labeler = function(matches)
+          for _, m in ipairs(matches) do
+            m.label = m.label2
+          end
+        end,
+      })
+    end,
+    labeler = function(matches, state)
+      local labels = state:labels()
+      for m, match in ipairs(matches) do
+        match.label1 = labels[math.floor((m - 1) / #labels) + 1]
+        match.label2 = labels[(m - 1) % #labels + 1]
+        match.label = match.label1
+      end
+    end,
+  })
+end
+
+vim.keymap.set({ 'n', 'x', 'o' }, '<Leader>hw', flash_word, { desc = 'Flash: jump to word' })
+vim.keymap.set({ 'n', 'x', 'o' }, '<Leader>hc', function()
+  flash.jump({ search = { max_length = 1 } })
+end, { desc = 'Flash: jump to char' })
+vim.keymap.set({ 'n', 'x', 'o' }, '<Leader>ha', flash.jump, { desc = 'Flash: jump anywhere' })
+
+require('neo-tree').setup({})
 
 require('gitsigns').setup()
 
