@@ -20,17 +20,14 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> General [GEN]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set encoding=utf-8
+" Neovim already defaults to: encoding=utf-8, hidden, autoread, history=10000,
+" undolevels=1000, filetype plugin/indent on, syntax on
 set fileformats=unix,dos,mac                          " Windows sucks
 set exrc                                              " Allow local exrc files
 set secure                                            " Disable autocmd in local exrc
-set hidden                                            " Allow switching buffers without saving
 set mouse=                                            " Mouse is for cry babies
-set autoread                                          " Set to auto read when a file is changed from the outside
-set history=256                                       " Command line history
 
-set undolevels=512                                    " Undo history
-silent !mkdir ~/.config/nvim/backups > /dev/null 2>&1 " Remember file changes, even after closing
+call mkdir(expand('~/.config/nvim/backups'), 'p')     " Remember file changes, even after closing
 set undodir=~/.config/nvim/backups
 set undofile
 
@@ -39,7 +36,8 @@ set undofile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Install Plug if it's not available
 if empty(glob("~/.local/share/nvim/site/autoload/plug.vim"))
-  execute "curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -58,7 +56,7 @@ Plug 'ntpeters/vim-better-whitespace'                 " Highlight trailing white
 Plug 'HiPhish/rainbow-delimiters.nvim'                " Rainbow parentheses for neovim
 Plug 'lukas-reineke/indent-blankline.nvim'            " Indentation guides to Neovim
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'kyazdani42/nvim-web-devicons'                   " Icons and colors
+Plug 'nvim-tree/nvim-web-devicons'                    " Icons and colors
 
 " File/Buffer handling
 Plug 'romgrk/barbar.nvim'
@@ -138,45 +136,32 @@ END
 " Editing position aid
 set relativenumber       " Show lines count relative to the current one
 set number               " Show the line number for the current line
-set numberwidth=2        " 3 columns reserved for the line gutter
+set numberwidth=2        " 2 columns reserved for the line gutter
 " set signcolumn="yes:1"   " Set signcolumn
 set cursorline           " Show the line's ruler
 set guicursor=
 
 " Vim command line
-set wildmenu             " Autocomplete in cmd
+" Neovim already defaults to: wildmenu, showcmd, cmdheight=1, laststatus=2
 set wildignore=*~,*.swp  " Ignore temp files
-set showcmd              " Show partial cmd
-set cmdheight=1          " Short cmd line
-set laststatus=2         " Always show the status line
 
 " Search options
+" Neovim already defaults to: hlsearch, incsearch, magic
 set ignorecase
 set smartcase            " Ignore casing unless search a cased word
-set hlsearch             " Highlight matches
-set incsearch            " Real time match
-set magic                " Parse regex in search
 
 " Interface improvements
-set noerrorbells         " Fuck bells!
-set novisualbell         " Disable flashes
+" Neovim already defaults to: belloff=all (no bells, no flashes)
 set lazyredraw           " Don't redraw while executing macros
 
 set termguicolors        " True color
-syntax enable            " Syntax highlight
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> File handling [FIL]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Don't write anything but the file
-set nobackup
+" Don't write anything but the file (nobackup is already the default)
 set nowb
 set noswapfile
-
-" Filetypes
-" Load filetype rules, not sure if this is needed in Neovim
-" filetype plugin on
-" filetype indent on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " -> Keymaps [KEY]
@@ -196,7 +181,6 @@ let mapleader = " "
 " Copy/Paste settings
 " Copy to the clipboard
 vnoremap <C-c> "+y
-set clipboard+=unnamedplus
 
 " Navigation keymaps
 " Fast jump
@@ -273,24 +257,16 @@ set shiftwidth=2
 
 " Use spaces for tabs
 set expandtab
-set smarttab
 
-" Indent
-set autoindent
+" Indent (autoindent is already the default)
 set smartindent
 
 " Break long lines, per word, 80 chars per line
 set wrap
 set linebreak
 
-" Allow backspacing over everything
-set backspace=indent,eol,start
-
 " Use clipboard provider
 set clipboard+=unnamedplus
-
-" Add an empty line at the end for UNIX compliance
-set eol
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "-> Autocmds and lang specific [AUL]
@@ -363,7 +339,6 @@ nnoremap <Leader>ha :HopAnywhereMW<CR>
 " Shell extensions
 "============================
 " -> ALE
-let g:airline#extensions#ale#enabled = 1
 let g:ale_lint_on_enter = 1
 let g:ale_lint_on_save = 1
 let g:ale_sign_error = '!'
@@ -374,24 +349,11 @@ let g:ale_linters = {
 \}
 
 "============================
-" Visual aid
-"============================
-" -> Rainbow Parentheses
-let g:rainbow_active = 1
-
-"============================
 " Completion
 "============================
 " -> CoC
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-let g:coc_snippet_next = '<tab>'
 
 let g:coc_global_extensions = [
       \ 'coc-css',
@@ -400,29 +362,33 @@ let g:coc_global_extensions = [
       \ 'coc-json',
       \ 'coc-lists',
       \ 'coc-tsserver',
-      \ 'coc-python',
+      \ 'coc-pyright',
       \ ]
 
 " -> Emmet
+" javascriptreact/typescriptreact are handled as jsx out of the box
 let g:user_emmet_leader_key='<C-q>'
-let g:user_emmet_settings = {
-  \  'javascript.jsx' : {
-    \      'extends' : 'jsx',
-    \  },
-  \}
 
 "============================
 " Colorschemes
 "============================
-let g:material_disable_background = 1
+" Transparent background everywhere, the terminal shows the wallpaper
 let g:moonflyTransparent = v:true
-colorscheme moonfly
+let g:neon_transparent = v:true
+lua << END
+require('material').setup { disable = { background = true } }
+require('onedarkpro').setup { options = { transparency = true } }
+END
 
-" Slight tweaks
-hi LineNr cterm=NONE guibg=NONE
-hi CursorColumn cterm=NONE guibg=NONE
-hi ColorColumn cterm=NONE guibg=NONE
-hi SignColumn cterm=NONE guibg=NONE
+" Catch-all for any colorscheme, also re-applied when switching themes
+function! s:TransparentBackground() abort
+  for group in ['Normal', 'NormalNC', 'EndOfBuffer', 'LineNr', 'CursorColumn', 'ColorColumn', 'SignColumn']
+    execute 'hi ' . group . ' cterm=NONE ctermbg=NONE guibg=NONE'
+  endfor
+endfunction
+autocmd ColorScheme * call s:TransparentBackground()
+
+colorscheme moonfly
 
 hi BufferVisible guibg=#2C2C2C
 hi BufferVisibleIndex guibg=#2C2C2C
@@ -483,34 +449,8 @@ require'barbar'.setup {
   focus_on_close = 'right'
 }
 
--- This module contains a number of default definitions
+-- Rainbow delimiters and indent-blankline scope share the same colors
 local rainbow_delimiters = require 'rainbow-delimiters'
-
----@type rainbow_delimiters.config
-vim.g.rainbow_delimiters = {
-    strategy = {
-        [''] = rainbow_delimiters.strategy['global'],
-        vim = rainbow_delimiters.strategy['local'],
-    },
-    query = {
-        [''] = 'rainbow-delimiters',
-        lua = 'rainbow-blocks',
-    },
-    priority = {
-        [''] = 110,
-        lua = 210,
-    },
-    highlight = {
-        'RainbowDelimiterRed',
-        'RainbowDelimiterYellow',
-        'RainbowDelimiterBlue',
-        'RainbowDelimiterOrange',
-        'RainbowDelimiterGreen',
-        'RainbowDelimiterViolet',
-        'RainbowDelimiterCyan',
-    },
-}
-
 local highlight = {
     "RainbowRed",
     "RainbowYellow",
@@ -533,7 +473,22 @@ hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
     vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
 end)
 
-vim.g.rainbow_delimiters = { highlight = highlight }
+---@type rainbow_delimiters.config
+vim.g.rainbow_delimiters = {
+    strategy = {
+        [''] = rainbow_delimiters.strategy['global'],
+        vim = rainbow_delimiters.strategy['local'],
+    },
+    query = {
+        [''] = 'rainbow-delimiters',
+        lua = 'rainbow-blocks',
+    },
+    priority = {
+        [''] = 110,
+        lua = 210,
+    },
+    highlight = highlight,
+}
 require("ibl").setup { scope = { highlight = highlight } }
 
 hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
