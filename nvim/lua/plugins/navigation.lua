@@ -31,7 +31,12 @@ return {
 
   {
     'folke/flash.nvim',  -- Jump anywhere with labels, mapped to the old hop keys (s is taken by vim-sandwich)
-    opts = {},
+    opts = {
+      -- Each label gets its own color
+      label = { rainbow = { enabled = true } },
+      -- f/t/F/T: no dimmed backdrop (it uses the Comment highlight)
+      modes = { char = { highlight = { backdrop = false } } },
+    },
     config = function(_, opts)
       local flash = require('flash')
       flash.setup(opts)
@@ -39,10 +44,11 @@ return {
       -- Word jump like HopWord: two-char labels on every word start
       -- Recipe from the flash.nvim README
       local function flash_word()
+        -- o.hl_group is FlashLabel, or the label's rainbow color when rainbow is on
         local function format(o)
           return {
             { o.match.label1, 'FlashMatch' },
-            { o.match.label2, 'FlashLabel' },
+            { o.match.label2, o.hl_group },
           }
         end
 

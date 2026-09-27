@@ -9,6 +9,10 @@ return {
         icons_enabled = true,
         theme = 'ayu_mirage',
       },
+      sections = {
+        -- Default section plus the language servers attached to the buffer
+        lualine_x = { 'lsp_status', 'encoding', 'fileformat', 'filetype' },
+      },
     },
   },
 
@@ -47,7 +51,10 @@ return {
 
   { 'ntpeters/vim-better-whitespace' },  -- Highlight trailing whitespace
 
-  { 'ap/vim-css-color' },
+  {
+    'brenoprata10/nvim-highlight-colors',  -- Preview hex/rgb/hsl/named/tailwind colors
+    opts = { enable_tailwind = true },
+  },
 
   -- Rainbow delimiters and indent-blankline scope share the same colors
   {

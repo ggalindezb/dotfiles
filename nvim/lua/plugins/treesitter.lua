@@ -9,10 +9,9 @@ return {
   build = ':TSUpdate',
   config = function()
     require('nvim-treesitter').install {
-      'bash', 'css', 'dockerfile', 'embedded_template', 'fish', 'html', 'javascript',
-      'jinja', 'json', 'lua', 'markdown', 'markdown_inline', 'nginx', 'python',
-      'ruby', 'rust', 'scss', 'slim', 'sql', 'styled', 'svelte', 'toml', 'tsx',
-      'typescript', 'vim', 'vimdoc', 'yaml',
+      'bash', 'css', 'dockerfile', 'fish', 'html', 'javascript', 'jinja', 'json',
+      'lua', 'markdown', 'markdown_inline', 'nginx', 'python', 'rust', 'scss', 'sql',
+      'styled', 'svelte', 'toml', 'tsx', 'typescript', 'vim', 'vimdoc', 'yaml',
     }
 
     vim.filetype.add({ extension = { j2 = 'jinja' } })
