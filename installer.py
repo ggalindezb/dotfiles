@@ -38,7 +38,7 @@ APT_PACKAGES = {
 BREW_FORMULAS = ['fish', 'zsh', 'tmux', 'neovim', 'starship', 'fzf', 'ripgrep', 'fd', 'bat', 'eza',
                  'git-delta', 'zoxide', 'direnv', 'httpie', 'jq', 'htop', 'tree', 'duf', 'ack',
                  'rust', 'gh', 'asdf', 'fortune', 'cowsay', 'lolcat']
-BREW_CASKS = ['alacritty', 'google-cloud-sdk']
+BREW_CASKS = ['alacritty']
 
 # Third party apt repositories, written as deb822 .sources files
 # Key sources are URLs, or a path relative to the dotfiles dir for vendored keys.
@@ -53,7 +53,6 @@ APT_REPOS = [
 
 # (snap name, needs --classic, command that means it's already installed)
 SNAPS = [
-    ('google-cloud-cli', True, 'gcloud'),
     ('slack', True, 'slack'),
     ('spotify', False, 'spotify'),
 ]
@@ -79,7 +78,7 @@ STATUS = {
     'Core Shells & Editors': ['alacritty', 'fish', 'git', 'nvim', 'tmux', 'bash', 'zsh', 'starship'],
     'CLI Utilities': ['fzf', 'rg', 'fdfind', 'batcat', 'eza', 'delta', 'zoxide', 'direnv', 'http', 'jq',
                       'htop', 'tree', 'duf', 'dust', 'procs', 'tokei', 'tree-sitter'],
-    'Dev & Cloud Tools': ['cargo', 'asdf', 'node', 'gh', 'gcloud'],
+    'Dev Tools': ['cargo', 'asdf', 'node', 'gh'],
 }
 
 
