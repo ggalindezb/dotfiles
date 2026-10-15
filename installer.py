@@ -40,15 +40,15 @@ BREW_FORMULAS = ['fish', 'zsh', 'tmux', 'neovim', 'starship', 'fzf', 'ripgrep', 
                  'rust', 'gh', 'asdf', 'fortune', 'cowsay', 'lolcat']
 BREW_CASKS = ['alacritty', 'google-cloud-sdk']
 
-# Third party apt repositories: (list file, keyring path, key source, deb line)
+# Third party apt repositories, written as deb822 .sources files
 # Key sources are URLs, or a path relative to the dotfiles dir for vendored keys.
 APT_REPOS = [
-    ('github-cli.list', '/etc/apt/keyrings/githubcli-archive-keyring.gpg',
-     'https://cli.github.com/packages/githubcli-archive-keyring.gpg',
-     'deb [arch={arch} signed-by={keyring}] https://cli.github.com/packages stable main'),
-    ('claude-desktop.list', '/usr/share/keyrings/claude-desktop-archive-keyring.asc',
-     'apt/claude-desktop-archive-keyring.asc',
-     'deb [arch=amd64,arm64 signed-by={keyring}] https://downloads.claude.ai/claude-desktop/apt/stable stable main'),
+    {'name': 'github-cli', 'uri': 'https://cli.github.com/packages/', 'suite': 'stable',
+     'keyring': '/etc/apt/keyrings/githubcli-archive-keyring.gpg',
+     'key': 'https://cli.github.com/packages/githubcli-archive-keyring.gpg'},
+    {'name': 'claude-desktop', 'uri': 'https://downloads.claude.ai/claude-desktop/apt/stable/', 'suite': 'stable',
+     'keyring': '/usr/share/keyrings/claude-desktop-archive-keyring.asc',
+     'key': 'apt/claude-desktop-archive-keyring.asc'},
 ]
 
 # (snap name, needs --classic, command that means it's already installed)
@@ -150,23 +150,25 @@ class Installer:
     def step_repos(self):
         if not LINUX:
             return print('  [-] Not on apt, skipping')
-        arch = subprocess.run(['dpkg', '--print-architecture'], capture_output=True, text=True).stdout.strip()
-        for list_name, keyring, key_src, deb in APT_REPOS:
-            list_path = Path('/etc/apt/sources.list.d') / list_name
-            line = deb.format(arch=arch, keyring=keyring) + '\n'
-            if Path(keyring).exists() and list_path.exists() and list_path.read_text() == line:
-                print(f'  [=] {list_name}')
+        sources_dir = Path('/etc/apt/sources.list.d')
+        existing = ''.join(f.read_text() for f in sources_dir.iterdir() if f.suffix in ('.list', '.sources'))
+        for repo in APT_REPOS:
+            if Path(repo['keyring']).exists() and repo['uri'].rstrip('/') in existing:
+                print(f'  [=] {repo["name"]}')
                 continue
-            print(f'  [+] {list_name}')
-            self.sudo(['mkdir', '-p', '-m', '755', Path(keyring).parent])
-            if key_src.startswith('https://'):
+            print(f'  [+] {repo["name"]}')
+            self.sudo(['mkdir', '-p', '-m', '755', Path(repo['keyring']).parent])
+            if repo['key'].startswith('https://'):
                 with tempfile.TemporaryDirectory() as tmp:
                     key = Path(tmp) / 'key'
-                    self.download(key_src, key)
-                    self.sudo(['install', '-m', '644', key, keyring])
+                    self.download(repo['key'], key)
+                    self.sudo(['install', '-m', '644', key, repo['keyring']])
             else:
-                self.sudo(['install', '-m', '644', self.dotfiles_dir / key_src, keyring])
-            self.sudo(['tee', list_path], input=line, text=True, stdout=subprocess.DEVNULL)
+                self.sudo(['install', '-m', '644', self.dotfiles_dir / repo['key'], repo['keyring']])
+            sources = (f'Types: deb\nURIs: {repo["uri"]}\nSuites: {repo["suite"]}\nComponents: main\n'
+                       f'Signed-By: {repo["keyring"]}\n')
+            self.sudo(['tee', sources_dir / f'{repo["name"]}.sources'], input=sources, text=True,
+                      stdout=subprocess.DEVNULL)
 
     def step_packages(self):
         if MAC:
