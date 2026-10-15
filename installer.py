@@ -70,6 +70,17 @@ NERD_FONTS = {
 }
 NERD_FONTS_URL = 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/{name}.tar.xz'
 
+# GNOME Shell extensions from extensions.gnome.org, and bundled ones to turn off
+GNOME_EXTENSIONS = [
+    'hidetopbar@mathieu.bidon.ca',          # Hide Top Bar
+    'azwallpaper@azwallpaper.gitlab.com',   # Wallpaper Slideshow
+    'caffeine@patapon.info',                # Caffeine
+    'tilingshell@ferrarodomenico.com',      # Tiling Shell
+]
+GNOME_EXTENSIONS_DISABLED = [
+    'tiling-assistant@ubuntu.com',          # Conflicts with Tiling Shell
+]
+
 ASDF_RELEASE_URL = 'https://github.com/asdf-vm/asdf/releases/latest/download/'
 TPM_REPO = 'https://github.com/tmux-plugins/tpm'
 
@@ -83,7 +94,7 @@ STATUS = {
 
 
 class Installer:
-    STEPS = ['repos', 'packages', 'snaps', 'cargo', 'asdf', 'fonts', 'links', 'tmux', 'nvim']
+    STEPS = ['repos', 'packages', 'snaps', 'cargo', 'asdf', 'fonts', 'links', 'tmux', 'nvim', 'gnome']
 
     def __init__(self, dry_run):
         self.dry_run = dry_run
@@ -104,12 +115,12 @@ class Installer:
                 return True
         return False
 
-    def run(self, cmd, **kwargs):
+    def run(self, cmd, check=True, **kwargs):
         print(f'    $ {" ".join(str(c) for c in cmd)}')
         if self.dry_run:
             return True
         result = subprocess.run([str(c) for c in cmd], **kwargs)
-        if result.returncode != 0:
+        if result.returncode != 0 and check:
             self.failures.append(' '.join(str(c) for c in cmd))
         return result.returncode == 0
 
@@ -326,6 +337,37 @@ class Installer:
     def step_nvim(self):
         # Install plugins at the versions pinned in nvim/lazy-lock.json
         self.run(['nvim', '--headless', '+Lazy! restore', '+qa'])
+
+    def step_gnome(self):
+        if not LINUX or 'GNOME' not in os.environ.get('XDG_CURRENT_DESKTOP', '') or not self.which('gnome-extensions'):
+            return print('  [-] Not in a GNOME session, skipping')
+
+        def listed(*flags):
+            return subprocess.run(['gnome-extensions', 'list', *flags], capture_output=True, text=True).stdout.split()
+
+        for uuid in GNOME_EXTENSIONS_DISABLED:
+            if uuid in listed('--enabled'):
+                print(f'  [-] Disabling {uuid}')
+                self.run(['gnome-extensions', 'disable', uuid])
+
+        # Ask the running shell to install, it loads the extension right away instead of on the next login.
+        # GNOME asks for confirmation of each one. The reply sometimes gets lost even though the install went
+        # through, so success is judged by the enable pass below.
+        installed = listed()
+        for uuid in GNOME_EXTENSIONS:
+            if uuid in installed:
+                continue
+            print(f'  [+] {uuid} (confirm the GNOME dialog)')
+            self.run(['gdbus', 'call', '--session', '--timeout', '600', '--dest', 'org.gnome.Shell.Extensions',
+                      '--object-path', '/org/gnome/Shell/Extensions',
+                      '--method', 'org.gnome.Shell.Extensions.InstallRemoteExtension', uuid], check=False)
+
+        enabled = listed('--enabled')
+        for uuid in GNOME_EXTENSIONS:
+            if uuid in enabled:
+                print(f'  [=] {uuid}')
+            else:
+                self.run(['gnome-extensions', 'enable', uuid])
 
     def install(self, steps):
         for step in steps:
