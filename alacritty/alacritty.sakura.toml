@@ -1,0 +1,181 @@
+# Alacritty configuration file (TOML format for Alacritty 0.13+)
+# Maintainer:	Gerardo Galindez
+# File Location:    ~/.config/alacritty/alacritty.toml
+
+[window]
+opacity = 0.70
+startup_mode = "Maximized"
+decorations = "None"
+title = "Alacritty"
+dynamic_title = true
+
+[scrolling]
+history = 100000
+multiplier = 3
+
+[font]
+size = 13.0
+
+[font.normal]
+family = "SauceCodePro Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "SauceCodePro Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "SauceCodePro Nerd Font"
+style = "Italic"
+
+[font.bold_italic]
+family = "SauceCodePro Nerd Font"
+style = "Bold Italic"
+
+[colors.primary]
+background = "#000000"
+foreground = "#ffffff"
+
+[colors.cursor]
+text = "#000000"
+cursor = "#ffffff"
+
+[colors.selection]
+text = "#eaeaea"
+background = "#404040"
+
+[colors.normal]
+black = "#000000"
+red = "#cc0000"
+green = "#59ff59"
+yellow = "#fcfc3f"
+blue = "#003be0"
+magenta = "#942098"
+cyan = "#06989a"
+white = "#dedede"
+
+[colors.bright]
+black = "#666666"
+red = "#ff0000"
+green = "#19ff00"
+yellow = "#ffff00"
+blue = "#0044ff"
+magenta = "#f700ff"
+cyan = "#09ffff"
+white = "#ffffff"
+
+[bell]
+animation = "EaseOutExpo"
+duration = 0
+color = "#ffffff"
+
+[selection]
+save_to_clipboard = true
+
+[cursor]
+style = "Block"
+unfocused_hollow = false
+
+[terminal.shell]
+program = "/usr/bin/fish"
+args = ["--login"]
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Control|Shift"
+action = "Paste"
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Control|Shift"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "Key0"
+mods = "Control"
+action = "ResetFontSize"
+
+[[keyboard.bindings]]
+key = "Plus"
+mods = "Control"
+action = "IncreaseFontSize"
+
+[[keyboard.bindings]]
+key = "Minus"
+mods = "Control"
+action = "DecreaseFontSize"
+
+[[keyboard.bindings]]
+key = "J"
+mods = "Alt"
+chars = "\u001bj"
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Alt"
+chars = "\u001bk"
+
+[[keyboard.bindings]]
+key = "H"
+mods = "Alt"
+chars = "\u001bh"
+
+[[keyboard.bindings]]
+key = "L"
+mods = "Alt"
+chars = "\u001bl"
+
+[[keyboard.bindings]]
+key = "Key1"
+mods = "Alt"
+chars = "\u001b1"
+
+[[keyboard.bindings]]
+key = "Key2"
+mods = "Alt"
+chars = "\u001b2"
+
+[[keyboard.bindings]]
+key = "Key3"
+mods = "Alt"
+chars = "\u001b3"
+
+[[keyboard.bindings]]
+key = "Key4"
+mods = "Alt"
+chars = "\u001b4"
+
+[[keyboard.bindings]]
+key = "Key5"
+mods = "Alt"
+chars = "\u001b5"
+
+[[keyboard.bindings]]
+key = "Key6"
+mods = "Alt"
+chars = "\u001b6"
+
+[[keyboard.bindings]]
+key = "Key7"
+mods = "Alt"
+chars = "\u001b7"
+
+[[keyboard.bindings]]
+key = "Key8"
+mods = "Alt"
+chars = "\u001b8"
+
+[[keyboard.bindings]]
+key = "Key9"
+mods = "Alt"
+chars = "\u001b9"
+
+[[keyboard.bindings]]
+key = "Key0"
+mods = "Alt"
+chars = "\u001b0"
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"

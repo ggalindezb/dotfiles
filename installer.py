@@ -3,61 +3,36 @@
 # Config installer script
 # Maintainer:       Gerardo Galindez
 # Created:          2019/08/09
-# Last Updated:     2020/02/28
-
-# Roadmap:
-# - Check Linux distro
-# - Probe for installed stuff
-# - Check for arguments, maybe?
-# - Create the config directories
-# - Move files into their places
-# - Install Rust and Rust dependencies
-
-# Commands that need to run in Ubuntu. All of this needs an osx port
-# Toolkit
-# sudo apt install ack cowsay curl firefox fish fortune git gnupg2 neovim tmux tree zsh
-
-# Gnome tweaks
-# sudo apt install chrome-gnome-shell dkms gnome-tweak-tool
-# sudo apt remove gnome-shell-extension-ubuntu-dock
-
-# Package manager tasks
-# sudo apt update sudo apt upgrade sudo apt autoremove
-
-# Once finished, change shells
-# chsh -s /usr/bin/fish
-
-# Install curl
-# Install system node, ruby, python and packages for neovim
-# Install starship
-# Compositor tweaks
-# Install direnv
-# Install git-delta
-# Install jq, batcat, httpie
+# Last Updated:     2026/07/31
 
 import os
 import platform
 import sys
 import shutil
+from pathlib import Path
 
 class Config:
-    CONFIGS = ['alacritty', 'fish', 'git', 'nvim', 'tmux']
+    CORE_APPS = ['alacritty', 'fish', 'git', 'nvim', 'tmux', 'bash', 'zsh']
+    CLI_UTILS = ['fzf', 'rg', 'fdfind', 'batcat', 'eza', 'delta', 'zoxide', 'direnv', 'httpie', 'jq', 'htop', 'tree', 'tree-sitter']
+    OPTIONAL_TOOLS = ['gh', 'tldr', 'procs', 'ctop', 'docker', 'aws', 'gcloud']
 
     def __init__(self):
+        self.home = Path.home()
+        self.dotfiles_dir = Path(__file__).resolve().parent
         self.set_environment_info()
-        self.set_configuration_info()
 
-    # Read the OS context and the currently available packages
     def set_environment_info(self):
         uname = os.uname()
         self.os_type = uname.sysname
 
-    # Read the config params
-    def set_configuration_info(self):
-        return 0
-
     def package_installed(self, name):
-        return True if shutil.which(name) else False
+        if shutil.which(name):
+            return True
+        # Check ~/.asdf/shims and ~/.local/bin
+        for p in [self.home / '.asdf' / 'shims', self.home / '.local' / 'bin']:
+            if (p / name).exists():
+                return True
+        return False
 
     def print_info(self):
         print('=' * 80)
@@ -70,6 +45,7 @@ class Config:
     def runtime_info(self):
         print(f'Runtime: {sys.version}')
         print(f'Arguments: {sys.argv}')
+        print(f'Dotfiles directory: {self.dotfiles_dir}')
         print()
 
     def platform_info(self):
@@ -81,19 +57,81 @@ class Config:
         print(f'Architecture: {uname.machine}')
         print()
 
-    def package_info(self):
-        self.print_subheader('Packages')
-
-        for package in self.CONFIGS:
+    def _print_package_category(self, category_name, package_list):
+        print(f'\n  [{category_name}]')
+        for package in package_list:
             if self.package_installed(package):
-                print(f'- {package}: Installed')
+                print(f'    [✓] {package:15} : Installed')
             else:
-                print(f'- {package}: Missing')
+                print(f'    [✗] {package:15} : Not Installed')
+
+    def package_info(self):
+        self.print_subheader('Packages & Tooling Status')
+        self._print_package_category('Core Shells & Editors', self.CORE_APPS)
+        self._print_package_category('CLI Utilities', self.CLI_UTILS)
+        self._print_package_category('Optional Cloud & Dev Tools', self.OPTIONAL_TOOLS)
         print()
 
     def print_subheader(self, title):
         print(f'-> {title}')
         print('-' * 20)
 
-config = Config()
-config.print_info()
+    def get_symlink_mappings(self):
+        fish_config = 'config.fish.linux' if self.os_type == 'Linux' else 'config.fish.mac'
+        
+        mappings = [
+            (self.dotfiles_dir / 'bash' / 'bashrc', self.home / '.bashrc'),
+            (self.dotfiles_dir / 'zsh' / 'zshrc', self.home / '.zshrc'),
+            (self.dotfiles_dir / 'git' / 'gitconfig', self.home / '.gitconfig'),
+            (self.dotfiles_dir / 'tmux' / 'tmux.conf', self.home / '.tmux.conf'),
+            (self.dotfiles_dir / 'nvim' / 'init.lua', self.home / '.config' / 'nvim' / 'init.lua'),
+            (self.dotfiles_dir / 'nvim' / 'lua', self.home / '.config' / 'nvim' / 'lua'),
+            (self.dotfiles_dir / 'fish' / fish_config, self.home / '.config' / 'fish' / 'config.fish'),
+            (self.dotfiles_dir / 'fish' / 'functions', self.home / '.config' / 'fish' / 'functions'),
+            (self.dotfiles_dir / 'alacritty' / 'alacritty.sakura.toml', self.home / '.config' / 'alacritty' / 'alacritty.toml'),
+        ]
+        return mappings
+
+    def install(self):
+        self.print_subheader('Installing Symlinks')
+        mappings = self.get_symlink_mappings()
+
+        for src, dst in mappings:
+            if not src.exists():
+                print(f'  [!] Source path does not exist: {src}')
+                continue
+
+            # Ensure parent directory exists
+            dst.parent.mkdir(parents=True, exist_ok=True)
+
+            if dst.is_symlink():
+                target = dst.readlink()
+                if target == src:
+                    print(f'  [=] Symlink already up-to-date: {dst} -> {src}')
+                    continue
+                else:
+                    print(f'  [~] Updating existing symlink: {dst} (was -> {target})')
+                    dst.unlink()
+            elif dst.exists():
+                backup = dst.with_suffix(dst.suffix + '.bak')
+                print(f'  [*] Backing up existing file: {dst} -> {backup}')
+                if backup.exists():
+                    if backup.is_dir() and not backup.is_symlink():
+                        shutil.rmtree(backup)
+                    else:
+                        backup.unlink()
+                dst.rename(backup)
+
+            dst.symlink_to(src)
+            print(f'  [+] Created symlink: {dst} -> {src}')
+
+        print('\nDone installing dotfiles symlinks!')
+
+if __name__ == '__main__':
+    config = Config()
+    config.print_info()
+    if '--install' in sys.argv or '-i' in sys.argv:
+        config.install()
+    else:
+        print("Run `python3 installer.py --install` to create symlinks.")
+

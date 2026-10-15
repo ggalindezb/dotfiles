@@ -9,6 +9,24 @@ This is the way.
 This setup is custom tailored for me. Just like you wouldn't use anyone else's suit, this is not meant for you to clone,
 set and forget but rather: I'm sharing what I do on a day to day basis and hopefully we can learn from each other.
 
+## Installation
+
+Symlink the configs into place (existing files are backed up as `*.bak`):
+
+```bash
+python3 installer.py --install
+```
+
+Run `python3 installer.py` alone to probe which tools are installed.
+
+Git identity lives outside the repo in `~/.gitconfig.local`:
+
+```ini
+[user]
+	email = you@example.com
+	signingkey = <GPG key id>
+```
+
 ## Tooling
 
 Here's a brief breakdown of the tools that I use.

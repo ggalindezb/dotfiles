@@ -1,10 +1,8 @@
 [user]
 	name = Gerardo Galindez
-	email = REPLACE_ME
-	signingkey = REPLACE_ME
 [core]
 	editor = nvim
-	excludesfile = /Users/ggalindezb/.gitignore_global
+	excludesfile = ~/.gitignore_global
   pager = delta
 [merge]
 	tool = nvimdiff
@@ -29,3 +27,6 @@
   light = false    # dark mode
   line-numbers = true
   side-by-side = true
+[include]
+  # Machine-specific identity (email, signingkey), not versioned
+  path = ~/.gitconfig.local

@@ -31,7 +31,7 @@ export ANDROID_HOME="$HOME/Android/Sdk"
 # Install Fisher if not available
 if not functions -q fisher
   set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
-  curl https://git.io/fisher --create-dirs -sLo $XDG_CONFIG_HOME/fish/functions/fisher.fish
+  curl https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish --create-dirs -sLo $XDG_CONFIG_HOME/fish/functions/fisher.fish
   fish -c fisher
 end
 
@@ -59,8 +59,8 @@ alias tree='tree -CAh'                      # Color tree
 alias precommit='pre-commit'
 abbr --add - 'cd -'                         # cd back
 abbr --add ls 'ls -lFpHh --color'           # Better ls
-abbr --add exal 'exa -lFhg'                 # Exa long
-abbr --add exat 'exa -lT -L2'               # Exa tree
+abbr --add exal 'eza -lFhg'                 # Eza long
+abbr --add exat 'eza -lT -L2'               # Eza tree
 
 # Git
 abbr --add gst 'git status -s -b'                  # Brief git status
@@ -107,6 +107,3 @@ set -g LS_COLORS 'di=1;32:fi=0:ln=4;33'
 # -> Fish shell docs (2019/08/01) [https://fishshell.com/docs/current/tutorial.html]
 # -> LS_COLORS https://gist.github.com/thomd/7667642
 
-
-# Added by Antigravity CLI installer
-set -gx PATH "/home/ggalindezb/.local/bin" $PATH

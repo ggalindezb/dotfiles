@@ -16,6 +16,10 @@ vim.fn.mkdir(undodir, 'p')
 opt.undodir = undodir
 opt.undofile = true
 
+-- Skip unused remote plugin providers
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 -------------------------------------------------------------------------------
 -- Vim UI
 -------------------------------------------------------------------------------
