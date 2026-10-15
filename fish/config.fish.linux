@@ -21,7 +21,6 @@ set -xg GPG_TTY (tty)
 set -xg EDITOR nvim
 fish_add_path "$HOME/.cargo/bin"
 fish_add_path "$HOME/.local/bin"
-if [ -f '/home/ggalindezb/.local/google-cloud-sdk/path.fish.inc' ]; . '/home/ggalindezb/.local/google-cloud-sdk/path.fish.inc'; end
 
 export ANDROID_HOME="$HOME/Android/Sdk"
 

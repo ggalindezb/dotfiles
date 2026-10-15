@@ -1,4 +1,7 @@
 /target
+.claude/
+google-cloud-sdk/
+google-cloud-cli-*.tar.gz
 Cargo.lock
 node_modules
 fish/functions/fisher.fish
