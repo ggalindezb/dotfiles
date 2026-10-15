@@ -41,6 +41,7 @@ end
 direnv hook fish | source
 starship init fish | source
 zoxide init --hook prompt fish | source
+fzf --fish | source
 
 set label (cat /etc/lsb-release | head -n 1 | cut -d = -f 2)
 
