@@ -32,7 +32,7 @@ APT_PACKAGES = {
             'jq', 'htop', 'tree', 'duf', 'ack', 'cargo', 'gh'],
     'fun': ['fortune-mod', 'cowsay', 'lolcat'],
     'virt': ['qemu-system-x86', 'qemu-utils', 'ovmf', 'virt-manager', 'virt-viewer', 'virtinst'],
-    'desktop': ['claude-desktop', 'vlc'],
+    'desktop': ['claude-desktop', 'vlc', 'flatpak'],
 }
 
 BREW_FORMULAS = ['fish', 'zsh', 'tmux', 'neovim', 'starship', 'fzf', 'ripgrep', 'fd', 'bat', 'eza',
@@ -55,6 +55,11 @@ APT_REPOS = [
 SNAPS = [
     ('slack', True, 'slack'),
     ('spotify', False, 'spotify'),
+]
+
+# Flathub apps, installed per user so they don't need sudo
+FLATPAKS = [
+    'me.timschneeberger.jdsp4linux',  # JamesDSP
 ]
 
 # (crate, binary)
@@ -94,7 +99,7 @@ STATUS = {
 
 
 class Installer:
-    STEPS = ['repos', 'packages', 'snaps', 'cargo', 'asdf', 'fonts', 'links', 'tmux', 'nvim', 'gnome']
+    STEPS = ['repos', 'packages', 'snaps', 'flatpaks', 'cargo', 'asdf', 'fonts', 'links', 'tmux', 'nvim', 'gnome']
 
     def __init__(self, dry_run):
         self.dry_run = dry_run
@@ -212,6 +217,20 @@ class Installer:
                 continue
             print(f'  [+] {name}')
             self.sudo(['snap', 'install', name] + (['--classic'] if classic else []))
+
+    def step_flatpaks(self):
+        if not LINUX or not self.which('flatpak'):
+            return print('  [-] No flatpak, skipping')
+        self.run(['flatpak', 'remote-add', '--user', '--if-not-exists', 'flathub',
+                  'https://dl.flathub.org/repo/flathub.flatpakrepo'])
+        installed = subprocess.run(['flatpak', 'list', '--user', '--app', '--columns=application'],
+                                   capture_output=True, text=True).stdout.split()
+        for app in FLATPAKS:
+            if app in installed:
+                print(f'  [=] {app}')
+                continue
+            print(f'  [+] {app}')
+            self.run(['flatpak', 'install', '--user', '--noninteractive', 'flathub', app])
 
     def step_cargo(self):
         missing = [crate for crate, binary in CARGO_CRATES if not self.which(binary)]
