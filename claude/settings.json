@@ -1,0 +1,15 @@
+{
+  "model": "opus[1m]",
+  "enabledPlugins": {
+    "slack@claude-plugins-official": true,
+    "linear@claude-plugins-official": true,
+    "atlassian@claude-plugins-official": true
+  },
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "agentPushNotifEnabled": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  }
+}
