@@ -12,7 +12,7 @@ import shutil
 from pathlib import Path
 
 class Config:
-    CORE_APPS = ['alacritty', 'fish', 'git', 'nvim', 'tmux', 'bash', 'zsh']
+    CORE_APPS = ['alacritty', 'ghostty', 'fish', 'git', 'nvim', 'tmux', 'bash', 'zsh']
     CLI_UTILS = ['fzf', 'rg', 'fdfind', 'batcat', 'eza', 'delta', 'zoxide', 'direnv', 'httpie', 'jq', 'htop', 'tree', 'tree-sitter']
     OPTIONAL_TOOLS = ['gh', 'tldr', 'procs', 'ctop', 'docker', 'aws', 'gcloud']
 
@@ -89,6 +89,7 @@ class Config:
             (self.dotfiles_dir / 'fish' / fish_config, self.home / '.config' / 'fish' / 'config.fish'),
             (self.dotfiles_dir / 'fish' / 'functions', self.home / '.config' / 'fish' / 'functions'),
             (self.dotfiles_dir / 'alacritty' / 'alacritty.sakura.toml', self.home / '.config' / 'alacritty' / 'alacritty.toml'),
+            (self.dotfiles_dir / 'ghostty' / 'config', self.home / '.config' / 'ghostty' / 'config'),
         ]
         return mappings
 

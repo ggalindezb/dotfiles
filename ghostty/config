@@ -1,0 +1,60 @@
+# Ported from ~/.config/alacritty/alacritty.toml
+
+# Shell
+command = /usr/bin/fish --login
+theme = Catppuccin Mocha
+custom-shader = shaders/ghostty/cursor_warp.glsl
+custom-shader-animation = always
+
+# Font
+font-family = "0xProto Nerd Font"
+font-size = 13
+adjust-cell-height = -12%
+
+#font-family = "SauceCodePro Nerd Font"
+#font-size = 14
+
+# Window
+background-opacity = 0.80
+window-decoration = none
+maximize = true
+window-padding-x = 0
+window-padding-y = 0
+
+# Scrolling (Ghostty limits scrollback in bytes, not lines)
+scrollback-limit = 100000000
+mouse-scroll-multiplier = precision:0.5,discrete:1
+
+# Selection
+copy-on-select = clipboard
+
+# Colors
+background = #000000
+foreground = #ffffff
+cursor-color = #ffffff
+cursor-text = #000000
+selection-background = #404040
+selection-foreground = #eaeaea
+
+# Alt+1..9 switch tabs by default; unbind them so they reach the shell as
+# Esc+digit, as they did in Alacritty
+# keybind = alt+1=unbind
+# keybind = alt+2=unbind
+# keybind = alt+3=unbind
+# keybind = alt+4=unbind
+# keybind = alt+5=unbind
+# keybind = alt+6=unbind
+# keybind = alt+7=unbind
+# keybind = alt+8=unbind
+# keybind = alt+9=unbind
+# keybind = alt+digit_1=unbind
+# keybind = alt+digit_2=unbind
+# keybind = alt+digit_3=unbind
+# keybind = alt+digit_4=unbind
+# keybind = alt+digit_5=unbind
+# keybind = alt+digit_6=unbind
+# keybind = alt+digit_7=unbind
+# keybind = alt+digit_8=unbind
+
+# Full screen drops transparency on GNOME
+keybind = ctrl+enter=unbind
