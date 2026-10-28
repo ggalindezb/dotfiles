@@ -85,6 +85,7 @@ class Config:
             (self.dotfiles_dir / 'git' / 'gitconfig', self.home / '.gitconfig'),
             (self.dotfiles_dir / 'tmux' / 'tmux.conf', self.home / '.tmux.conf'),
             (self.dotfiles_dir / 'tmux' / 'dir-icon.sh', self.home / '.config' / 'tmux' / 'dir-icon.sh'),
+            (self.dotfiles_dir / 'tmux' / 'cmd-icon.sh', self.home / '.config' / 'tmux' / 'cmd-icon.sh'),
             (self.dotfiles_dir / 'nvim' / 'init.lua', self.home / '.config' / 'nvim' / 'init.lua'),
             (self.dotfiles_dir / 'nvim' / 'lua', self.home / '.config' / 'nvim' / 'lua'),
             (self.dotfiles_dir / 'fish' / fish_config, self.home / '.config' / 'fish' / 'config.fish'),
