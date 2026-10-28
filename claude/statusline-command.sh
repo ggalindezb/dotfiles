@@ -32,6 +32,7 @@ DARK_PURPLE="88;56;128"
 
 SEP=$''
 LCAP=$''
+RCAP=$''
 prev=""
 out=""
 
@@ -76,5 +77,5 @@ if [ -n "$dur" ]; then
 fi
 [ -n "$added" ] && seg "$MAUVE" " +${added} -${removed:-0} "
 
-out+="\033[0m\033[38;2;${prev}m${SEP}\033[0m"
+out+="\033[0m\033[38;2;${prev}m${RCAP}\033[0m"
 printf "%b" "$out"
