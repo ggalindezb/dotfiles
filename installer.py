@@ -13,7 +13,7 @@ from pathlib import Path
 
 class Config:
     CORE_APPS = ['alacritty', 'ghostty', 'claude', 'fish', 'git', 'nvim', 'tmux', 'bash', 'zsh']
-    CLI_UTILS = ['fzf', 'rg', 'fdfind', 'batcat', 'eza', 'delta', 'zoxide', 'direnv', 'httpie', 'jq', 'htop', 'tree', 'tree-sitter']
+    CLI_UTILS = ['fzf', 'rg', 'fdfind', 'batcat', 'eza', 'delta', 'zoxide', 'direnv', 'httpie', 'jq', 'htop', 'tree', 'tree-sitter', 'ast-grep', 'shellcheck', 'yq', 'sd']
     OPTIONAL_TOOLS = ['gh', 'tldr', 'procs', 'ctop', 'docker', 'aws', 'gcloud']
 
     def __init__(self):
