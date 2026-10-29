@@ -29,15 +29,15 @@ APT_PACKAGES = {
     'base': ['build-essential', 'curl', 'wget', 'git', 'gnupg', 'unzip', 'xz-utils', 'fontconfig'],
     'shells': ['fish', 'zsh', 'tmux', 'neovim', 'alacritty', 'starship'],
     'cli': ['fzf', 'ripgrep', 'fd-find', 'bat', 'eza', 'git-delta', 'zoxide', 'direnv', 'httpie',
-            'jq', 'htop', 'tree', 'duf', 'du-dust', 'ack', 'cargo', 'gh'],
+            'jq', 'htop', 'tree', 'duf', 'ack', 'gh'],
     'fun': ['fortune-mod', 'cowsay', 'lolcat'],
     'virt': ['qemu-system-x86', 'qemu-utils', 'ovmf', 'virt-manager', 'virt-viewer', 'virtinst'],
     'desktop': ['claude-desktop', 'vlc', 'flatpak'],
 }
 
 BREW_FORMULAS = ['fish', 'zsh', 'tmux', 'neovim', 'starship', 'fzf', 'ripgrep', 'fd', 'bat', 'eza',
-                 'git-delta', 'zoxide', 'direnv', 'httpie', 'jq', 'htop', 'tree', 'duf', 'dust', 'ack',
-                 'rust', 'gh', 'asdf', 'fortune', 'cowsay', 'lolcat']
+                 'git-delta', 'zoxide', 'direnv', 'httpie', 'jq', 'htop', 'tree', 'duf', 'ack',
+                 'gh', 'asdf', 'fortune', 'cowsay', 'lolcat']
 BREW_CASKS = ['alacritty']
 
 # Third party apt repositories, written as deb822 .sources files
@@ -65,9 +65,8 @@ FLATPAKS = [
 # Global npm packages, installed with asdf's node: (package, binary)
 NPM_PACKAGES = [('tree-sitter-cli', 'tree-sitter')]
 
-# (crate, binary)
-# du-dust comes from apt: its locked deps need a newer rustc than Ubuntu ships
-CARGO_CRATES = [('procs', 'procs'), ('tokei', 'tokei'), ('bandwhich', 'bandwhich')]
+# Built with asdf's rust: (crate, binary)
+CARGO_CRATES = [('du-dust', 'dust'), ('procs', 'procs'), ('tokei', 'tokei'), ('bandwhich', 'bandwhich')]
 
 # Nerd Fonts release archive name -> file prefix once installed
 NERD_FONTS = {
@@ -105,7 +104,7 @@ STATUS = {
 
 
 class Installer:
-    STEPS = ['repos', 'packages', 'snaps', 'flatpaks', 'cargo', 'asdf', 'npm', 'fonts', 'links', 'tmux', 'nvim', 'gnome']
+    STEPS = ['repos', 'packages', 'snaps', 'flatpaks', 'asdf', 'npm', 'cargo', 'fonts', 'links', 'tmux', 'nvim', 'gnome']
 
     def __init__(self, dry_run):
         self.dry_run = dry_run
@@ -238,13 +237,6 @@ class Installer:
             print(f'  [+] {app}')
             self.run(['flatpak', 'install', '--user', '--noninteractive', 'flathub', app])
 
-    def step_cargo(self):
-        missing = [crate for crate, binary in CARGO_CRATES if not self.which(binary)]
-        if not missing:
-            return print(f'  [=] All {len(CARGO_CRATES)} crates installed')
-        print(f'  [+] Missing: {" ".join(missing)}')
-        self.run(['cargo', 'install', '--locked'] + missing)
-
     def asdf_command(self):
         for candidate in [shutil.which('asdf'), self.home / '.asdf' / 'bin' / 'asdf', self.local_bin / 'asdf']:
             if candidate and Path(candidate).exists():
@@ -284,13 +276,18 @@ class Installer:
         self.run([asdf, 'install'], cwd=tool_versions.parent,
                  env={**env, 'ASDF_DEFAULT_TOOL_VERSIONS_FILENAME': tool_versions.name})
 
-    def step_npm(self):
+    def asdf_tool(self, tool):
+        """asdf, run options and the bin dir of the tool's version (None until it's installed)"""
         asdf = self.asdf_command() or 'asdf'  # Not there yet on a fresh machine's dry run
-        # Same as the asdf step: ~/.tool-versions isn't linked yet, so pick node from the repo copy
+        # Same as the asdf step: ~/.tool-versions isn't linked yet, so pick versions from the repo copy
         kwargs = {'cwd': self.dotfiles_dir, 'env': {**os.environ, 'ASDF_DEFAULT_TOOL_VERSIONS_FILENAME': 'tool-versions'}}
-        where = subprocess.run([asdf, 'where', 'nodejs'], capture_output=True, text=True, **kwargs) \
+        where = subprocess.run([asdf, 'where', tool], capture_output=True, text=True, **kwargs) \
             if Path(asdf).exists() else None
-        node_bin = Path(where.stdout.strip()) / 'bin' if where and where.returncode == 0 else None
+        bin_dir = Path(where.stdout.strip()) / 'bin' if where and where.returncode == 0 else None
+        return asdf, kwargs, bin_dir
+
+    def step_npm(self):
+        asdf, kwargs, node_bin = self.asdf_tool('nodejs')
         missing = [package for package, binary in NPM_PACKAGES if not (node_bin and (node_bin / binary).exists())]
         if not missing:
             return print(f'  [=] All {len(NPM_PACKAGES)} npm packages installed')
@@ -298,6 +295,16 @@ class Installer:
         # Packages like tree-sitter-cli fetch their binary in an install script, which newer npm won't run unless allowed
         self.run([asdf, 'exec', 'npm', 'install', '-g', f'--allow-scripts={",".join(missing)}'] + missing, **kwargs)
         self.run([asdf, 'reshim', 'nodejs'], **kwargs)
+
+    def step_cargo(self):
+        # asdf's rust keeps CARGO_HOME in its install dir, so crates land next to cargo and need a reshim
+        asdf, kwargs, rust_bin = self.asdf_tool('rust')
+        missing = [crate for crate, binary in CARGO_CRATES if not (rust_bin and (rust_bin / binary).exists())]
+        if not missing:
+            return print(f'  [=] All {len(CARGO_CRATES)} crates installed')
+        print(f'  [+] Missing: {" ".join(missing)}')
+        self.run([asdf, 'exec', 'cargo', 'install', '--locked'] + missing, **kwargs)
+        self.run([asdf, 'reshim', 'rust'], **kwargs)
 
     def latest_release_tag(self, latest_download_url):
         # /releases/latest/download/ redirects to /releases/download/<tag>/
