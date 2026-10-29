@@ -363,10 +363,15 @@ class Installer:
             (self.dotfiles_dir / 'claude' / 'settings.json', self.home / '.claude' / 'settings.json'),
             (self.dotfiles_dir / 'claude' / 'statusline-command.sh', self.home / '.claude' / 'statusline-command.sh'),
         ]
+        host = os.uname().nodename
         # Per-device Ghostty overrides, picked up by `config-file = ?local`
-        ghostty_host = self.dotfiles_dir / 'ghostty' / 'hosts' / os.uname().nodename
+        ghostty_host = self.dotfiles_dir / 'ghostty' / 'hosts' / host
         if ghostty_host.exists():
             mappings.append((ghostty_host, self.home / '.config' / 'ghostty' / 'local'))
+        # Each device has its own whole Starship prompt; there's no include to share a base
+        starship_host = self.dotfiles_dir / 'starship' / 'hosts' / f'{host}.toml'
+        if starship_host.exists():
+            mappings.append((starship_host, self.home / '.config' / 'starship.toml'))
         return mappings
 
     def step_links(self):
