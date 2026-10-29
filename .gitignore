@@ -1,4 +1,5 @@
 /target
+.claude/
 Cargo.lock
 node_modules
 fish/functions/fisher.fish

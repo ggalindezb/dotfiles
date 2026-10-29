@@ -11,13 +11,20 @@ set and forget but rather: I'm sharing what I do on a day to day basis and hopef
 
 ## Installation
 
-Symlink the configs into place (existing files are backed up as `*.bak`):
+One run sets up a machine: apt repos and packages (Homebrew on macOS), snaps, Flathub apps, cargo crates, asdf with the
+runtimes in `tool-versions`, Nerd Fonts, config symlinks, tmux plugins, the pinned nvim plugins and GNOME Shell extensions.
 
 ```bash
-python3 installer.py --install
+python3 installer.py            # Tool status plus a dry run of every step
+python3 installer.py --install  # Do it (asks for sudo when something system-wide is missing)
 ```
 
-Run `python3 installer.py` alone to probe which tools are installed.
+Every step skips whatever is already in place, so re-running is safe. Existing config files are backed up as
+`*.bak` before being replaced with symlinks. Pick steps with `--only` / `--skip`, e.g.
+`python3 installer.py --install --only packages,links`. Steps, in order:
+`repos, packages, snaps, flatpaks, cargo, asdf, fonts, links, tmux, nvim, gnome`.
+
+What gets installed lives in the manifest at the top of `installer.py`.
 
 Git identity lives outside the repo in `~/.gitconfig.local`:
 
