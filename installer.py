@@ -62,6 +62,9 @@ FLATPAKS = [
     'me.timschneeberger.jdsp4linux',  # JamesDSP
 ]
 
+# Global npm packages, installed with asdf's node: (package, binary)
+NPM_PACKAGES = [('tree-sitter-cli', 'tree-sitter')]
+
 # (crate, binary)
 CARGO_CRATES = [('du-dust', 'dust'), ('procs', 'procs'), ('tokei', 'tokei'), ('bandwhich', 'bandwhich')]
 
@@ -101,7 +104,7 @@ STATUS = {
 
 
 class Installer:
-    STEPS = ['repos', 'packages', 'snaps', 'flatpaks', 'cargo', 'asdf', 'fonts', 'links', 'tmux', 'nvim', 'gnome']
+    STEPS = ['repos', 'packages', 'snaps', 'flatpaks', 'cargo', 'asdf', 'npm', 'fonts', 'links', 'tmux', 'nvim', 'gnome']
 
     def __init__(self, dry_run):
         self.dry_run = dry_run
@@ -280,6 +283,21 @@ class Installer:
         self.run([asdf, 'install'], cwd=tool_versions.parent,
                  env={**env, 'ASDF_DEFAULT_TOOL_VERSIONS_FILENAME': tool_versions.name})
 
+    def step_npm(self):
+        asdf = self.asdf_command() or 'asdf'  # Not there yet on a fresh machine's dry run
+        # Same as the asdf step: ~/.tool-versions isn't linked yet, so pick node from the repo copy
+        kwargs = {'cwd': self.dotfiles_dir, 'env': {**os.environ, 'ASDF_DEFAULT_TOOL_VERSIONS_FILENAME': 'tool-versions'}}
+        where = subprocess.run([asdf, 'where', 'nodejs'], capture_output=True, text=True, **kwargs) \
+            if Path(asdf).exists() else None
+        node_bin = Path(where.stdout.strip()) / 'bin' if where and where.returncode == 0 else None
+        missing = [package for package, binary in NPM_PACKAGES if not (node_bin and (node_bin / binary).exists())]
+        if not missing:
+            return print(f'  [=] All {len(NPM_PACKAGES)} npm packages installed')
+        print(f'  [+] Missing: {" ".join(missing)}')
+        # Packages like tree-sitter-cli fetch their binary in an install script, which newer npm won't run unless allowed
+        self.run([asdf, 'exec', 'npm', 'install', '-g', f'--allow-scripts={",".join(missing)}'] + missing, **kwargs)
+        self.run([asdf, 'reshim', 'nodejs'], **kwargs)
+
     def latest_release_tag(self, latest_download_url):
         # /releases/latest/download/ redirects to /releases/download/<tag>/
         latest = latest_download_url.replace('/latest/download/', '/latest')
@@ -311,6 +329,7 @@ class Installer:
         mappings = [
             (self.dotfiles_dir / 'bash' / 'bashrc', self.home / '.bashrc'),
             (self.dotfiles_dir / 'zsh' / 'zshrc', self.home / '.zshrc'),
+            (self.dotfiles_dir / 'git' / 'gitconfig', self.home / '.gitconfig'),
             (self.dotfiles_dir / 'tmux' / 'tmux.conf', self.home / '.tmux.conf'),
             (self.dotfiles_dir / 'tmux' / 'dir-icon.sh', self.home / '.config' / 'tmux' / 'dir-icon.sh'),
             (self.dotfiles_dir / 'tmux' / 'cmd-icon.sh', self.home / '.config' / 'tmux' / 'cmd-icon.sh'),
@@ -357,17 +376,6 @@ class Installer:
 
             dst.symlink_to(src)
             print(f'  [+] {dst} -> {src}')
-
-        # ~/.gitconfig is a copy, not a link: each machine adds its own identity to it
-        src, dst = self.dotfiles_dir / 'git' / 'gitconfig', self.home / '.gitconfig'
-        if dst.exists() and not (dst.is_symlink() and dst.readlink() == src):
-            print(f'  [=] {dst} (machine copy, left alone)')
-        else:
-            print(f'  [+] {dst} (copied from {src})')
-            if not self.dry_run:
-                if dst.is_symlink():
-                    dst.unlink()
-                shutil.copyfile(src, dst)
 
     def step_tmux(self):
         tpm = self.home / '.tmux' / 'plugins' / 'tpm'
