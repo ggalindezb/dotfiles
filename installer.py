@@ -308,7 +308,7 @@ class Installer:
 
     def get_symlink_mappings(self):
         fish_config = 'config.fish.mac' if MAC else 'config.fish.linux'
-        return [
+        mappings = [
             (self.dotfiles_dir / 'bash' / 'bashrc', self.home / '.bashrc'),
             (self.dotfiles_dir / 'zsh' / 'zshrc', self.home / '.zshrc'),
             (self.dotfiles_dir / 'git' / 'gitconfig', self.home / '.gitconfig'),
@@ -325,6 +325,11 @@ class Installer:
             (self.dotfiles_dir / 'claude' / 'settings.json', self.home / '.claude' / 'settings.json'),
             (self.dotfiles_dir / 'claude' / 'statusline-command.sh', self.home / '.claude' / 'statusline-command.sh'),
         ]
+        # Per-device Ghostty overrides, picked up by `config-file = ?local`
+        ghostty_host = self.dotfiles_dir / 'ghostty' / 'hosts' / os.uname().nodename
+        if ghostty_host.exists():
+            mappings.append((ghostty_host, self.home / '.config' / 'ghostty' / 'local'))
+        return mappings
 
     def step_links(self):
         for src, dst in self.get_symlink_mappings():
