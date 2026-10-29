@@ -26,6 +26,8 @@ return {
         vim.api.nvim_set_hl(0, group, { bg = '#2C2C2C' })
       end
       vim.cmd('hi BufferTabpageFill guifg=#FFFFFF cterm=NONE guibg=#2C2C2C')
+      -- moonfly's #323437 selection vanishes against the see-through background, which ends up around #333
+      vim.api.nvim_set_hl(0, 'Visual', { bg = '#3e5378' })
     end,
   },
   {
