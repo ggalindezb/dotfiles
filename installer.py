@@ -10,6 +10,7 @@
 # Without `--install` it only prints what it would do.
 
 import argparse
+import json
 import os
 import shutil
 import subprocess
@@ -21,6 +22,9 @@ from pathlib import Path
 
 LINUX = sys.platform.startswith('linux')
 MAC = sys.platform == 'darwin'
+# Release codename (e.g. resolute) for repos that publish one suite per Ubuntu release
+CODENAME = next((l.split('=', 1)[1].strip().strip('"') for l in Path('/etc/os-release').read_text().splitlines()
+                 if l.startswith('VERSION_CODENAME=')), '') if LINUX else ''
 
 # """"""""""""""""""""""""""""""""""""""""""""""""
 # -> Manifest
@@ -33,6 +37,7 @@ APT_PACKAGES = {
     'fun': ['fortune-mod', 'cowsay', 'lolcat'],
     'virt': ['qemu-system-x86', 'qemu-utils', 'ovmf', 'virt-manager', 'virt-viewer', 'virtinst'],
     'desktop': ['claude-desktop', 'vlc', 'flatpak'],
+    'net': ['tailscale'],
 }
 
 BREW_FORMULAS = ['fish', 'zsh', 'tmux', 'neovim', 'starship', 'fzf', 'ripgrep', 'fd', 'bat', 'eza',
@@ -49,6 +54,9 @@ APT_REPOS = [
     {'name': 'claude-desktop', 'uri': 'https://downloads.claude.ai/claude-desktop/apt/stable/', 'suite': 'stable',
      'keyring': '/usr/share/keyrings/claude-desktop-archive-keyring.asc',
      'key': 'apt/claude-desktop-archive-keyring.asc'},
+    {'name': 'tailscale', 'uri': 'https://pkgs.tailscale.com/stable/ubuntu', 'suite': CODENAME,
+     'keyring': '/usr/share/keyrings/tailscale-archive-keyring.gpg',
+     'key': f'https://pkgs.tailscale.com/stable/ubuntu/{CODENAME}.noarmor.gpg'},
 ]
 
 # (snap name, needs --classic, command that means it's already installed)
@@ -90,6 +98,9 @@ GNOME_EXTENSIONS_DISABLED = [
     'tiling-assistant@ubuntu.com',          # Conflicts with Tiling Shell
 ]
 
+# Mostly for ssh to the other boxes. Twingate runs on top for work and owns DNS, so Tailscale keeps its hands off it
+TAILSCALE_FLAGS = ['--accept-dns=false', '--ssh', '--accept-routes']
+
 ASDF_RELEASE_URL = 'https://github.com/asdf-vm/asdf/releases/latest/download/'
 TPM_REPO = 'https://github.com/tmux-plugins/tpm'
 
@@ -104,7 +115,8 @@ STATUS = {
 
 
 class Installer:
-    STEPS = ['repos', 'packages', 'snaps', 'flatpaks', 'asdf', 'npm', 'cargo', 'fonts', 'links', 'tmux', 'nvim', 'gnome']
+    STEPS = ['repos', 'packages', 'snaps', 'flatpaks', 'asdf', 'npm', 'cargo', 'fonts', 'links', 'tmux', 'nvim', 'gnome',
+             'tailscale']
 
     def __init__(self, dry_run):
         self.dry_run = dry_run
@@ -425,6 +437,28 @@ class Installer:
                 print(f'  [=] {uuid}')
             else:
                 self.run(['gnome-extensions', 'enable', uuid])
+
+    def step_tailscale(self):
+        if not LINUX or not self.which('tailscale'):
+            return print('  [-] No tailscale, skipping')
+        user = os.environ.get('USER', '')
+
+        def query(*args):
+            return json.loads(subprocess.run(['tailscale', *args], capture_output=True, text=True).stdout or '{}')
+
+        if query('debug', 'prefs').get('OperatorUser') == user:
+            print(f'  [=] operator {user}')
+        else:
+            # Lets this user run tailscale without sudo, including the commands below
+            print(f'  [+] operator {user}')
+            self.sudo(['tailscale', 'set', f'--operator={user}'])
+
+        if query('status', '--json').get('BackendState') == 'Running':
+            print(f'  [=] logged in, applying {" ".join(TAILSCALE_FLAGS)}')
+            self.run(['tailscale', 'set'] + TAILSCALE_FLAGS)
+        else:
+            print('  [+] login (open the URL it prints)')
+            self.run(['tailscale', 'up'] + TAILSCALE_FLAGS)
 
     def install(self, steps):
         for step in steps:
