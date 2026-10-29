@@ -74,6 +74,15 @@ FLATPAKS = [
 NPM_PACKAGES = [('tree-sitter-cli', 'tree-sitter'), ('@ast-grep/cli', 'ast-grep')]
 
 # Built with asdf's rust: (crate, binary)
+# Tools that print their own fish completions, but don't install them: (command, generator)
+# dust, bandwhich, claude and httpie have no generator
+FISH_COMPLETIONS = [
+    ('asdf', ['asdf', 'completion', 'fish']),
+    ('tree-sitter', ['tree-sitter', 'complete', '--shell', 'fish']),
+    ('ast-grep', ['ast-grep', 'completions', 'fish']),
+    ('procs', ['procs', '--gen-completion-out', 'fish']),
+]
+
 CARGO_CRATES = [('du-dust', 'dust'), ('procs', 'procs'), ('tokei', 'tokei'), ('bandwhich', 'bandwhich')]
 
 # Nerd Fonts release archive name -> file prefix once installed
@@ -115,7 +124,7 @@ STATUS = {
 
 
 class Installer:
-    STEPS = ['repos', 'packages', 'snaps', 'flatpaks', 'asdf', 'npm', 'cargo', 'fonts', 'links', 'tmux', 'nvim', 'gnome',
+    STEPS = ['repos', 'packages', 'snaps', 'flatpaks', 'asdf', 'npm', 'cargo', 'completions', 'fonts', 'links', 'tmux', 'nvim', 'gnome',
              'tailscale']
 
     def __init__(self, dry_run):
@@ -326,6 +335,31 @@ class Installer:
         latest = latest_download_url.replace('/latest/download/', '/latest')
         with urllib.request.urlopen(urllib.request.Request(latest, method='HEAD')) as response:
             return response.url.rstrip('/').rsplit('/', 1)[-1]
+
+    def step_completions(self):
+        # Regenerated on every run so they follow tool upgrades. Not versioned, they depend on the installed version
+        completions_dir = self.home / '.config' / 'fish' / 'completions'
+        env = {**os.environ, 'PATH': os.pathsep.join([str(self.local_bin), str(self.home / '.asdf' / 'shims'),
+                                                      os.environ.get('PATH', '')])}
+        for command, generator in FISH_COMPLETIONS:
+            if not self.which(command):
+                print(f'  [-] {command} not installed, skipping')
+                continue
+            dst = completions_dir / f'{command}.fish'
+            if self.dry_run:
+                print(f'  [+] {dst} ({" ".join(generator)})')
+                continue
+            result = subprocess.run(generator, capture_output=True, text=True, env=env, cwd=self.home)
+            if result.returncode != 0 or 'complete ' not in result.stdout:
+                print(f'  [!] {command}: {" ".join(generator)} gave no completions')
+                self.failures.append(f'completions: {command}')
+                continue
+            if dst.exists() and dst.read_text() == result.stdout:
+                print(f'  [=] {dst}')
+                continue
+            completions_dir.mkdir(parents=True, exist_ok=True)
+            dst.write_text(result.stdout)
+            print(f'  [+] {dst}')
 
     def step_fonts(self):
         fonts_dir = self.home / 'Library' / 'Fonts' if MAC else self.home / '.local' / 'share' / 'fonts' / 'NerdFonts'
