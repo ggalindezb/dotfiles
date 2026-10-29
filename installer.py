@@ -384,8 +384,8 @@ class Installer:
             if uuid in installed:
                 continue
             print(f'  [+] {uuid} (confirm the GNOME dialog)')
-            self.run(['gdbus', 'call', '--session', '--timeout', '600', '--dest', 'org.gnome.Shell.Extensions',
-                      '--object-path', '/org/gnome/Shell/Extensions',
+            self.run(['gdbus', 'call', '--session', '--timeout', '600', '--dest', 'org.gnome.Shell',
+                      '--object-path', '/org/gnome/Shell',
                       '--method', 'org.gnome.Shell.Extensions.InstallRemoteExtension', uuid], check=False)
 
         enabled = listed('--enabled')
