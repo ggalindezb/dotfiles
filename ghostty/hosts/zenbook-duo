@@ -1,0 +1,3 @@
+# zenbook-duo (UX8406MA): the shared config was tuned on this screen, so this only pins it
+# Hostname unconfirmed: rename this file to the output of `hostname` there if the override doesn't load
+font-size = 13
