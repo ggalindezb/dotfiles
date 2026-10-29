@@ -29,14 +29,14 @@ APT_PACKAGES = {
     'base': ['build-essential', 'curl', 'wget', 'git', 'gnupg', 'unzip', 'xz-utils', 'fontconfig'],
     'shells': ['fish', 'zsh', 'tmux', 'neovim', 'alacritty', 'starship'],
     'cli': ['fzf', 'ripgrep', 'fd-find', 'bat', 'eza', 'git-delta', 'zoxide', 'direnv', 'httpie',
-            'jq', 'htop', 'tree', 'duf', 'ack', 'cargo', 'gh'],
+            'jq', 'htop', 'tree', 'duf', 'du-dust', 'ack', 'cargo', 'gh'],
     'fun': ['fortune-mod', 'cowsay', 'lolcat'],
     'virt': ['qemu-system-x86', 'qemu-utils', 'ovmf', 'virt-manager', 'virt-viewer', 'virtinst'],
     'desktop': ['claude-desktop', 'vlc', 'flatpak'],
 }
 
 BREW_FORMULAS = ['fish', 'zsh', 'tmux', 'neovim', 'starship', 'fzf', 'ripgrep', 'fd', 'bat', 'eza',
-                 'git-delta', 'zoxide', 'direnv', 'httpie', 'jq', 'htop', 'tree', 'duf', 'ack',
+                 'git-delta', 'zoxide', 'direnv', 'httpie', 'jq', 'htop', 'tree', 'duf', 'dust', 'ack',
                  'rust', 'gh', 'asdf', 'fortune', 'cowsay', 'lolcat']
 BREW_CASKS = ['alacritty']
 
@@ -66,7 +66,8 @@ FLATPAKS = [
 NPM_PACKAGES = [('tree-sitter-cli', 'tree-sitter')]
 
 # (crate, binary)
-CARGO_CRATES = [('du-dust', 'dust'), ('procs', 'procs'), ('tokei', 'tokei'), ('bandwhich', 'bandwhich')]
+# du-dust comes from apt: its locked deps need a newer rustc than Ubuntu ships
+CARGO_CRATES = [('procs', 'procs'), ('tokei', 'tokei'), ('bandwhich', 'bandwhich')]
 
 # Nerd Fonts release archive name -> file prefix once installed
 NERD_FONTS = {
