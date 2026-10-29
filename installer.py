@@ -71,7 +71,7 @@ FLATPAKS = [
 ]
 
 # Global npm packages, installed with asdf's node: (package, binary)
-NPM_PACKAGES = [('tree-sitter-cli', 'tree-sitter')]
+NPM_PACKAGES = [('tree-sitter-cli', 'tree-sitter'), ('@ast-grep/cli', 'ast-grep')]
 
 # Built with asdf's rust: (crate, binary)
 CARGO_CRATES = [('du-dust', 'dust'), ('procs', 'procs'), ('tokei', 'tokei'), ('bandwhich', 'bandwhich')]

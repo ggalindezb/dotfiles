@@ -27,13 +27,32 @@ Every step skips whatever is already in place, so re-running is safe. Existing c
 
 What gets installed lives in the manifest at the top of `installer.py`.
 
-Git identity lives outside the repo in `~/.gitconfig.local`:
+## Per-machine config
+
+Shared config is versioned; what differs per machine is either keyed by hostname in the repo or kept out of it.
+
+- **Ghostty**: `ghostty/hosts/<hostname>` is linked to `~/.config/ghostty/local`, which the shared config includes
+  last, so a few overrides (e.g. `font-size`) win.
+- **Starship**: `starship/hosts/<hostname>.toml` is linked to `~/.config/starship.toml`. Starship has no includes, so
+  each one is a whole prompt. `starship/carabina.toml` is a custom prompt kept for reuse.
+- **SSH**: `ssh/config` holds the tailnet boxes (by Tailscale IP, since Tailscale DNS is off for Twingate's sake) and
+  a `github-work` alias for a second GitHub account. The installer sets `~/.ssh` to 700 and the config to 600.
+- **Git**: identity lives outside the repo in `~/.gitconfig.local`, which `git/gitconfig` includes:
 
 ```ini
 [user]
 	email = you@example.com
 	signingkey = <GPG key id>
+
+# Work repos: different ssh key (GitHub picks the account from the key) and identity
+[includeIf "gitdir:~/dev/work/"]
+	path = ~/.gitconfig.work
+[url "git@github-work:work-org/"]
+	insteadOf = git@github.com:work-org/
 ```
+
+With `~/.gitconfig.work` setting `core.sshCommand = ssh -i ~/.ssh/id_ed25519_work -o IdentitiesOnly=yes`, plus the
+work `[user]`. `includeIf` also applies while cloning into that folder.
 
 ## Tooling
 
