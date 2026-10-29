@@ -296,6 +296,9 @@ class Installer:
         where = subprocess.run([asdf, 'where', tool], capture_output=True, text=True, **kwargs) \
             if Path(asdf).exists() else None
         bin_dir = Path(where.stdout.strip()) / 'bin' if where and where.returncode == 0 else None
+        # `asdf exec` doesn't put the tool on PATH, and npm and cargo builds call `node`/`rustc` by name
+        if bin_dir:
+            kwargs['env']['PATH'] = os.pathsep.join([str(bin_dir), kwargs['env'].get('PATH', '')])
         return asdf, kwargs, bin_dir
 
     def step_npm(self):
