@@ -12,6 +12,7 @@
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -74,13 +75,16 @@ FLATPAKS = [
 NPM_PACKAGES = [('tree-sitter-cli', 'tree-sitter'), ('@ast-grep/cli', 'ast-grep')]
 
 # Built with asdf's rust: (crate, binary)
-# Tools that print their own fish completions, but don't install them: (command, generator)
-# dust, bandwhich, claude and httpie have no generator
+# Fish completions the tools don't install themselves: (command, generator). A generator is the command that
+# prints them, or the name of an Installer method that builds them. dust and bandwhich have nothing to build from
 FISH_COMPLETIONS = [
     ('asdf', ['asdf', 'completion', 'fish']),
     ('tree-sitter', ['tree-sitter', 'complete', '--shell', 'fish']),
     ('ast-grep', ['ast-grep', 'completions', 'fish']),
     ('procs', ['procs', '--gen-completion-out', 'fish']),
+    ('http', 'httpie_completions'),     # Shipped in httpie's repo, not in the package
+    ('https', 'https_completions'),
+    ('claude', 'commander_completions'),  # No generator, built from its --help
 ]
 
 CARGO_CRATES = [('du-dust', 'dust'), ('procs', 'procs'), ('tokei', 'tokei'), ('bandwhich', 'bandwhich')]
@@ -346,20 +350,76 @@ class Installer:
                 print(f'  [-] {command} not installed, skipping')
                 continue
             dst = completions_dir / f'{command}.fish'
+            source = ' '.join(generator) if isinstance(generator, list) else generator
             if self.dry_run:
-                print(f'  [+] {dst} ({" ".join(generator)})')
+                print(f'  [+] {dst} ({source})')
                 continue
-            result = subprocess.run(generator, capture_output=True, text=True, env=env, cwd=self.home)
-            if result.returncode != 0 or 'complete ' not in result.stdout:
-                print(f'  [!] {command}: {" ".join(generator)} gave no completions')
+            try:
+                if isinstance(generator, list):
+                    result = subprocess.run(generator, capture_output=True, text=True, env=env, cwd=self.home)
+                    text = result.stdout if result.returncode == 0 else ''
+                else:
+                    text = getattr(self, generator)(command, env)
+            except Exception as error:  # A download or parse failing shouldn't stop the others
+                print(f'  [!] {command}: {error}')
+                text = ''
+            if 'complete ' not in text:
+                print(f'  [!] {command}: {source} gave no completions')
                 self.failures.append(f'completions: {command}')
                 continue
-            if dst.exists() and dst.read_text() == result.stdout:
+            if dst.exists() and dst.read_text() == text:
                 print(f'  [=] {dst}')
                 continue
             completions_dir.mkdir(parents=True, exist_ok=True)
-            dst.write_text(result.stdout)
+            dst.write_text(text)
             print(f'  [+] {dst}')
+
+    def httpie_completions(self, command, env):
+        version = subprocess.run([command, '--version'], capture_output=True, text=True, env=env).stdout.strip()
+        url = f'https://raw.githubusercontent.com/httpie/cli/{version}/extras/httpie-completion.fish'
+        with urllib.request.urlopen(url) as response:
+            return response.read().decode()
+
+    def https_completions(self, command, env):
+        # Fish autoloads by command name, so https needs its own file pointing at http's
+        return 'complete -c https -w http\n'
+
+    def commander_completions(self, command, env):
+        """Fish completions from a Commander.js --help: top level flags and subcommands"""
+        help_text = subprocess.run([command, '--help'], capture_output=True, text=True, env=env).stdout
+        lines, out, section = help_text.splitlines(), [], None
+
+        def describe(i, rest):
+            # Descriptions wrap onto deeper indented lines; join them, then keep the first sentence
+            parts = [rest.strip()]
+            for following in lines[i + 1:]:
+                if not following.startswith('    '):
+                    break
+                parts.append(following.strip())
+            desc = re.split(r'(?<!e\.g)(?<!i\.e)\.\s', ' '.join(p for p in parts if p), maxsplit=1)[0].rstrip('.')
+            desc = desc if len(desc) <= 80 else desc[:79].rstrip() + '…'
+            return desc.replace('\\', '\\\\').replace("'", "\\'")
+
+        for i, line in enumerate(lines):
+            if line and not line.startswith(' '):
+                section = line.rstrip(':')
+                continue
+            if section == 'Options':
+                m = re.match(r'  (?:-(\w), )?((?:--[\w-]+(?:, )?)+)((?: [<\[][^>\]]*[>\]])*)(.*)$', line)
+                if not m:
+                    continue
+                short, longs, value, rest = m.groups()
+                flags = ''.join(f' -l {name}' for name in re.findall(r'--([\w-]+)', longs))
+                flags = (f' -s {short}' if short else '') + flags + (' -r' if value.startswith(' <') else '')
+                out.append(f"complete -c {command}{flags} -d '{describe(i, rest)}'")
+            elif section == 'Commands':
+                m = re.match(r'  ([\w-]+(?:\|[\w-]+)*)((?: [<\[][^>\]]*[>\]])*)(.*)$', line)
+                if not m:
+                    continue
+                names, _, rest = m.groups()
+                for name in names.split('|'):
+                    out.append(f"complete -c {command} -n __fish_use_subcommand -f -a {name} -d '{describe(i, rest)}'")
+        return '\n'.join(out) + '\n' if out else ''
 
     def step_fonts(self):
         fonts_dir = self.home / 'Library' / 'Fonts' if MAC else self.home / '.local' / 'share' / 'fonts' / 'NerdFonts'
