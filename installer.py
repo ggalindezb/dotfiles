@@ -311,7 +311,6 @@ class Installer:
         mappings = [
             (self.dotfiles_dir / 'bash' / 'bashrc', self.home / '.bashrc'),
             (self.dotfiles_dir / 'zsh' / 'zshrc', self.home / '.zshrc'),
-            (self.dotfiles_dir / 'git' / 'gitconfig', self.home / '.gitconfig'),
             (self.dotfiles_dir / 'tmux' / 'tmux.conf', self.home / '.tmux.conf'),
             (self.dotfiles_dir / 'tmux' / 'dir-icon.sh', self.home / '.config' / 'tmux' / 'dir-icon.sh'),
             (self.dotfiles_dir / 'tmux' / 'cmd-icon.sh', self.home / '.config' / 'tmux' / 'cmd-icon.sh'),
@@ -358,6 +357,17 @@ class Installer:
 
             dst.symlink_to(src)
             print(f'  [+] {dst} -> {src}')
+
+        # ~/.gitconfig is a copy, not a link: each machine adds its own identity to it
+        src, dst = self.dotfiles_dir / 'git' / 'gitconfig', self.home / '.gitconfig'
+        if dst.exists() and not (dst.is_symlink() and dst.readlink() == src):
+            print(f'  [=] {dst} (machine copy, left alone)')
+        else:
+            print(f'  [+] {dst} (copied from {src})')
+            if not self.dry_run:
+                if dst.is_symlink():
+                    dst.unlink()
+                shutil.copyfile(src, dst)
 
     def step_tmux(self):
         tpm = self.home / '.tmux' / 'plugins' / 'tpm'

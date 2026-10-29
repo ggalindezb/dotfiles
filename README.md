@@ -26,7 +26,8 @@ Every step skips whatever is already in place, so re-running is safe. Existing c
 
 What gets installed lives in the manifest at the top of `installer.py`.
 
-Git identity lives outside the repo in `~/.gitconfig.local`:
+`~/.gitconfig` is copied rather than linked, and only when it's missing, so each machine can add its git identity
+there without the next run replacing it. Either set it in the copy or in `~/.gitconfig.local`, which it includes:
 
 ```ini
 [user]
