@@ -8,3 +8,11 @@ Host zenbook-duo
 Host cajita
       HostName 100.66.13.77
       User ggalindezb
+
+# Work GitHub account (ggalindez-sdl). GitHub picks the account from the key, so
+# work repos go through this alias; ~/.gitconfig.local rewrites the org's URLs to it.
+Host github-work
+      HostName github.com
+      User git
+      IdentityFile ~/.ssh/id_ed25519_work
+      IdentitiesOnly yes
