@@ -106,4 +106,11 @@ return {
       hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
   },
+
+  {
+    'MeanderingProgrammer/render-markdown.nvim',  -- Headings, lists, tables and code blocks drawn in the buffer
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+    ft = 'markdown',
+    opts = {},
+  },
 }
