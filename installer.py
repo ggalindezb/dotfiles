@@ -362,6 +362,7 @@ class Installer:
             (self.dotfiles_dir / 'ghostty' / 'config', self.home / '.config' / 'ghostty' / 'config'),
             (self.dotfiles_dir / 'claude' / 'settings.json', self.home / '.claude' / 'settings.json'),
             (self.dotfiles_dir / 'claude' / 'statusline-command.sh', self.home / '.claude' / 'statusline-command.sh'),
+            (self.dotfiles_dir / 'ssh' / 'config', self.home / '.ssh' / 'config'),
         ]
         host = os.uname().nodename
         # Per-device Ghostty overrides, picked up by `config-file = ?local`
@@ -401,6 +402,11 @@ class Installer:
 
             dst.symlink_to(src)
             print(f'  [+] {dst} -> {src}')
+
+        # ssh ignores a config others can write to, and git doesn't keep modes, so set them on every run
+        if not self.dry_run:
+            (self.home / '.ssh').chmod(0o700)
+            (self.dotfiles_dir / 'ssh' / 'config').chmod(0o600)
 
     def step_tmux(self):
         tpm = self.home / '.tmux' / 'plugins' / 'tpm'

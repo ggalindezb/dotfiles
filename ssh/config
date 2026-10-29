@@ -1,0 +1,10 @@
+# Tailnet boxes, by Tailscale IP (100.x only routes inside the tailnet).
+# Tailscale DNS is off so it doesn't fight Twingate, so names don't resolve on their own.
+
+Host zenbook-duo
+      HostName 100.97.180.56
+      User ggalindezb
+
+Host cajita
+      HostName 100.66.13.77
+      User ggalindezb
